@@ -108,6 +108,7 @@ namespace ClassRegistration
         {
             string output = "";
             string tab = "\n\t\t\t\t\t\t\t\t\t\t\t";
+           
             foreach (int ddttl in timeBlocks)
             {
                 output += sum_up(ddttl / 1000) + "\t" + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + tab;
@@ -117,7 +118,7 @@ namespace ClassRegistration
 
         public override string ToString()
         {
-            return getCourseName() + getTitle() + getInstructor() +  getCredit() + "\t" + getSchedule(timeBlocks) +"\n";
+            return getCourseName() + getTitle() + getInstructor() +  getCredit() + "\t" + getSchedule(timeBlocks);
         }
     }
 }

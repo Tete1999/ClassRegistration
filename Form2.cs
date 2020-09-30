@@ -21,11 +21,6 @@ namespace ClassRegistration
             this.faculty = faculty;
             this.courses = courses;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            allCourse = new List<string>();
-            foreach (Course element in courses)
-            {
-                allCourse.Add(element.ToString());
-            }
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             InitializeComponent();
         }
@@ -59,7 +54,7 @@ namespace ClassRegistration
         private void button1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3(courses);
-            form3.listBox1.DataSource = allCourse;
+            form3.listBox1.DataSource = courses;
             form3.ShowDialog();
             }
 

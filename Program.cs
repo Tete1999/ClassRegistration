@@ -26,9 +26,7 @@ namespace ClassRegistration
             CourseReader c = new CourseReader();
             c.readFile("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/courses.txt");
             List<Course> courses = c.getCourses();
-
-
-
+           
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -25,12 +25,7 @@ namespace ClassRegistration
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBox1.DataSource = allCourse;
-            foreach (string element in allCourse)
-            {
-                Console.WriteLine(element);
-                allCourse.Add(element.ToString());
-            }
+            listBox1.DataSource = courses; 
 
         }
     }

@@ -44,7 +44,10 @@ namespace ClassRegistration
         {
             string[] tmp = tb.Split(' ');
             timeBlocks.Clear();
-            foreach (string element in tmp) { timeBlocks.Add(int.Parse(element));}
+            foreach (string element in tmp) {
+                Console.WriteLine(int.Parse(element));
+                timeBlocks.Add(int.Parse(element));}
+            Console.WriteLine("SDSDSD");
         }
         
         public List<Course> getCourses() { return courses;}
