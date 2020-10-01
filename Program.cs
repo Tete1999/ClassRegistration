@@ -23,8 +23,7 @@ namespace ClassRegistration
            List<Faculty> faculty = sfa.getFaculty();
 
             // Read in Courses 
-            CourseReader c = new CourseReader();
-            c.readFile("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/courses.txt");
+            CourseReader c = new CourseReader("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/courses.txt");
             List<Course> courses = c.getCourses();
            
 

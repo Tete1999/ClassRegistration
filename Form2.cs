@@ -13,7 +13,6 @@ namespace ClassRegistration
         private List<Faculty> faculty;
         private List<Course> courses;
         private Student student;
-        private List<string> allCourse;
         public Form2(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses)
         {
             this.students = students;

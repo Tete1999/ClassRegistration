@@ -14,12 +14,9 @@ namespace ClassRegistration
     public partial class Form3 : Form
     {
         private List<Course> courses;
-        private List<string> allCourse = new List<string>();
         public Form3(List<Course> courses)
         {
-            this.courses = courses;
-            
-            
+            this.courses = courses;   
             InitializeComponent();
         }
 

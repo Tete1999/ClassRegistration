@@ -8,22 +8,30 @@ namespace ClassRegistration
 {
     public class CourseReader
     {
-        private List<Course> courses;
+        private List<Course> courses = new List<Course>();
         private string courseName;
         private string title;
         private string instructor;
         private decimal credit;
         private int seats;
         private int numBlocks;
-        private ArrayList timeBlocks = new ArrayList();
-        
+       // private ArrayList timeBlocks = new ArrayList();
+        private string fname;
+        private Course course;
+
+        public CourseReader(string fname)
+        {
+            this.fname = fname;
+            readFile(fname);
+          
+        }
+
+       
         public void readFile(string fname)
         {
-            using (StreamReader file = new StreamReader(fname))
-            {
-
+            StreamReader file = new StreamReader(fname);
+            
                 string ln;
-                courses = new List<Course>();
                 while ((ln = file.ReadLine()) != null)
                 {
                     courseName = ln.Substring(0, 11);
@@ -32,25 +40,26 @@ namespace ClassRegistration
                     credit = decimal.Parse(ln.Substring(38, 4));
                     seats = int.Parse(ln.Substring(43, 3));
                     numBlocks = int.Parse(ln.Substring(47, 1));
-                    append(ln.Substring(49).TrimEnd());
-        
-                    Course course = new Course(courseName, title, instructor, credit, seats, timeBlocks);
+                    ArrayList timeBlocks = append(ln.Substring(49).TrimEnd());
+                    course = new Course(courseName, title, instructor, credit, seats, timeBlocks);
                     courses.Add(course);
-                }
+                    }
                 file.Close();
-            }
+
         }
-        private void append(string tb)
+        private ArrayList append(string tb)
         {
+            ArrayList timeBlocks = new ArrayList();
             string[] tmp = tb.Split(' ');
             timeBlocks.Clear();
             foreach (string element in tmp) {
-                Console.WriteLine(int.Parse(element));
                 timeBlocks.Add(int.Parse(element));}
-            Console.WriteLine("SDSDSD");
+            return timeBlocks;
         }
         
-        public List<Course> getCourses() { return courses;}
+        public List<Course> getCourses() {
+            return courses;
+        }
 
     }
 
