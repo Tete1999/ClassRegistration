@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _404NotFound
+namespace ClassRegistration
 {
     class Time
     {
