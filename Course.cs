@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ClassRegistration
 {
@@ -15,7 +16,7 @@ namespace ClassRegistration
         private decimal credit;
         private int seats;
         private ArrayList timeBlocks;
- 
+
 
 
         public Course(string courseName, string title, string instructor, decimal credit, int seats, ArrayList timeBlocks)
@@ -28,9 +29,10 @@ namespace ClassRegistration
             this.timeBlocks = timeBlocks;
         }
 
-        private string getCourseName() { 
-      
-            return courseName+"\t"; 
+        private string getCourseName()
+        {
+
+            return courseName + "\t";
         }
         private string getTitle()
         {
@@ -47,11 +49,11 @@ namespace ClassRegistration
         {
             string code = "";
             List<int> numbers = new List<int>() { 1, 2, 4, 8, 16 };
-            sum_up_recursive(numbers, target, new List<int>(),  code);
+            sum_up_recursive(numbers, target, new List<int>(), ref code);
             return code;
         }
 
-        private static void sum_up_recursive(List<int> numbers, int target, List<int> partial,  string code)
+        private static void sum_up_recursive(List<int> numbers, int target, List<int> partial, ref string code)
         {
             int s = 0;
             foreach (int x in partial) s += x;
@@ -70,7 +72,7 @@ namespace ClassRegistration
 
                 List<int> partial_rec = new List<int>(partial);
                 partial_rec.Add(n);
-                sum_up_recursive(remaining, target, partial_rec,  code);
+                sum_up_recursive(remaining, target, partial_rec, ref code);
             }
         }
 
@@ -119,10 +121,11 @@ namespace ClassRegistration
         {
             string output = "";
             string tab = " \t";
-           
+
             foreach (int ddttl in timeBlocks)
             {
-                output += sum_up(ddttl / 1000)  + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10)))+tab;
+                //Console.WriteLine(ddttl);
+                output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + tab;
             }
             return output;
         }
@@ -131,6 +134,55 @@ namespace ClassRegistration
         {
             return getCourseName() + getTitle() + getInstructor() + getCredit() + "\t" + getSchedule(timeBlocks);
         }
+
+
+
+        private bool TimeSpan_Overlap(TimeSpan start1, TimeSpan finish1, TimeSpan start2, TimeSpan finish2)
+        {
+            if (start1 == start2 || finish1 == finish2)
+                return true;
+
+            if ((start1 < start2 && start2 < finish1) || (start1 < finish2 && finish2 < finish1))
+                return true;
+
+            if ((start2 < start1 && start1 < finish2) || (start2 < finish1 && finish1 < finish2))
+                return true;
+            else
+                return false;
+
+        }
+
+        public bool Overlap(Course c2)
+        {
+            ArrayList tb1 = this.getTimeBlocks();
+            ArrayList tb2 = c2.getTimeBlocks();
+            foreach (int ddttl1 in tb1)
+            {
+                char[] dayarray1 = sum_up(ddttl1 / 1000).Trim().ToCharArray();
+                foreach (int ddttl2 in tb2)
+                {
+                    char[] dayarray2 = sum_up(ddttl2 / 1000).Trim().ToCharArray();
+                    foreach(char day1 in dayarray1)
+                    {
+                        TimeSpan start1 = DateTime.Parse(getTime((ddttl1 / 10) % 100)).TimeOfDay;
+                        TimeSpan finish1 = DateTime.Parse(getTime(((ddttl1 / 10) % 100) + ((ddttl1 % 10)))).TimeOfDay;
+                        foreach (char day2 in dayarray2)
+                        {
+                            if (day1 == day2)
+                            {
+                                TimeSpan start2 = DateTime.Parse(getTime((ddttl2 / 10) % 100)).TimeOfDay;
+                                TimeSpan finish2 = DateTime.Parse(getTime(((ddttl2 / 10) % 100) + ((ddttl2 % 10)))).TimeOfDay;
+                                if (TimeSpan_Overlap(start1, finish1, start2, finish2))
+                                    return true;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+   
     }
 }
 
