@@ -14,15 +14,27 @@ namespace ClassRegistration
     public partial class Form3 : Form
     {
         private List<Course> courses;
-        public Form3(List<Course> courses)
+        private Student student;
+        public Form3(List<Course> courses, Student student)
         {
-            this.courses = courses;   
+            this.courses = courses;
+            this.student = student;
             InitializeComponent();
         }
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBox1.DataSource = courses; 
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
 
         }
     }
