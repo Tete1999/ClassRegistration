@@ -17,21 +17,13 @@ namespace ClassRegistration
         {
            // Read in Students, Faculty, and Admin
            ReaderSFA sfa = new ReaderSFA();
-<<<<<<< Updated upstream
- 
-=======
-           sfa.readFile("C:/Users/zmorr/Source/Repos/ClassRegistration/sfa.txt");
->>>>>>> Stashed changes
+           sfa.readFile("sfa.txt");
            List<Student> students = sfa.getStudents();
            List<Admin> admin = sfa.getAdmin();
            List<Faculty> faculty = sfa.getFaculty();
 
             // Read in Courses 
-<<<<<<< Updated upstream
-      
-=======
-            CourseReader c = new CourseReader("C:/Users/zmorr/Source/Repos/ClassRegistration/courses.txt");
->>>>>>> Stashed changes
+            CourseReader c = new CourseReader("courses.txt");
             List<Course> courses = c.getCourses();
             Console.WriteLine(courses[0].ToString());
             Console.WriteLine(courses[1].ToString()); //
