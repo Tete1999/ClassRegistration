@@ -122,7 +122,6 @@ namespace ClassRegistration
            
             foreach (int ddttl in timeBlocks)
             {
-                //Console.WriteLine(ddttl);
                 output += sum_up(ddttl / 1000)  + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10)))+tab;
             }
             return output;

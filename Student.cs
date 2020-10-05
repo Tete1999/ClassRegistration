@@ -15,17 +15,21 @@ namespace ClassRegistration
         private string middleName;
         private string lastName;
         private string advisor;
+        private string courseHistory;
         private List<Course> registeredCourses;
 
-        public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor)
+        public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor,string courseHistory)
         {
-            this.user = user.ToLower();
+            this.user = user;
             this.pass = pass;
             this.firstName = firstName;
             this.middleName = middleName;
             this.lastName = lastName;
             this.advisor = advisor;
+            this.courseHistory = courseHistory;  
         }
+
+     
 
         public string getUser() { return this.user; }
         public string getPass() { return this.pass; }
@@ -33,6 +37,9 @@ namespace ClassRegistration
         public string getMiddle() { return this.middleName; }
         public string getLast() { return this.lastName; }
         public string getAdvisor() { return this.advisor; }
+
+        public string getCourseHistory() { return this.courseHistory; }
+
 
         public List<Course>  getRegisteredCourses() { 
             return registeredCourses; }

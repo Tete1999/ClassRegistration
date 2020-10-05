@@ -17,7 +17,7 @@ namespace ClassRegistration
         {
            // Read in Students, Faculty, and Admin
            ReaderSFA sfa = new ReaderSFA();
-           sfa.readFile("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/sfa.txt");
+           sfa.readFile("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/sfa.txt", "C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/csh.txt");           
            List<Student> students = sfa.getStudents();
            List<Admin> admin = sfa.getAdmin();
            List<Faculty> faculty = sfa.getFaculty();
@@ -26,7 +26,6 @@ namespace ClassRegistration
             CourseReader c = new CourseReader("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/courses.txt");
             List<Course> courses = c.getCourses();
            
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(students, admin,  faculty, courses));

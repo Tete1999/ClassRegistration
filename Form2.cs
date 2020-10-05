@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace ClassRegistration
 {
@@ -13,24 +14,24 @@ namespace ClassRegistration
         private List<Faculty> faculty;
         private List<Course> courses;
         private Student student;
-        public Form2(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses)
+
+        public Form2(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses, Student student)
         {
             this.students = students;
             this.admin = admin;
             this.faculty = faculty;
             this.courses = courses;
+            this.student = student;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             InitializeComponent();
         }
 
-        public void setStudent(Student s)
+      
+        public Student getStudent()
         {
-            List<string> courseBox = new List<string>();
-            this.student = s;
-           
+            return student;
         }
-
         private void Form2_Load(object sender, EventArgs e)
         {
 
@@ -62,6 +63,20 @@ namespace ClassRegistration
         }
 
         private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form4 form4 = new Form4();
+            string text = student.getCourseHistory().Replace("\n", "\r\n");
+            // form4.listBox1.DataSource = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            form4.textBox1.Text = text;
+            form4.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
 
         }

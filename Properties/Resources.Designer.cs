@@ -113,6 +113,16 @@ namespace ClassRegistration.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap coe {
+            get {
+                object obj = ResourceManager.GetObject("coe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap coe12 {
             get {
                 object obj = ResourceManager.GetObject("coe12", resourceCulture);

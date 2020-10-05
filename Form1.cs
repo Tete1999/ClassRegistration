@@ -55,7 +55,7 @@ namespace ClassRegistration
 
 private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(students, admin, faculty, courses);
+            Form2 form2 = new Form2(students, admin, faculty, courses, null);
             bool flag = false;
 
             foreach (Faculty element in faculty)
@@ -84,6 +84,7 @@ private void button1_Click(object sender, EventArgs e)
             {
                 if (element.getUser() == textBox1.Text.ToLower() && element.getPass() == textBox2.Text)
                 {
+                    form2 = new Form2(students, admin, faculty, courses, element);
                     List<Course> studentsCourses = element.getRegisteredCourses();
                     courseBox = new List<string>();
                     if (studentsCourses == null)
@@ -104,7 +105,6 @@ private void button1_Click(object sender, EventArgs e)
                     form2.ChangeLabelName(s);
                     form2.ShowDialog();
                     flag = true;
-                    form2.setStudent(element);
                     form2.Refresh();
                     break;
                 }
