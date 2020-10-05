@@ -17,7 +17,7 @@ namespace ClassRegistration
         {
            // Read in Students, Faculty, and Admin
            ReaderSFA sfa = new ReaderSFA();
-           sfa.readFile("sfa.txt", "csh.txt");
+           sfa.readFile("sfa.txt");
            List<Student> students = sfa.getStudents();
            List<Admin> admin = sfa.getAdmin();
            List<Faculty> faculty = sfa.getFaculty();
