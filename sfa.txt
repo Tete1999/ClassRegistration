@@ -1,7 +1,0 @@
-PRyan      Cheese     Paul            Davis           Ryan            MRomney
-JBiden     Delaware   Joe             Robinette       Biden           BObama
-MRomney    Mass       Willard         Mitt            Romney          faculty
-BObama     Illinois   Barack          Hussein         Obama           faculty
-Voter      USA        Jane            Quincy          Public          admin
-CVN        mathsci    Calvin          Security        Van Niewaal     admin
-FLWright   Taliesin   Frank           Lloyd           Wright          BObama
