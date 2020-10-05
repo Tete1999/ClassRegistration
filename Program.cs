@@ -17,13 +17,13 @@ namespace ClassRegistration
         {
            // Read in Students, Faculty, and Admin
            ReaderSFA sfa = new ReaderSFA();
-           sfa.readFile("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/sfa.txt");
+           sfa.readFile("sfa.txt");
            List<Student> students = sfa.getStudents();
            List<Admin> admin = sfa.getAdmin();
            List<Faculty> faculty = sfa.getFaculty();
 
             // Read in Courses 
-            CourseReader c = new CourseReader("C:/Users/Talal/Desktop/SE Fresh Attempt/ClassRegistration/courses.txt");
+            CourseReader c = new CourseReader("courses.txt");
             List<Course> courses = c.getCourses();
            
 
