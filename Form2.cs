@@ -65,5 +65,13 @@ namespace ClassRegistration
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form4 form4 = new Form4(student, courses);
+            //form4.listBox1.DataSource = courses;
+            //form4.listBox2.DataSource = student.getRegisteredCourses();
+            form4.ShowDialog();
+        }
     }
 }
