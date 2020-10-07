@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace ClassRegistration
 {
 
-   
+
     public partial class Form2 : Form
     {
         private List<Student> students;
@@ -23,11 +23,10 @@ namespace ClassRegistration
             this.courses = courses;
             this.student = student;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             InitializeComponent();
         }
 
-      
+
         public Student getStudent()
         {
             return student;
@@ -50,13 +49,14 @@ namespace ClassRegistration
         {
 
         }
-
+   
         private void button1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3(courses, student);
             form3.listBox1.DataSource = courses;
             form3.ShowDialog();
-            }
+
+        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -80,5 +80,16 @@ namespace ClassRegistration
         {
 
         }
+
+        public void Reload()
+        {
+            this.Refresh();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
+
 }

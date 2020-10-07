@@ -16,7 +16,8 @@ namespace ClassRegistration
         private string lastName;
         private string advisor;
         private string courseHistory;
-        private List<Course> registeredCourses = new List<Course>();
+        private List<Course> registeredCourses;
+        
 
         public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor,string courseHistory)
         {
@@ -27,6 +28,7 @@ namespace ClassRegistration
             this.lastName = lastName;
             this.advisor = advisor;
             this.courseHistory = courseHistory;  
+            registeredCourses = new List<Course>();
         }
 
      
@@ -40,6 +42,16 @@ namespace ClassRegistration
 
         public string getCourseHistory() { return this.courseHistory; }
 
+        public decimal getTotalCredit()
+        {
+            decimal totalCred = 0;
+            List<Course> registered = getRegisteredCourses();
+            foreach(Course c in registered)
+            {
+                totalCred += c.getCredit();
+            }
+            return totalCred;
+        }
 
         public List<Course>  getRegisteredCourses() { 
             return registeredCourses; }

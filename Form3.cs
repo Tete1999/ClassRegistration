@@ -15,74 +15,83 @@ namespace ClassRegistration
     {
         private List<Course> courses;
         private Student student;
+   
         public Form3(List<Course> courses, Student student)
         {
             this.courses = courses;
             this.student = student;
-            Console.WriteLine("XXX");
-            Console.WriteLine(student.ToString());
+            this.
             InitializeComponent();
         }
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBox1.DataSource = courses; 
-
         }
 
+        
         private void button1_Click(object sender, EventArgs e)
         {
             List<Course> studentsCourses = student.getRegisteredCourses();
-            decimal totalCred = 0;
             Course newCourse = new Course();
             bool flag = false;
-            foreach (Course c in courses)
-            {
-                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0,11).TrimEnd())
-                {
-                    newCourse = c;
-                }
-            }
+            //Selection of Course 
 
-            foreach (Course c in studentsCourses)
+            if (student.getTotalCredit() < 5)
             {
-                totalCred += c.getCredit();
-                if (c.getCourseName().TrimEnd() == newCourse.getCourseName().TrimEnd())
+                foreach (Course c in courses)
                 {
-                    flag = true;
-                }
-            }
-
-            if (newCourse.getSeats() > 0)
-            {
-                if (flag == false)
-                {
-                    if (totalCred < 5)
+                    if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
                     {
-                        student.addCourse(newCourse);
+                        newCourse = c;
                     }
                 }
-            }
-            else { MessageBox.Show("Course could not be added"); }
-
-            if (student.getCourseHistory().ToString().Contains(newCourse.getCourseName().ToString().TrimEnd()))
-            {
-                MessageBox.Show("Warning, Course taken before");
-            }
-
-            foreach (Course c in studentsCourses)
-            {
-                
-                if (c.Overlap(newCourse))
+                foreach (Course c in studentsCourses)
                 {
-                    MessageBox.Show("Warning, time overlap");
+                    if (c.Overlap(newCourse))
+                    {
+                        MessageBox.Show("Warning, time overlap");
+                    }
+                }
+
+                // Have I already registered
+                foreach (Course c in studentsCourses)
+                {
+                    if (c.getCourseName().TrimEnd() == newCourse.getCourseName().TrimEnd())
+                    {
+                        flag = true;
+                    }
+                }
+
+                //if (newCourse.getSeats() > 0 && flag == false && totalCred < 5)
+                //{
+
+                //    student.addCourse(newCourse);
+                //}
+
+                if (student.getCourseHistory().ToString().Contains(newCourse.getCourseName().ToString().TrimEnd()))
+                {
+                    MessageBox.Show("Warning, Course taken before");
+
+                }
+                if (flag == false && newCourse.getSeats() >= 1)
+                {
+                    student.addCourse(newCourse);
                 }
             }
+            else
+            {
+                MessageBox.Show("Course could not be added");
+            }
+            
         }
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
 
         }
+
+        
     }
 }
