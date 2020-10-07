@@ -19,6 +19,8 @@ namespace ClassRegistration
         {
             this.courses = courses;
             this.student = student;
+            Console.WriteLine("XXX");
+            Console.WriteLine(student.ToString());
             InitializeComponent();
         }
 
@@ -30,7 +32,52 @@ namespace ClassRegistration
 
         private void button1_Click(object sender, EventArgs e)
         {
+            List<Course> studentsCourses = student.getRegisteredCourses();
+            decimal totalCred = 0;
+            Course newCourse = new Course();
+            bool flag = false;
+            foreach (Course c in courses)
+            {
+                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0,11).TrimEnd())
+                {
+                    newCourse = c;
+                }
+            }
 
+            foreach (Course c in studentsCourses)
+            {
+                totalCred += c.getCredit();
+                if (c.getCourseName().TrimEnd() == newCourse.getCourseName().TrimEnd())
+                {
+                    flag = true;
+                }
+            }
+
+            if (newCourse.getSeats() > 0)
+            {
+                if (flag == false)
+                {
+                    if (totalCred < 5)
+                    {
+                        student.addCourse(newCourse);
+                    }
+                }
+            }
+            else { MessageBox.Show("Course could not be added"); }
+
+            if (student.getCourseHistory().ToString().Contains(newCourse.getCourseName().ToString().TrimEnd()))
+            {
+                MessageBox.Show("Warning, Course taken before");
+            }
+
+            foreach (Course c in studentsCourses)
+            {
+                
+                if (c.Overlap(newCourse))
+                {
+                    MessageBox.Show("Warning, time overlap");
+                }
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

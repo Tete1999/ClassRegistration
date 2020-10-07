@@ -16,7 +16,7 @@ namespace ClassRegistration
         private string lastName;
         private string advisor;
         private string courseHistory;
-        private List<Course> registeredCourses;
+        private List<Course> registeredCourses = new List<Course>();
 
         public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor,string courseHistory)
         {
@@ -69,6 +69,8 @@ namespace ClassRegistration
         public void setAdvisor(string advisor) { this.advisor = advisor; }
 
         public void addCourse(Course c) { registeredCourses.Add(c); }
+
+
     }
 
 }

@@ -19,6 +19,16 @@ namespace ClassRegistration
 
 
 
+
+        public Course()
+        {
+            string courseName;
+            string title;
+            string instructor;
+            decimal credit;
+            int seats;
+            ArrayList timeblocks;
+        }
         public Course(string courseName, string title, string instructor, decimal credit, int seats, ArrayList timeBlocks)
         {
             this.courseName = courseName;
@@ -29,7 +39,7 @@ namespace ClassRegistration
             this.timeBlocks = timeBlocks;
         }
 
-        private string getCourseName()
+        public string getCourseName()
         {
 
             return courseName + "\t";
@@ -39,7 +49,7 @@ namespace ClassRegistration
             return title + "\t";
         }
         private string getInstructor() { return instructor + "\t"; }
-        private decimal getCredit() { return credit; }
+        public decimal getCredit() { return credit; }
         public int getSeats() { return seats; }
         public ArrayList getTimeBlocks() { return timeBlocks; }
 
