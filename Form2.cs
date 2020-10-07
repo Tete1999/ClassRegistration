@@ -23,6 +23,7 @@ namespace ClassRegistration
             this.courses = courses;
             this.student = student;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
         }
 
@@ -52,7 +53,7 @@ namespace ClassRegistration
    
         private void button1_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3(courses, student, this);
+            Form3 form3 = new Form3(courses, student);
             form3.listBox1.DataSource = courses;
             form3.ShowDialog();
             
@@ -89,12 +90,13 @@ namespace ClassRegistration
 
         }
 
-        public void Reload()
-        {
-            this.Close();
-        }
 
         private void button2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
         {
 
         }

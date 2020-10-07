@@ -15,13 +15,13 @@ namespace ClassRegistration
     {
         private List<Course> courses;
         private Student student;
-        private Form2 f;
    
-        public Form3(List<Course> courses, Student student, Form2 frm)
+        public Form3(List<Course> courses, Student student)
         {
             this.courses = courses;
             this.student = student;
-            this.f = frm;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
         }
 
@@ -51,7 +51,7 @@ namespace ClassRegistration
                 {
                     if (c.Overlap(newCourse))
                     {
-                        MessageBox.Show("Warning, time overlap");
+                        MessageBox.Show("Warning: Time Overlap");
                     }
                 }
 
@@ -64,46 +64,29 @@ namespace ClassRegistration
                     }
                 }
 
-                //if (newCourse.getSeats() > 0 && flag == false && totalCred < 5)
-                //{
-
-                //    student.addCourse(newCourse);
-                //}
-
                 if (student.getCourseHistory().ToString().Contains(newCourse.getCourseName().ToString().TrimEnd()))
                 {
-                    MessageBox.Show("Warning, Course taken before");
+                    MessageBox.Show("Warning: Course Taken Before");
 
                 }
                 if (flag == false && newCourse.getSeats() >= 1 && ((student.getTotalCredit() + newCourse.getCredit()) < 5))
                 {
                     student.addCourse(newCourse);
                     studentsCourses = student.getRegisteredCourses();
+                    MessageBox.Show("Course Added");
                 }
                 else
                 {
-                    MessageBox.Show("Course could not be added");
+                    MessageBox.Show("Error: Credit Limit Exceeded or Course Already Registered");
                 }
             }
-            else
-            {
-                MessageBox.Show("Course could not be added");
-            }
-            f.listBox1.DataSource = studentsCourses;
-            this.Refresh();
-            //f.Hide();
-            //f.ResetText();
-            //f.Refresh();
- 
-
-            
+           
         }
         
 
         private void button2_Click(object sender, EventArgs e)
         {
             List<Course> studentsCourses = student.getRegisteredCourses();
-            f.listBox1.DataSource = studentsCourses;
             Course newCourse = new Course();
             foreach (Course c in courses)
             {
@@ -113,11 +96,34 @@ namespace ClassRegistration
                 }
             }
             student.dropCourse(newCourse);
-            f.listBox1.DataSource = studentsCourses;
-            this.Refresh();
-            
         }
 
-        
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            Form5 f5 = new Form5(this);
+            f5.listBox1.DataSource = student.getRegisteredCourses();
+            f5.ShowDialog();
+
+        }
+
+        public List<Course> getRegisteredCourses()
+        {
+            return student.getRegisteredCourses();
+        }
     }
 }

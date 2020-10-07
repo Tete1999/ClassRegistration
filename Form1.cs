@@ -22,6 +22,7 @@ namespace ClassRegistration
             this.faculty = faculty;
             this.courses = courses;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
         }
 
@@ -101,7 +102,7 @@ private void button1_Click(object sender, EventArgs e)
                         }
                     }
 
-                    form2.listBox1.DataSource = courseBox;
+                  
                     string s = "Welcome " + element.getFullName();
                     form2.ChangeLabelName(s);
                     form2.ShowDialog();
