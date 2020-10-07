@@ -19,8 +19,7 @@ namespace ClassRegistration
         {
             this.courses = courses;
             this.student = student;
-            Console.WriteLine("XXX");
-            Console.WriteLine(student.ToString());
+
             InitializeComponent();
         }
 
@@ -52,8 +51,16 @@ namespace ClassRegistration
                     flag = true;
                 }
             }
+            foreach (Course c in studentsCourses)
+            {
 
-            if (newCourse.getSeats() > 0)
+                if (c.Overlap(newCourse))
+                {
+                    MessageBox.Show("Warning, time overlap");
+                }
+            }
+
+            if (newCourse.getSeats() >= 1)
             {
                 if (flag == false)
                 {
@@ -70,14 +77,9 @@ namespace ClassRegistration
                 MessageBox.Show("Warning, Course taken before");
             }
 
-            foreach (Course c in studentsCourses)
-            {
-                
-                if (c.Overlap(newCourse))
-                {
-                    MessageBox.Show("Warning, time overlap");
-                }
-            }
+            
+           
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
