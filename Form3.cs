@@ -15,12 +15,13 @@ namespace ClassRegistration
     {
         private List<Course> courses;
         private Student student;
+        private Form2 f;
    
-        public Form3(List<Course> courses, Student student)
+        public Form3(List<Course> courses, Student student, Form2 frm)
         {
             this.courses = courses;
             this.student = student;
-            this.
+            this.f = frm;
             InitializeComponent();
         }
 
@@ -57,7 +58,7 @@ namespace ClassRegistration
                 // Have I already registered
                 foreach (Course c in studentsCourses)
                 {
-                    if (c.getCourseName().TrimEnd() == newCourse.getCourseName().TrimEnd())
+                    if (c.getTitle().TrimEnd() == newCourse.getTitle().TrimEnd())
                     {
                         flag = true;
                     }
@@ -74,22 +75,47 @@ namespace ClassRegistration
                     MessageBox.Show("Warning, Course taken before");
 
                 }
-                if (flag == false && newCourse.getSeats() >= 1)
+                if (flag == false && newCourse.getSeats() >= 1 && ((student.getTotalCredit() + newCourse.getCredit()) < 5))
                 {
                     student.addCourse(newCourse);
+                    studentsCourses = student.getRegisteredCourses();
+                }
+                else
+                {
+                    MessageBox.Show("Course could not be added");
                 }
             }
             else
             {
                 MessageBox.Show("Course could not be added");
             }
+            f.listBox1.DataSource = studentsCourses;
+            this.Refresh();
+            //f.Hide();
+            //f.ResetText();
+            //f.Refresh();
+ 
+
             
         }
         
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            List<Course> studentsCourses = student.getRegisteredCourses();
+            f.listBox1.DataSource = studentsCourses;
+            Course newCourse = new Course();
+            foreach (Course c in courses)
+            {
+                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                {
+                    newCourse = c;
+                }
+            }
+            student.dropCourse(newCourse);
+            f.listBox1.DataSource = studentsCourses;
+            this.Refresh();
+            
         }
 
         

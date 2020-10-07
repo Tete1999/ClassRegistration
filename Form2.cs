@@ -52,11 +52,19 @@ namespace ClassRegistration
    
         private void button1_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3(courses, student);
+            Form3 form3 = new Form3(courses, student, this);
             form3.listBox1.DataSource = courses;
             form3.ShowDialog();
+            
 
         }
+
+        private void Form3_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Refresh();
+        }
+
+
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -83,7 +91,7 @@ namespace ClassRegistration
 
         public void Reload()
         {
-            this.Refresh();
+            this.Close();
         }
 
         private void button2_Click_1(object sender, EventArgs e)

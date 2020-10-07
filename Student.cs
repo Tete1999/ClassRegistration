@@ -81,6 +81,7 @@ namespace ClassRegistration
         public void setAdvisor(string advisor) { this.advisor = advisor; }
 
         public void addCourse(Course c) { registeredCourses.Add(c); }
+        public void dropCourse(Course c) { registeredCourses.Remove(c); }
 
 
     }

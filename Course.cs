@@ -44,7 +44,7 @@ namespace ClassRegistration
 
             return courseName + "\t";
         }
-        private string getTitle()
+        public string getTitle()
         {
             return title + "\t";
         }
