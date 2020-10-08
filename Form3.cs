@@ -69,15 +69,22 @@ namespace ClassRegistration
                     MessageBox.Show("Warning: Course Taken Before");
 
                 }
-                if (flag == false && newCourse.getSeats() >= 1 && ((student.getTotalCredit() + newCourse.getCredit()) < 5))
+                if (flag == false && newCourse.getSeats() >= 1)
                 {
-                    student.addCourse(newCourse);
-                    studentsCourses = student.getRegisteredCourses();
-                    MessageBox.Show("Course Added");
+                    if ((student.getTotalCredit() + newCourse.getCredit()) < 5)
+                    {
+                        student.addCourse(newCourse);
+                        studentsCourses = student.getRegisteredCourses();
+                        MessageBox.Show("Course Added");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Credit Limit Exceeded");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Error: Credit Limit Exceeded or Course Already Registered");
+                    MessageBox.Show("Error: Course is Full or Course Already Registered");
                 }
             }
            
