@@ -32,6 +32,8 @@ namespace ClassRegistration
             Console.WriteLine(courses[4].ToString());
             Console.WriteLine(courses[2].Overlap(courses[3]).ToString());
 
+            students[0].getTranscriptInfo();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(students, admin,  faculty, courses));

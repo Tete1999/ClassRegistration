@@ -55,7 +55,7 @@ namespace ClassRegistration
                         }
                         catch (KeyNotFoundException e)
                         {
-                            csh = "No Course History to Show";
+                            csh = "";
                             Student s = new Student(user, pass, first, middle, last, status, csh);
                             students.Add(s);
                         }
@@ -87,7 +87,7 @@ namespace ClassRegistration
                     int i = 0;
                     int start = 14;
                     int length = 22;
-
+                    courseHist += numCourses.ToString() + " ";
                     while (i != numCourses)
                     {
                         if (numCourses - i == 1)

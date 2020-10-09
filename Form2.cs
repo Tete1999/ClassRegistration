@@ -80,8 +80,11 @@ namespace ClassRegistration
         {
             Form4 form4 = new Form4();
             string text = student.getCourseHistory().Replace("\n", "\r\n");
+            if (text != "")
+                text = text.Substring(2);
             // form4.listBox1.DataSource = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             form4.textBox1.Text = text;
+            form4.richTextBox1.Text = student.getTranscriptInfo();   
             form4.ShowDialog();
         }
 
