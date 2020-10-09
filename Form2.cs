@@ -84,7 +84,7 @@ namespace ClassRegistration
                 text = text.Substring(2);
             // form4.listBox1.DataSource = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
             form4.textBox1.Text = text;
-            form4.richTextBox1.Text = student.getTranscriptInfo();   
+            form4.richTextBox1.Text = student.getGPA();
             form4.ShowDialog();
         }
 

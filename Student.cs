@@ -19,6 +19,8 @@ namespace ClassRegistration
         private string advisor;
         private string courseHistory;
         private List<Course> registeredCourses;
+        private string gpa;
+       
         
 
         public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor,string courseHistory)
@@ -31,10 +33,14 @@ namespace ClassRegistration
             this.advisor = advisor;
             this.courseHistory = courseHistory;  
             registeredCourses = new List<Course>();
+            gpa = getTranscriptInfo();
         }
 
      
-
+        public string getGPA()
+        {
+            return this.gpa;
+        }
         public string getUser() { return this.user; }
         public string getPass() { return this.pass; }
         public string getFirst() { return this.firstName; }

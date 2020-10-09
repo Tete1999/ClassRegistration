@@ -102,8 +102,7 @@ namespace ClassRegistration
                             i += 1;
                         }     
                     }
-                    //Console.WriteLine(String.Format(courseHist));
-                    
+                   
                     courseHistory.Add(user, courseHist);
                     courseHist = "";
                 }

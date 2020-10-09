@@ -25,12 +25,12 @@ namespace ClassRegistration
             // Read in Courses 
             CourseReader c = new CourseReader("courses.txt");
             List<Course> courses = c.getCourses();
-            Console.WriteLine(courses[0].ToString());
-            Console.WriteLine(courses[1].ToString()); //
-            Console.WriteLine(courses[2].ToString()); //
-            Console.WriteLine(courses[3].ToString());
-            Console.WriteLine(courses[4].ToString());
-            Console.WriteLine(courses[2].Overlap(courses[3]).ToString());
+            //Console.WriteLine(courses[0].ToString());
+            //Console.WriteLine(courses[1].ToString()); //
+            //Console.WriteLine(courses[2].ToString()); //
+            //Console.WriteLine(courses[3].ToString());
+            //Console.WriteLine(courses[4].ToString());
+            //Console.WriteLine(courses[2].Overlap(courses[3]).ToString());
 
             students[0].getTranscriptInfo();
 
