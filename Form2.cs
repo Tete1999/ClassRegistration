@@ -54,10 +54,8 @@ namespace ClassRegistration
         private void button1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3(courses, student);
-            form3.listBox1.DataSource = courses;
             form3.ShowDialog();
-            
-
+  
         }
 
         private void Form3_Closing(object sender, System.ComponentModel.CancelEventArgs e)

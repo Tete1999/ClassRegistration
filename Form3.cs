@@ -15,7 +15,9 @@ namespace ClassRegistration
     {
         private List<Course> courses;
         private Student student;
-   
+        private List<Course> studentsCourses = new List<Course>();
+
+
         public Form3(List<Course> courses, Student student)
         {
             this.courses = courses;
@@ -23,17 +25,18 @@ namespace ClassRegistration
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
+            listBox1.DataSource = courses;
         }
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBox1.DataSource = courses; 
+          
         }
 
         
         private void button1_Click(object sender, EventArgs e)
         {
-            List<Course> studentsCourses = student.getRegisteredCourses();
+            studentsCourses = student.getRegisteredCourses();
             Course newCourse = new Course();
             bool flag = false;
             //Selection of Course 
@@ -87,7 +90,10 @@ namespace ClassRegistration
                     MessageBox.Show("Error: Course is Full or Course Already Registered");
                 }
             }
-           
+            listBox3.DataSource = null;
+            listBox3.DataSource = studentsCourses;
+            
+            
         }
         
 
@@ -122,15 +128,39 @@ namespace ClassRegistration
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            Form5 f5 = new Form5(this);
-            f5.listBox1.DataSource = student.getRegisteredCourses();
-            f5.ShowDialog();
-
+            List<Course> rg = student.getRegisteredCourses();
+            Course toRemove = new Course(null, null, null, 1, 0, null);
+            foreach (Course c in rg)
+            {
+                if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                {
+                    toRemove = c;
+                }
+            }
+            rg.Remove(toRemove);
+            listBox3.DataSource = null;
+            listBox3.DataSource = rg;
+            MessageBox.Show("Course Dropped Successfully");
         }
 
         public List<Course> getRegisteredCourses()
         {
             return student.getRegisteredCourses();
+        }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void listBox2_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
