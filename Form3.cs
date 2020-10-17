@@ -26,6 +26,8 @@ namespace ClassRegistration
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
             listBox1.DataSource = courses;
+            listBox3.DataSource = null;
+            listBox3.DataSource = studentsCourses;
         }
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -79,6 +81,7 @@ namespace ClassRegistration
                         student.addCourse(newCourse);
                         studentsCourses = student.getRegisteredCourses();
                         MessageBox.Show("Course Added");
+                        newCourse.setSeats(newCourse.getSeats() + 1);
                     }
                     else
                     {
@@ -109,6 +112,7 @@ namespace ClassRegistration
                 }
             }
             student.dropCourse(newCourse);
+            newCourse.setSeats(newCourse.getSeats() - 1);
         }
 
         private void button3_Click(object sender, EventArgs e)

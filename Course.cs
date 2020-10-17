@@ -53,7 +53,7 @@ namespace ClassRegistration
         public int getSeats() { return seats; }
         public ArrayList getTimeBlocks() { return timeBlocks; }
 
-        private void setSeats(int s) { this.seats = s; }
+        public void setSeats(int s) { this.seats = s; }
 
         private static string sum_up(int target)
         {

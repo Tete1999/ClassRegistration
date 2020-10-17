@@ -54,6 +54,8 @@ namespace ClassRegistration
         private void button1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3(courses, student);
+            form3.listBox3.DataSource = null;
+            form3.listBox3.DataSource = student.getRegisteredCourses();
             form3.ShowDialog();
   
         }
