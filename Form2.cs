@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace ClassRegistration
 {
@@ -79,13 +80,26 @@ namespace ClassRegistration
         private void button3_Click(object sender, EventArgs e)
         {
             Form4 form4 = new Form4();
-            string text = student.getCourseHistory().Replace("\n", "\r\n");
-            if (text != "")
-                text = text.Substring(2);
-            // form4.listBox1.DataSource = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            form4.textBox1.Text = text;
+            // string text = student.getCourseHistory().Replace("\n", "\r\n");
+            string[] coursesTaken = student.getCourseHistory().Split('\n');
+            List<string> ct = new List<string>();
+            foreach (string element in coursesTaken)
+            {
+                string opt = "";
+                string[] tmp = Regex.Replace(element, @"\s+", " ").Split();
+                foreach (string s in tmp)
+                {
+                    string t = s.Trim() + "\t";
+                    opt += t;
+                }
+                ct.Add(opt);
+                opt = "";
+            }
+            
+            form4.listBox1.DataSource = ct;
             form4.richTextBox1.Text = student.getGPA();
             form4.ShowDialog();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
