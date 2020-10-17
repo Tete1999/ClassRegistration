@@ -35,5 +35,12 @@ namespace ClassRegistration
         {
             label1.Text = s;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form6 form6 = new Form6(courses, students, facultyMember);
+            form6.listBox1.DataSource = courses;
+            form6.ShowDialog();
+        }
     }
 }

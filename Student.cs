@@ -126,9 +126,6 @@ namespace ClassRegistration
             decimal GPA = 0;
             if (courseHistory != "")
             {
-
-                //List<string> cNames = new List<string>();
-                //List<string> terms = new List<string>();
                 List<decimal> credits = new List<decimal>();
                 List<string> grades = new List<string>();
                 int numCourses = Int32.Parse(courseHistory.Substring(0, 2).Trim());
@@ -137,13 +134,8 @@ namespace ClassRegistration
                 string grade;
                 for (int x = 0; x != numCourses; x++)
                 {
-                    //courseName = courseHistory.Substring(0 + (x * 24) - x, 11).TrimEnd();
-                    //term = courseHistory.Substring(11 + (x * 24) - x, 4).TrimEnd();
-                    //Console.WriteLine("XXXX" + courseHist.Substring(14 + (x * 24)-x, 5).TrimEnd());
                     credit = Convert.ToDecimal(courseHistory.Substring(15 + (x * 24) - x, 5).TrimEnd());
                     grade = courseHistory.Substring(20 + (x * 24) - x, 2).TrimEnd();
-                    //cNames.Add(courseName);
-                    //terms.Add(term);
                     credits.Add(credit);
                     grades.Add(grade);
                 }
@@ -161,7 +153,7 @@ namespace ClassRegistration
                     GPA = qualityPoints / qualityCred;
             }
 
-            return "GPA:                  " + GPA.ToString() + "\nQuality Credits:   " + qualityCred.ToString() + "\nTotal Credits:      " + totalCred.ToString();
+            return "GPA:\t\t" + GPA.ToString() + "\nQuality Credits:\t" + qualityCred.ToString() + "\nTotal Credits:\t" + totalCred.ToString();
         }
 
         public void setUser(string user) { this.user = user; }
@@ -174,7 +166,10 @@ namespace ClassRegistration
         public void addCourse(Course c) { registeredCourses.Add(c); }
         public void dropCourse(Course c) { registeredCourses.Remove(c); }
 
-
+        public override string ToString()
+        {
+            return getFullName();
+        }
     }
 
 }

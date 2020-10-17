@@ -26,7 +26,6 @@ namespace ClassRegistration
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
             listBox1.DataSource = courses;
-            listBox3.DataSource = null;
             listBox3.DataSource = studentsCourses;
         }
 
@@ -42,7 +41,6 @@ namespace ClassRegistration
             Course newCourse = new Course();
             bool flag = false;
             //Selection of Course 
-
             if (student.getTotalCredit() < 5)
             {
                 foreach (Course c in courses)
@@ -139,7 +137,7 @@ namespace ClassRegistration
                 if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
                 {
                     toRemove = c;
-                }
+                };
             }
             rg.Remove(toRemove);
             listBox3.DataSource = null;

@@ -106,10 +106,6 @@ namespace ClassRegistration
                     courseHistory.Add(user, courseHist);
                     courseHist = "";
                 }
-                foreach (string value in courseHistory.Values)
-                {
-                    Console.WriteLine(value);
-                }
             }
         }
 

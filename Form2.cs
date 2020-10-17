@@ -79,8 +79,7 @@ namespace ClassRegistration
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form4 form4 = new Form4();
-            // string text = student.getCourseHistory().Replace("\n", "\r\n");
+            
             string[] coursesTaken = student.getCourseHistory().Split('\n');
             List<string> ct = new List<string>();
             foreach (string element in coursesTaken)
@@ -95,11 +94,8 @@ namespace ClassRegistration
                 ct.Add(opt);
                 opt = "";
             }
-            
-            form4.listBox1.DataSource = ct;
-            form4.richTextBox1.Text = student.getGPA();
+            Form4 form4 = new Form4(ct, student.getGPA());
             form4.ShowDialog();
-
         }
 
         private void button2_Click(object sender, EventArgs e)
