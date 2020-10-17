@@ -28,16 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.label1.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(11, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(628, 37);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Name";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form5
             // 
-            this.ClientSize = new System.Drawing.Size(1335, 540);
+            this.BackColor = System.Drawing.Color.Maroon;
+            this.ClientSize = new System.Drawing.Size(1335, 583);
+            this.Controls.Add(this.label1);
             this.Name = "Form5";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
     }
 }

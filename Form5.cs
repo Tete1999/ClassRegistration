@@ -26,10 +26,14 @@ namespace ClassRegistration
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
         }
+        public Faculty getFaculty() { return facultyMember; }
+        private void label1_Click(object sender, EventArgs e)
+        {
 
-
-
-
-
+        }
+        public void ChangeLabelName(string s)
+        {
+            label1.Text = s;
+        }
     }
 }

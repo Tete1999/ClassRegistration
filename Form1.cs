@@ -67,9 +67,10 @@ private void button1_Click(object sender, EventArgs e)
                 {
                     Form5 form5 = new Form5(students, admin, faculty, courses, element);
                     string s = "Welcome " + element.getFullName();
-                    form2.ChangeLabelName(s);
-                    form2.ShowDialog();
+                    form5.ChangeLabelName(s);
+                    form5.ShowDialog();
                     flag = true;
+                    form5.Refresh();
                     break;
                 }
             }
