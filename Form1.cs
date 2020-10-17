@@ -59,11 +59,13 @@ private void button1_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2(students, admin, faculty, courses, null);
             bool flag = false;
+            
 
             foreach (Faculty element in faculty)
             {
                 if (element.getUser() == textBox1.Text.ToLower() && element.getPass() == textBox2.Text)
                 {
+                    Form5 form5 = new Form5(students, admin, faculty, courses, element);
                     string s = "Welcome " + element.getFullName();
                     form2.ChangeLabelName(s);
                     form2.ShowDialog();
@@ -75,6 +77,7 @@ private void button1_Click(object sender, EventArgs e)
             {
                 if (element.getUser() == textBox1.Text.ToLower() && element.getPass() == textBox2.Text)
                 {
+                    form2 = new Form2(students, admin, faculty, courses, null);
                     string s = "Welcome " + element.getFullName();
                     form2.ChangeLabelName(s);
                     form2.ShowDialog();
