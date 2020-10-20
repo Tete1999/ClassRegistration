@@ -17,25 +17,23 @@ namespace ClassRegistration
         {
            // Read in Students, Faculty, and Admin
            ReaderSFA sfa = new ReaderSFA();
-           sfa.readFile("sfa.txt", "csh.txt"); //Read in account info and course history
-           List<Student> students = sfa.getStudents(); //apppend student account objects to list
-           List<Admin> admin = sfa.getAdmin(); //apppend admin account objects to list
-            List<Faculty> faculty = sfa.getFaculty(); //apppend student account objects to list
+           sfa.readFile("sfa.txt", "csh.txt");
+           List<Student> students = sfa.getStudents();
+           List<Admin> admin = sfa.getAdmin();
+           List<Faculty> faculty = sfa.getFaculty();
 
             // Read in Courses 
-            CourseReader c = new CourseReader("courses.txt"); //read in course objects
-            List<Course> courses = c.getCourses(); //apppend course objects to list
-
-            //************ Code Tessting Area **********************//
+            CourseReader c = new CourseReader("courses.txt");
+            List<Course> courses = c.getCourses();
             //Console.WriteLine(courses[0].ToString());
+            //Console.WriteLine(courses[1].ToString()); //
+            //Console.WriteLine(courses[2].ToString()); //
+            //Console.WriteLine(courses[3].ToString());
+            //Console.WriteLine(courses[4].ToString());
+            //Console.WriteLine(courses[2].Overlap(courses[3]).ToString());
 
-            //students[0].getTranscriptInfo();
+            students[0].getTranscriptInfo();
 
-
-            //******************************************************//
-
-
-            //GUI STUFF
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(students, admin,  faculty, courses));

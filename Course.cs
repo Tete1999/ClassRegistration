@@ -21,14 +21,7 @@ namespace ClassRegistration
 
 
         public Course()
-        {
-            string courseName;
-            string title;
-            string instructor;
-            decimal credit;
-            int seats;
-            ArrayList timeblocks;
-        }
+        {}
         public Course(string courseName, string title, string instructor, decimal credit, int seats, ArrayList timeBlocks)
         {
             this.courseName = courseName;
@@ -53,7 +46,7 @@ namespace ClassRegistration
         public int getSeats() { return seats; }
         public ArrayList getTimeBlocks() { return timeBlocks; }
 
-        private void setSeats(int s) { this.seats = s; }
+        public void setSeats(int s) { this.seats = s; }
 
         private static string sum_up(int target)
         {
@@ -135,7 +128,7 @@ namespace ClassRegistration
             foreach (int ddttl in timeBlocks)
             {
                 //Console.WriteLine(ddttl);
-                output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + tab;
+                output += sum_up(ddttl / 1000) + tab + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + tab;
             }
             return output;
         }

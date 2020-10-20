@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace ClassRegistration
 {
@@ -54,10 +55,10 @@ namespace ClassRegistration
         private void button1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3(courses, student);
-            form3.listBox1.DataSource = courses;
+            form3.listBox3.DataSource = null;
+            form3.listBox3.DataSource = student.getRegisteredCourses();
             form3.ShowDialog();
-            
-
+  
         }
 
         private void Form3_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -78,13 +79,22 @@ namespace ClassRegistration
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form4 form4 = new Form4();
-            string text = student.getCourseHistory().Replace("\n", "\r\n");
-            if (text != "")
-                text = text.Substring(2);
-            // form4.listBox1.DataSource = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-            form4.textBox1.Text = text;
-            form4.richTextBox1.Text = student.getTranscriptInfo();   
+            
+            string[] coursesTaken = student.getCourseHistory().Split('\n');
+            List<string> ct = new List<string>();
+            foreach (string element in coursesTaken)
+            {
+                string opt = "";
+                string[] tmp = Regex.Replace(element, @"\s+", " ").Split();
+                foreach (string s in tmp)
+                {
+                    string t = s.Trim() + "\t";
+                    opt += t;
+                }
+                ct.Add(opt);
+                opt = "";
+            }
+            Form4 form4 = new Form4(ct, student.getGPA());
             form4.ShowDialog();
         }
 

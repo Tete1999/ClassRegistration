@@ -53,7 +53,7 @@ namespace ClassRegistration
                             Student s = new Student(user, pass, first, middle, last, status, csh);
                             students.Add(s);
                         }
-                        catch (KeyNotFoundException e)
+                        catch (KeyNotFoundException)
                         {
                             csh = "";
                             Student s = new Student(user, pass, first, middle, last, status, csh);
@@ -102,8 +102,7 @@ namespace ClassRegistration
                             i += 1;
                         }     
                     }
-                    //Console.WriteLine(String.Format(courseHist));
-                    
+                   
                     courseHistory.Add(user, courseHist);
                     courseHist = "";
                 }
