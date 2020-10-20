@@ -27,6 +27,9 @@ namespace ClassRegistration
             InitializeComponent();
             listBox1.DataSource = courses;
             listBox3.DataSource = studentsCourses;
+            List<string> seats = seatsData(courses);
+            listBox2.DataSource = seats;
+
         }
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -34,7 +37,21 @@ namespace ClassRegistration
           
         }
 
-        
+        private List<string> seatsData(List<Course> courses)
+        {
+            List<string> seats = new List<string>();
+            foreach (Course c in courses)
+            {
+                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                {
+                    c.setSeats(c.getSeats() - 1);
+                }
+                seats.Add(c.getSeats().ToString() + "\n");
+            }
+            return seats;
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             studentsCourses = student.getRegisteredCourses();
@@ -79,7 +96,7 @@ namespace ClassRegistration
                         student.addCourse(newCourse);
                         studentsCourses = student.getRegisteredCourses();
                         MessageBox.Show("Course Added");
-                        newCourse.setSeats(newCourse.getSeats() + 1);
+                        //newCourse.setSeats(newCourse.getSeats() - 1);
                     }
                     else
                     {
@@ -91,11 +108,15 @@ namespace ClassRegistration
                     MessageBox.Show("Error: Course is Full or Course Already Registered");
                 }
             }
+            List<string> seats = seatsData(courses);
+            listBox2.DataSource = seats;
+            listBox1.DataSource = null;
+            listBox1.DataSource = courses;
             listBox3.DataSource = null;
             listBox3.DataSource = studentsCourses;
-            
-            
+           
         }
+       
         
 
         private void button2_Click(object sender, EventArgs e)
@@ -161,6 +182,11 @@ namespace ClassRegistration
         }
 
         private void listBox2_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

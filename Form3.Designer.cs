@@ -34,6 +34,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.listBox3 = new System.Windows.Forms.ListBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
@@ -69,7 +71,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1508, 30);
+            this.button3.Location = new System.Drawing.Point(1592, 30);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(158, 47);
@@ -82,7 +84,7 @@
             // 
             this.label2.BackColor = System.Drawing.Color.Goldenrod;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(917, 30);
+            this.label2.Location = new System.Drawing.Point(1001, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(584, 47);
             this.label2.TabIndex = 5;
@@ -93,11 +95,32 @@
             // 
             this.listBox3.FormattingEnabled = true;
             this.listBox3.ItemHeight = 20;
-            this.listBox3.Location = new System.Drawing.Point(917, 97);
+            this.listBox3.Location = new System.Drawing.Point(1001, 97);
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(749, 704);
             this.listBox3.TabIndex = 7;
             this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 20;
+            this.listBox2.Location = new System.Drawing.Point(781, 97);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listBox2.Size = new System.Drawing.Size(103, 704);
+            this.listBox2.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.Goldenrod;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(782, 30);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 47);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Seats";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // Form3
             // 
@@ -105,6 +128,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Maroon;
             this.ClientSize = new System.Drawing.Size(1856, 1202);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.listBox3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button3);
@@ -125,5 +150,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ListBox listBox3;
+        public System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label3;
     }
 }

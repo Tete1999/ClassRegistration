@@ -17,9 +17,6 @@ namespace ClassRegistration
         private int seats;
         private ArrayList timeBlocks;
 
-
-
-
         public Course()
         {}
         public Course(string courseName, string title, string instructor, decimal credit, int seats, ArrayList timeBlocks)
@@ -135,7 +132,7 @@ namespace ClassRegistration
 
         public override string ToString()
         {
-            return getCourseName() + getTitle() + getInstructor() + getCredit() + "\t" + getSchedule(timeBlocks);
+            return getCourseName() + getTitle() + getInstructor() + getCredit() + "\t" + getSchedule(timeBlocks) + "\t" ;
         }
 
 
