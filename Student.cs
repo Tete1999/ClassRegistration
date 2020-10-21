@@ -31,7 +31,7 @@ namespace ClassRegistration
             this.middleName = middleName;
             this.lastName = lastName;
             this.advisor = advisor;
-            this.courseHistory = courseHistory;  
+            this.courseHistory = courseHistory;
             registeredCourses = new List<Course>();
             gpa = getTranscriptInfo();
         }
@@ -128,18 +128,20 @@ namespace ClassRegistration
             {
                 List<decimal> credits = new List<decimal>();
                 List<string> grades = new List<string>();
-                //////////////// Console.WriteLine(courseHistory);
+                //Console.WriteLine(courseHistory);
                 int numCourses = 0;
                 try
                 {
                     numCourses = Int32.Parse(courseHistory.Substring(0, 2).Trim());
+                    courseHistory = courseHistory.Substring(2);
+                    // Console.WriteLine(numCourses);
                 }
                 catch (System.FormatException e)
                 {
                     numCourses = 0;
                 }
 
-                    courseHistory = courseHistory.Substring(2);
+                
                 decimal credit;
                 string grade;
                 for (int x = 0; x != numCourses; x++)

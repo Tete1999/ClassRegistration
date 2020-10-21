@@ -17,13 +17,13 @@ namespace ClassRegistration
         {
            // Read in Students, Faculty, and Admin
            ReaderSFA sfa = new ReaderSFA();
-           sfa.readFile("sfa.txt", "csh.txt");
+           sfa.readFile("userDB.in", "historyDB.in");
            List<Student> students = sfa.getStudents();
            List<Admin> admin = sfa.getAdmin();
            List<Faculty> faculty = sfa.getFaculty();
 
             // Read in Courses 
-            CourseReader c = new CourseReader("courses.txt");
+            CourseReader c = new CourseReader("courseDB.in");
             List<Course> courses = c.getCourses();
             //Console.WriteLine(courses[0].ToString());
             //Console.WriteLine(courses[1].ToString()); //

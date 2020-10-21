@@ -79,11 +79,12 @@ namespace ClassRegistration
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+            Console.WriteLine(student.getCourseHistory());
             string[] coursesTaken = student.getCourseHistory().Split('\n');
             List<string> ct = new List<string>();
             foreach (string element in coursesTaken)
             {
+                Console.WriteLine(element);
                 string opt = "";
                 string[] tmp = Regex.Replace(element, @"\s+", " ").Split();
                 foreach (string s in tmp)
@@ -92,7 +93,6 @@ namespace ClassRegistration
                     opt += t;
                 }
                 ct.Add(opt);
-                opt = "";
             }
             Form4 form4 = new Form4(ct, student.getGPA());
             form4.ShowDialog();
