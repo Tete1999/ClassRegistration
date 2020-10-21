@@ -62,5 +62,24 @@ namespace ClassRegistration
         {
             
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string course = listBox1.SelectedItem.ToString();
+            Form7 form7 = new Form7();
+            List<Student> roster = new List<Student>();
+            foreach (Student stud in students)
+            {
+                foreach (Course c in stud.getRegisteredCourses())
+                {
+                    if (c.getCourseName().ToString().TrimEnd().ToLower() == course.Substring(0, 11).TrimEnd().ToLower())
+                    {
+                        roster.Add(stud);
+                    }
+                }
+            }
+            form7.listBox1.DataSource = roster;
+            form7.ShowDialog();
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace ClassRegistration
         {
             return title + "\t";
         }
-        public string getInstructor() { return instructor + "\t"; }
+        public string getInstructor() { return instructor.Trim() + "\t"; }
         public decimal getCredit() { return credit; }
         public int getSeats() { return seats; }
         public ArrayList getTimeBlocks() { return timeBlocks; }
