@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,6 +46,23 @@ namespace ClassRegistration
                 if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
                 {
                     c.setSeats(c.getSeats() - 1);
+                }
+                seats.Add(c.getSeats().ToString() + "\n");
+            }
+            return seats;
+        }
+
+        private List<string> seatsDataDrop(List<Course> courses)
+        {
+            List<string> seats = new List<string>();
+            foreach (Course c in courses)
+            {
+                if (listBox3.SelectedItem != null)
+                {
+                    if (c.getCourseName().TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                    {
+                        c.setSeats(c.getSeats() + 1);
+                    }
                 }
                 seats.Add(c.getSeats().ToString() + "\n");
             }
@@ -97,6 +115,8 @@ namespace ClassRegistration
                         studentsCourses = student.getRegisteredCourses();
                         MessageBox.Show("Course Added");
                         //newCourse.setSeats(newCourse.getSeats() - 1);
+                        List<string> seats = seatsData(courses);
+                        listBox2.DataSource = seats;
                     }
                     else
                     {
@@ -108,8 +128,7 @@ namespace ClassRegistration
                     MessageBox.Show("Error: Course is Full or Course Already Registered");
                 }
             }
-            List<string> seats = seatsData(courses);
-            listBox2.DataSource = seats;
+            
             listBox1.DataSource = null;
             listBox1.DataSource = courses;
             listBox3.DataSource = null;
@@ -131,7 +150,8 @@ namespace ClassRegistration
                 }
             }
             student.dropCourse(newCourse);
-            newCourse.setSeats(newCourse.getSeats() - 1);
+            listBox2.DataSource = seatsDataDrop(courses);
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -161,6 +181,7 @@ namespace ClassRegistration
                 };
             }
             rg.Remove(toRemove);
+            listBox2.DataSource = seatsDataDrop(courses);
             listBox3.DataSource = null;
             listBox3.DataSource = rg;
             MessageBox.Show("Course Dropped Successfully");

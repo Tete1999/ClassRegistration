@@ -71,7 +71,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1592, 30);
+            this.button3.Location = new System.Drawing.Point(1539, 30);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(158, 47);
@@ -84,7 +84,7 @@
             // 
             this.label2.BackColor = System.Drawing.Color.Goldenrod;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1001, 30);
+            this.label2.Location = new System.Drawing.Point(942, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(584, 47);
             this.label2.TabIndex = 5;
@@ -95,7 +95,7 @@
             // 
             this.listBox3.FormattingEnabled = true;
             this.listBox3.ItemHeight = 20;
-            this.listBox3.Location = new System.Drawing.Point(1001, 97);
+            this.listBox3.Location = new System.Drawing.Point(948, 97);
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(749, 704);
             this.listBox3.TabIndex = 7;
