@@ -51,6 +51,19 @@ namespace ClassRegistration
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string s = listBox2.SelectedItem.ToString();
+            Form8 form8 = new Form8();
+            form8.ChangeLabelName(s);
+            foreach(Student stud in students)
+            {
+                if (stud.getFullName().TrimEnd().ToLower() == s.TrimEnd().ToLower())
+                {
+                    Student adv = stud;
+                    form8.listBox1.DataSource = adv.getRegisteredCourses();
+                }
+            }
+            form8.ShowDialog();
+            //form8.listBox1.DataSource = adv.getRegisteredCourses();
 
         }
     }
