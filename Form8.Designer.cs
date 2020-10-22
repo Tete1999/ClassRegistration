@@ -31,15 +31,18 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(46, 83);
+            this.listBox1.Location = new System.Drawing.Point(76, 200);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(820, 420);
+            this.listBox1.Size = new System.Drawing.Size(433, 420);
             this.listBox1.TabIndex = 0;
             // 
             // label1
@@ -47,11 +50,11 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Goldenrod;
             this.label1.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(48, 32);
+            this.label1.Location = new System.Drawing.Point(135, 115);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(294, 40);
+            this.label1.Size = new System.Drawing.Size(340, 40);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Course Schedule";
+            this.label1.Text = "Courses Registered";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
@@ -59,17 +62,51 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Goldenrod;
             this.label2.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(540, 32);
+            this.label2.Location = new System.Drawing.Point(69, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(113, 40);
             this.label2.TabIndex = 2;
             this.label2.Text = "label2";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 16;
+            this.listBox2.Location = new System.Drawing.Point(623, 200);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(423, 420);
+            this.listBox2.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Goldenrod;
+            this.label3.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(701, 115);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(286, 40);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Current Courses";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Goldenrod;
+            this.label4.Location = new System.Drawing.Point(194, 170);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 17);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "label4";
+            this.label4.Visible = false;
+            // 
             // Form8
             // 
             this.BackColor = System.Drawing.Color.Maroon;
-            this.ClientSize = new System.Drawing.Size(917, 532);
+            this.ClientSize = new System.Drawing.Size(1105, 650);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
@@ -84,5 +121,8 @@
         public System.Windows.Forms.ListBox listBox1;
         public System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label label4;
     }
 }

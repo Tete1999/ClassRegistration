@@ -21,7 +21,18 @@ namespace ClassRegistration
         private List<Course> registeredCourses;
         private string gpa;
        
-        
+        public Student()
+        {
+            this.user = "";
+            this.pass = "";
+            this.firstName = "";
+            this.middleName = "";
+            this.lastName = "";
+            this.advisor = "";
+            this.courseHistory = "";
+            registeredCourses = new List<Course>();
+            gpa = "";
+        }
 
         public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor,string courseHistory)
         {
