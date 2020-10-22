@@ -171,14 +171,19 @@ namespace ClassRegistration
 
         private void button3_Click_1(object sender, EventArgs e)
         {
+            bool flag = false;
             List<Course> rg = student.getRegisteredCourses();
             Course toRemove = new Course(null, null, null, 1, 0, null);
             foreach (Course c in rg)
             {
-                if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                if (listBox3.SelectedItem != null)
                 {
-                    toRemove = c;
-                };
+                    if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                    {
+                        toRemove = c;
+                        flag = true;
+                    }
+                }
             }
             rg.Remove(toRemove);
             listBox2.DataSource = seatsDataDrop(courses);
