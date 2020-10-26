@@ -2,15 +2,37 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Collections;
+using System.Data;
+using System.Security.Policy;
 
 namespace ClassRegistration
 {
     class ReaderSFA
     {
-      
+
         private List<Student> students = new List<Student>();
         private List<Faculty> faculty = new List<Faculty>();
         private List<Admin> admin = new List<Admin>();
+
+
+        private DataSet DB = new DataSet();
+        private DataTable CreateFacultyDB()
+        {
+            DataTable AllFaculty = new DataTable();
+            AllFaculty.Columns.Add("ID", typeof(int));
+            AllFaculty.Columns.Add("User", typeof(string));
+            AllFaculty.Columns.Add("Pass", typeof(string));
+            AllFaculty.Columns.Add("First", typeof(string));
+            AllFaculty.Columns.Add("Middle", typeof(string));
+            AllFaculty.Columns.Add("Last", typeof(string));
+            AllFaculty.Columns.Add("AdviseeUsers", typeof(List<string>));
+            return AllFaculty;
+        }
+
+
+
+
+
         private Dictionary<string, string> courseHistory = new Dictionary<string, string>();
 
         public void readFile(string fname, string cshFile)

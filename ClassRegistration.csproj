@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin.cs" />
+    <Compile Include="DataBase.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="CourseReader.cs" />
     <Compile Include="Faculty.cs" />
