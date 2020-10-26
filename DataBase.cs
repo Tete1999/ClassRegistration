@@ -214,6 +214,84 @@ namespace ClassRegistration
             return CSH;
         }
 
+        public DataRow getStudent(string username)
+        {
+            DataRow DR;
+            string criteria = "User = '" + username + "'";
+            DR = StudentDB.Select(criteria)[0];
+            return DR;
+
+        }
+
+        public DataRow getFaculty(string username)
+        {
+            DataRow DR;
+            string criteria = "User = '" + username + "'";
+            DR = FacultyDB.Select(criteria)[0];
+            return DR;
+
+        }
+
+        public DataRow getAdmin(string username)
+        {
+            DataRow DR;
+            string criteria = "User = '" + username + "'";
+            DR = AdminDB.Select(criteria)[0];
+            return DR;
+
+        }
+
+        public void setStudentField<T>(string user, string column, T data)
+        {
+            DataRow DR = getStudent(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            StudentDB.Rows[index].SetField(column, data);
+        }
+
+        public void setStudentField<T>(string user, int column, T data)
+        {
+            DataRow DR = getStudent(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            StudentDB.Rows[index].SetField(column, data);
+        }
+
+        public void setFacultyField<T>(string user, string column, T data)
+        {
+            DataRow DR = getFaculty(user);
+            int index = FacultyDB.Rows.IndexOf(DR);
+            FacultyDB.Rows[index].SetField(column, data);
+        }
+
+        public void setFacultyField<T>(string user, int column, T data)
+        {
+            DataRow DR = getFaculty(user);
+            int index = FacultyDB.Rows.IndexOf(DR);
+            FacultyDB.Rows[index].SetField(column, data);
+        }
+
+        public void setAdminField<T>(string user, string column, T data)
+        {
+            DataRow DR = getAdmin(user);
+            int index = AdminDB.Rows.IndexOf(DR);
+            AdminDB.Rows[index].SetField(column, data);
+        }
+
+        public void setAdminField<T>(string user, int column, T data)
+        {
+            DataRow DR = getAdmin(user);
+            int index = AdminDB.Rows.IndexOf(DR);
+            AdminDB.Rows[index].SetField(column, data);
+        }
+
+        public void pushArrayStudent(string user, string column, string data)
+        {
+            DataRow DR = getStudent(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Add(data);
+            StudentDB.Rows[index].SetField(column, lst);
+        }
+
     }
 
 

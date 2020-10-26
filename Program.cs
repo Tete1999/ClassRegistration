@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data; 
+using System.Data;
+using System.ComponentModel;
 
 namespace ClassRegistration
 {
@@ -35,8 +36,11 @@ namespace ClassRegistration
 
             DataBase DDD = new DataBase("sfa.txt", "courses.txt", "csh.txt");
 
-            
-
+            DataRow DR = DDD.getStudent("JBiden");
+            string qwert = DR.Field<string>("Pass");
+            DDD.setStudentField<string>("Jbiden", "Pass", "DickFart");
+            DR = DDD.getStudent("JBiden");
+            qwert = DR.Field<string>("Pass");
 
             DataTable student = new DataTable();
             student.Columns.Add("ID", typeof(int));
