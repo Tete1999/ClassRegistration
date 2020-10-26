@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +28,9 @@ namespace ClassRegistration
             InitializeComponent();
             listBox1.DataSource = courses;
             listBox3.DataSource = studentsCourses;
+            List<string> seats = seatsData(courses);
+            listBox2.DataSource = seats;
+
         }
 
         public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -34,7 +38,38 @@ namespace ClassRegistration
           
         }
 
-        
+        private List<string> seatsData(List<Course> courses)
+        {
+            List<string> seats = new List<string>();
+            foreach (Course c in courses)
+            {
+                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                {
+                    c.setSeats(c.getSeats() - 1);
+                }
+                seats.Add(c.getSeats().ToString() + "\n");
+            }
+            return seats;
+        }
+
+        private List<string> seatsDataDrop(List<Course> courses)
+        {
+            List<string> seats = new List<string>();
+            foreach (Course c in courses)
+            {
+                if (listBox3.SelectedItem != null)
+                {
+                    if (c.getCourseName().TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                    {
+                        c.setSeats(c.getSeats() + 1);
+                    }
+                }
+                seats.Add(c.getSeats().ToString() + "\n");
+            }
+            return seats;
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             studentsCourses = student.getRegisteredCourses();
@@ -79,7 +114,9 @@ namespace ClassRegistration
                         student.addCourse(newCourse);
                         studentsCourses = student.getRegisteredCourses();
                         MessageBox.Show("Course Added");
-                        newCourse.setSeats(newCourse.getSeats() + 1);
+                        //newCourse.setSeats(newCourse.getSeats() - 1);
+                        List<string> seats = seatsData(courses);
+                        listBox2.DataSource = seats;
                     }
                     else
                     {
@@ -91,11 +128,14 @@ namespace ClassRegistration
                     MessageBox.Show("Error: Course is Full or Course Already Registered");
                 }
             }
+            
+            listBox1.DataSource = null;
+            listBox1.DataSource = courses;
             listBox3.DataSource = null;
             listBox3.DataSource = studentsCourses;
-            
-            
+           
         }
+       
         
 
         private void button2_Click(object sender, EventArgs e)
@@ -110,7 +150,8 @@ namespace ClassRegistration
                 }
             }
             student.dropCourse(newCourse);
-            newCourse.setSeats(newCourse.getSeats() - 1);
+            listBox2.DataSource = seatsDataDrop(courses);
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -130,16 +171,22 @@ namespace ClassRegistration
 
         private void button3_Click_1(object sender, EventArgs e)
         {
+            bool flag = false;
             List<Course> rg = student.getRegisteredCourses();
             Course toRemove = new Course(null, null, null, 1, 0, null);
             foreach (Course c in rg)
             {
-                if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                if (listBox3.SelectedItem != null)
                 {
-                    toRemove = c;
-                };
+                    if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+                    {
+                        toRemove = c;
+                        flag = true;
+                    }
+                }
             }
             rg.Remove(toRemove);
+            listBox2.DataSource = seatsDataDrop(courses);
             listBox3.DataSource = null;
             listBox3.DataSource = rg;
             MessageBox.Show("Course Dropped Successfully");
@@ -161,6 +208,11 @@ namespace ClassRegistration
         }
 
         private void listBox2_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

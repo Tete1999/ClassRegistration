@@ -74,6 +74,8 @@ namespace ClassRegistration
                             csh = courseHistory[user];
                             Student s = new Student(user, pass, first, middle, last, status, csh);
                             students.Add(s);
+                            //Console.WriteLine(user);
+                            //Console.WriteLine(csh);
                         }
                         catch (KeyNotFoundException)
                         {
@@ -122,10 +124,12 @@ namespace ClassRegistration
                             courseHist += ln.Substring(start, length) + "\n";
                             start += 24;
                             i += 1;
-                        }     
+                        }
+                        
                     }
                    
                     courseHistory.Add(user, courseHist);
+                   // Console.WriteLine(courseHist);
                     courseHist = "";
                 }
             }

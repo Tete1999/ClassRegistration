@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
-using System.Data;
 
 namespace ClassRegistration
 {
@@ -21,33 +20,19 @@ namespace ClassRegistration
         private string courseHistory;
         private List<Course> registeredCourses;
         private string gpa;
-
-
-        ////////////////// DATABASE STUFF ////////////////////////////////////
-        private DataTable DB;
-
+       
         public Student()
         {
-            DB = CreateStudentDB();
+            this.user = "";
+            this.pass = "";
+            this.firstName = "";
+            this.middleName = "";
+            this.lastName = "";
+            this.advisor = "";
+            this.courseHistory = "";
+            registeredCourses = new List<Course>();
+            gpa = "";
         }
-        private DataTable CreateStudentDB()
-        {
-            DataTable student = new DataTable();
-            student.Columns.Add("ID", typeof(int));
-            student.Columns.Add("User", typeof(string));
-            student.Columns.Add("Pass", typeof(string));
-            student.Columns.Add("First", typeof(string));
-            student.Columns.Add("Middle", typeof(string));
-            student.Columns.Add("Last", typeof(string));
-            student.Columns.Add("AdvisorUser", typeof(string));
-            student.Columns.Add("CC", typeof(List<string>));
-            student.Columns.Add("RC", typeof(List<string>));
-            return student;
-        }
-
-
-
-        ////////////////// DATABASE STUFF ////////////////////////////////////
 
         public Student(string user, string pass, string firstName, string middleName, string lastName, string advisor,string courseHistory)
         {
@@ -57,7 +42,7 @@ namespace ClassRegistration
             this.middleName = middleName;
             this.lastName = lastName;
             this.advisor = advisor;
-            this.courseHistory = courseHistory;  
+            this.courseHistory = courseHistory;
             registeredCourses = new List<Course>();
             gpa = getTranscriptInfo();
         }
@@ -154,8 +139,20 @@ namespace ClassRegistration
             {
                 List<decimal> credits = new List<decimal>();
                 List<string> grades = new List<string>();
-                int numCourses = Int32.Parse(courseHistory.Substring(0, 2).Trim());
-                courseHistory = courseHistory.Substring(2);
+                //Console.WriteLine(courseHistory);
+                int numCourses = 0;
+                try
+                {
+                    numCourses = Int32.Parse(courseHistory.Substring(0, 2).Trim());
+                    courseHistory = courseHistory.Substring(2);
+                    // Console.WriteLine(numCourses);
+                }
+                catch (System.FormatException e)
+                {
+                    numCourses = 0;
+                }
+
+                
                 decimal credit;
                 string grade;
                 for (int x = 0; x != numCourses; x++)

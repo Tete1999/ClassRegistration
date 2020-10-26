@@ -25,6 +25,21 @@ namespace ClassRegistration
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
+
+            List<Course> teaching = new List<Course>();
+            foreach (Course c in courses)
+            {
+                if (c.getInstructor().TrimEnd().ToLower() == facultyMember.getUser().ToLower())
+                {
+                    teaching.Add(c);
+                }
+            }
+            Console.WriteLine(teaching.Count.ToString());
+            listBox1.DataSource = null;
+            listBox1.DataSource = teaching;
+
+
+            
         }
         public Faculty getFaculty() { return facultyMember; }
         private void label1_Click(object sender, EventArgs e)
@@ -41,6 +56,30 @@ namespace ClassRegistration
             Form6 form6 = new Form6(courses, students, facultyMember);
             form6.listBox1.DataSource = courses;
             form6.ShowDialog();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string course = listBox1.SelectedItem.ToString();
+            Form7 form7 = new Form7();
+            List<Student> roster = new List<Student>();
+            foreach (Student stud in students)
+            {
+                foreach (Course c in stud.getRegisteredCourses())
+                {
+                    if (c.getCourseName().ToString().TrimEnd().ToLower() == course.Substring(0, 11).TrimEnd().ToLower())
+                    {
+                        roster.Add(stud);
+                    }
+                }
+            }
+            form7.listBox1.DataSource = roster;
+            form7.ShowDialog();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +47,47 @@ namespace ClassRegistration
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Student adv = new Student();
+            string s = listBox2.SelectedItem.ToString();
+            Form8 form8 = new Form8();
+            form8.ChangeLabelName(s);
+            foreach(Student stud in students)
+            {
+                if (stud.getFullName().TrimEnd().ToLower() == s.TrimEnd().ToLower())
+                {
+                    adv = stud;
+                    ArrayList ch = new ArrayList();
+                    form8.listBox1.DataSource = adv.getRegisteredCourses();
+                    foreach(string crse in stud.getCourseHistory().Split('\n'))
+                    {
+                        
+                        if (crse.Contains("S08"))
+                        {
+                            ch.Add(crse);
+                        }
+                    }
+                    form8.listBox2.DataSource = ch;
+                }
+            }
+            
+            foreach (Course c in adv.getRegisteredCourses())
+            {
+                foreach (Course c2 in adv.getRegisteredCourses())
+                {
+                    if (c.Overlap(c2))
+                    {
+                        form8.ChangeLabelName2("Time Conflict Detected!");
+                        break;
+                    }
+                }
+            }
+            form8.ShowDialog();
+            //form8.listBox1.DataSource = adv.getRegisteredCourses();
 
         }
     }
