@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
+using System.Net;
 
 namespace ClassRegistration
 {
@@ -36,7 +37,73 @@ namespace ClassRegistration
         }
 
     }
-    class DataBase
+
+    public class Faculty2
+    {
+        public string user;
+        public string pass;
+        public string firstName;
+        public string middleName;
+        public string lastName;
+        public List<string> AdviseeUsers;
+        public List<string> Courses;
+
+        public Faculty2(string username, string password, string first, string middle, string last,
+            List<string> CC, List<string> RC)
+        {
+            user = username;
+            pass = password;
+            firstName = first;
+            middleName = middle;
+            lastName = last;
+            AdviseeUsers = CC;
+            Courses = RC;
+        }
+
+    }
+
+    public class Admin2
+    {
+        public string user;
+        public string pass;
+        public string firstName;
+        public string middleName;
+        public string lastName;
+
+        public Admin2(string username, string password, string first, string middle, string last)
+        {
+            user = username;
+            pass = password;
+            firstName = first;
+            middleName = middle;
+            lastName = last;
+        }
+
+    }
+
+    public class Course2
+    {
+        public string coursecode;
+        public string coursename;
+        public string faculty;
+        public decimal credits;
+        public int seats;
+        ArrayList TimeBlocks;
+        List<string> StudentsEnrolled;
+
+        public Course2(string cc, string cn, string fac, decimal cred, int seat, ArrayList TB, List<string> SE)
+        {
+            coursecode = cc;
+            coursename= cn;
+            faculty = fac;
+            credits = cred;
+            seats = seat;
+            TimeBlocks = TB;
+            StudentsEnrolled= SE;
+        }
+    }
+
+    public class DataBase
     {
         //Private Attributes
         private DataTable StudentDB;
@@ -837,6 +904,19 @@ namespace ClassRegistration
         public string getSchedule(string coursecode)
         {
             ArrayList timeBlocks = getCourseField<ArrayList>(coursecode, "TimeBlocks");
+            string output = "";
+
+            foreach (int ddttl in timeBlocks)
+            {
+                //Console.WriteLine(ddttl);
+                output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + "  ";
+            }
+            return output;
+
+        }
+
+        public string getSchedule(ArrayList timeBlocks)
+        {
             string output = "";
 
             foreach (int ddttl in timeBlocks)
