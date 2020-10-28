@@ -9,15 +9,43 @@ using System.Collections;
 
 namespace ClassRegistration
 {
+    public class Student2
+    {
+        public string user;
+        public string pass;
+        public string firstName;
+        public string middleName;
+        public string lastName;
+        public string advisorUser;
+        public decimal RegCredits;
+        public List<string> CurrentCourses;
+        public List<string> RegisteredCourses;
+
+        public Student2(string username, string password, string first, string middle, string last, string advisor,
+            decimal credits, List<string> CC, List<string> RC)
+        {
+            user = username;
+            pass = password;
+            firstName = first;
+            middleName = middle;
+            lastName = last;
+            advisorUser = advisor;
+            RegCredits = credits;
+            CurrentCourses = CC;
+            RegisteredCourses = RC;
+        }
+
+    }
     class DataBase
     {
+        //Private Attributes
         private DataTable StudentDB;
         private DataTable FacultyDB;
         private DataTable AdminDB;
         private DataTable CourseDB;
-        private DataTable CourseHistoryDB;
+        public DataTable CourseHistoryDB;
 
-
+        ////////////// Constructor /////////////////////////////////////////////
         public DataBase(string SFA_File, string Course_File, string CSH_File)
         {
             DataTable[] tmp =  getSFA(SFA_File);
@@ -28,6 +56,9 @@ namespace ClassRegistration
             CourseHistoryDB= GetCourseHistory(CSH_File);
         }
 
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////// Private Functions ///////////////////////////////////////////////
         private DataTable CreateStudentDB()
         {
             DataTable student = new DataTable();
@@ -37,6 +68,7 @@ namespace ClassRegistration
             student.Columns.Add("Middle", typeof(string));
             student.Columns.Add("Last", typeof(string));
             student.Columns.Add("AdvisorUser", typeof(string));
+            student.Columns.Add("RegCred", typeof(decimal));
             student.Columns.Add("CC", typeof(List<string>));
             student.Columns.Add("RC", typeof(List<string>));
             return student;
@@ -85,7 +117,7 @@ namespace ClassRegistration
             CourseHistory.Columns.Add("User", typeof(string));
             CourseHistory.Columns.Add("Course", typeof(string));
             CourseHistory.Columns.Add("Term", typeof(string));
-            CourseHistory.Columns.Add("Credits", typeof(decimal));
+            CourseHistory.Columns.Add("Credit", typeof(decimal));
             CourseHistory.Columns.Add("Grade", typeof(string));
             return CourseHistory;
         }
@@ -126,7 +158,7 @@ namespace ClassRegistration
                     }
                     else
                     {
-                        STU.Rows.Add(user, pass, first, middle, last, status,emptyList, emptyList);
+                        STU.Rows.Add(user, pass, first, middle, last, status,0.0 ,emptyList, emptyList);
                     }
                 }
                 file.Close();
@@ -200,12 +232,14 @@ namespace ClassRegistration
                     user = ln.Substring(0, 9).TrimEnd().ToLower();
                     numCourses = Int32.Parse(ln.Substring(11, 2));
                     ln = " " + ln.Substring(14);
-                    for (int i=0; i < numCourses-1; i++)
+                    for (int i=0; i < numCourses; i++)
                     {
                         course = ln.Substring(24*i, 11).Trim();
                         term = ln.Substring((24 * i) +12, 3).Trim();
                         credit = Decimal.Parse(ln.Substring((24 * i)+16, 4).Trim());
-                        grade = ln.Substring((24 * i)+21, 3).Trim();
+                        //grade = ln.Substring((24 * i)+21, 2).Trim();
+                        grade = ln.Substring((24 * i) + 21);
+                        grade = grade.Substring(0, grade.IndexOf(" ")  < 1 ? 1 : grade.IndexOf(" ")).Trim();
                         CSH.Rows.Add(user, course, term, credit, grade);
                     }
                 }
@@ -213,8 +247,16 @@ namespace ClassRegistration
             
             return CSH;
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public DataRow getStudent(string username)
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        //Returns a DataRow/ArrayList from Database from applicable function with primary key parameters/
+        private DataRow getStudentRow(string username)
         {
             DataRow DR;
             string criteria = "User = '" + username + "'";
@@ -223,7 +265,16 @@ namespace ClassRegistration
 
         }
 
-        public DataRow getFaculty(string username)
+        public ArrayList getStudentArrayList(string username)
+        {
+            DataRow DR = getStudentRow(username);
+            ArrayList lst = new ArrayList();
+            for (int i = 0; i < DR.ItemArray.Length; i++)
+                lst.Add(DR.ItemArray[i]);
+            return lst;
+        }
+
+        private DataRow getFacultyRow(string username)
         {
             DataRow DR;
             string criteria = "User = '" + username + "'";
@@ -232,7 +283,16 @@ namespace ClassRegistration
 
         }
 
-        public DataRow getAdmin(string username)
+        public ArrayList getFacultyArrayList(string username)
+        {
+            DataRow DR = getFacultyRow(username);
+            ArrayList lst = new ArrayList();
+            for (int i = 0; i < DR.ItemArray.Length; i++)
+                lst.Add(DR.ItemArray[i]);
+            return lst;
+        }
+
+        private DataRow getAdminRow(string username)
         {
             DataRow DR;
             string criteria = "User = '" + username + "'";
@@ -241,55 +301,348 @@ namespace ClassRegistration
 
         }
 
+        public ArrayList getAdminArrayList(string username)
+        {
+            DataRow DR = getAdminRow(username);
+            ArrayList lst = new ArrayList();
+            for (int i = 0; i < DR.ItemArray.Length; i++)
+                lst.Add(DR.ItemArray[i]);
+            return lst;
+        }
+
+        private DataRow getCourseRow(string coursecode)
+        {
+            DataRow DR;
+            string criteria = "CourseCode = '" + coursecode + "'";
+            DR = CourseDB.Select(criteria)[0];
+            return DR;
+
+        }
+
+        public ArrayList getCourseArrayList(string username)
+        {
+            DataRow DR = getCourseRow(username);
+            ArrayList lst = new ArrayList();
+            for (int i = 0; i < DR.ItemArray.Length; i++)
+                lst.Add(DR.ItemArray[i]);
+            return lst;
+        }
+
+        private DataRow[] getCourseHistoryRow(string username)
+        {
+            DataRow[] DR;
+            string criteria = "User = '" + username + "'";
+            DR = CourseHistoryDB.Select(criteria);
+            return DR;
+        }
+
+        public ArrayList getCourseHistoryArrayList(string username)
+        {
+            DataRow[] DR = getCourseHistoryRow(username);
+            ArrayList lst = new ArrayList();
+            foreach (DataRow row in DR)
+            {
+                ArrayList tmp = new ArrayList();
+
+            }
+            return lst;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        // Get and set functions for databases given user and applicable column /////////////////////////
+        public T getStudentField<T>(string user, string column)
+        {
+            DataRow DR = getStudentRow(user);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
+        public T getStudentField<T>(string user, int column)
+        {
+            DataRow DR = getStudentRow(user);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
         public void setStudentField<T>(string user, string column, T data)
         {
-            DataRow DR = getStudent(user);
+            DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
             StudentDB.Rows[index].SetField(column, data);
         }
 
         public void setStudentField<T>(string user, int column, T data)
         {
-            DataRow DR = getStudent(user);
+            DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
             StudentDB.Rows[index].SetField(column, data);
         }
 
+        public T getFacultyField<T>(string user, string column)
+        {
+            DataRow DR = getFacultyRow(user);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
+        public T getFacultyField<T>(string user, int column)
+        {
+            DataRow DR = getFacultyRow(user);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
         public void setFacultyField<T>(string user, string column, T data)
         {
-            DataRow DR = getFaculty(user);
+            DataRow DR = getFacultyRow(user);
             int index = FacultyDB.Rows.IndexOf(DR);
             FacultyDB.Rows[index].SetField(column, data);
         }
 
         public void setFacultyField<T>(string user, int column, T data)
         {
-            DataRow DR = getFaculty(user);
+            DataRow DR = getFacultyRow(user);
             int index = FacultyDB.Rows.IndexOf(DR);
             FacultyDB.Rows[index].SetField(column, data);
         }
 
+        public T getAdminField<T>(string user, string column)
+        {
+            DataRow DR = getAdminRow(user);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
+        public T getAdminField<T>(string user, int column)
+        {
+            DataRow DR = getAdminRow(user);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
         public void setAdminField<T>(string user, string column, T data)
         {
-            DataRow DR = getAdmin(user);
+            DataRow DR = getAdminRow(user);
             int index = AdminDB.Rows.IndexOf(DR);
             AdminDB.Rows[index].SetField(column, data);
         }
 
         public void setAdminField<T>(string user, int column, T data)
         {
-            DataRow DR = getAdmin(user);
+            DataRow DR = getAdminRow(user);
             int index = AdminDB.Rows.IndexOf(DR);
             AdminDB.Rows[index].SetField(column, data);
         }
 
-        public void pushArrayStudent(string user, string column, string data)
+        ///////////////////////////////////////////////////////////////////////////////////////////////// 
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        // Used for adding and removing strings from lists within DataBases (Current/Registered Courses)/
+        public void pushCourseinStudent(string user, string column, string data)
         {
-            DataRow DR = getStudent(user);
+            DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
             List<string> lst = DR.Field<List<string>>(column);
             lst.Add(data);
             StudentDB.Rows[index].SetField(column, lst);
+        }
+
+        public void pushCourseinStudent(string user, int column, string data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Add(data);
+            StudentDB.Rows[index].SetField(column, lst);
+        }
+
+        public void removeCourseinStudent(string user, string column, string data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Remove(data);
+            StudentDB.Rows[index].SetField(column, lst);
+        }
+
+        public void removeCourseinStudent(string user, int column, string data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Remove(data);
+            StudentDB.Rows[index].SetField(column, lst);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        // Used for incrementing and decrementing ints and decimals in databases ////////////////////////
+        public void IncrementDecrementinStudent(string user, string column, int data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            int item = DR.Field<int>(column);
+            item = item + data;
+            StudentDB.Rows[index].SetField(column, item);
+        }
+
+        public void IncrementDecrementinStudent(string user, int column, int data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            int item = DR.Field<int>(column);
+            item = item + data;
+            StudentDB.Rows[index].SetField(column, item);
+        }
+
+        public void IncrementDecrementinStudent(string user, string column, decimal data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            decimal item = DR.Field<decimal>(column);
+            item = item + data;
+            StudentDB.Rows[index].SetField(column, item);
+        }
+
+        public void IncrementDecrementinStudent(string user, int column, decimal data)
+        {
+            DataRow DR = getStudentRow(user);
+            int index = StudentDB.Rows.IndexOf(DR);
+            decimal item = DR.Field<decimal>(column);
+            item = item + data;
+            StudentDB.Rows[index].SetField(column, item);
+        }
+
+        public void IncrementDecrementinCourse(string coursecode, string column, int data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = CourseDB.Rows.IndexOf(DR);
+            int item = DR.Field<int>(column);
+            item = item + data;
+            CourseDB.Rows[index].SetField(column, item);
+        }
+
+        public void IncrementDecrementinCourse(string coursecode, int column, int data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = CourseDB.Rows.IndexOf(DR);
+            int item = DR.Field<int>(column);
+            item = item + data;
+            CourseDB.Rows[index].SetField(column, item);
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        private bool isQuality(string grade)
+        {
+            List<string> letters = new List<string> { "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F" };
+            if (letters.Contains(grade))
+                return true;
+            return false;
+        }
+
+        private decimal letterGradeToCredit(string grade)
+        {
+            switch (grade)
+            {
+                case "A":
+                    return 4.0M;
+                case "A-":
+                    return 3.7M;
+                case "B+":
+                    return 3.3M;
+                case "B":
+                    return 3.0M;
+                case "B-":
+                    return 2.7M;
+                case "C+":
+                    return 2.3M;
+                case "C":
+                    return 2.0M;
+                case "C-":
+                    return 1.7M;
+                case "D+":
+                    return 1.2M;
+                case "D":
+                    return 1.0M;
+                case "D-":
+                    return 0.7M;
+                default:
+                    return 0M;
+            }
+        }
+
+        public decimal[] GetStudentGPA(string user)
+        {
+            decimal[] lst = new decimal[3];
+
+            decimal qualityCred = 0;
+            decimal qualityPoints = 0;
+            decimal totalCred = 0;
+            decimal GPA = 0;
+
+            List<string> courses = new List<string>();
+            List<decimal> credits = new List<decimal>();
+            List<string> grades = new List<string>();
+
+
+            DataRow[] rows = getCourseHistoryRow(user);
+            foreach (DataRow row in rows)
+            {
+                string crs = row.Field<string>("Course");
+                crs = crs.Substring(0, crs.Length - 3);
+                courses.Add(crs);
+
+                decimal creds = row.Field<decimal>("Credit");
+                credits.Add(creds);
+
+                string grde = row.Field<string>("Grade");
+                if (grde.Contains("R"))
+                    grde = grde.Substring(1);
+                grades.Add(grde);
+
+            }
+
+            List<string> tmp = new List<string>();
+            List<string> NoCreds = new List<string>(){"U", "W", "X", "O", "I", "EQ"};
+
+            for (int i= courses.Count()-1; i >= 0; i--)
+            {
+                if (!NoCreds.Contains(grades[i]))
+                {
+                    totalCred += credits[i];
+                    if (!tmp.Contains(courses[i]))
+                    {
+                        tmp.Add(courses[i]);
+                        if (isQuality(grades[i]))
+                        {
+                            qualityCred += credits[i];
+                            qualityPoints += letterGradeToCredit(grades[i]) * credits[i];
+                        }
+                    }
+                }
+
+            }
+            if (qualityCred != 0M)
+                GPA = qualityPoints / qualityCred;
+
+            lst[0] = GPA;
+            lst[1] = qualityCred;
+            lst[2] = totalCred;
+
+            return lst;
         }
 
     }
