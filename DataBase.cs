@@ -43,17 +43,17 @@ namespace ClassRegistration
         private DataTable FacultyDB;
         private DataTable AdminDB;
         private DataTable CourseDB;
-        public DataTable CourseHistoryDB;
+        private DataTable CourseHistoryDB;
 
         ////////////// Constructor /////////////////////////////////////////////
         public DataBase(string SFA_File, string Course_File, string CSH_File)
         {
-            DataTable[] tmp =  getSFA(SFA_File);
+            DataTable[] tmp = getSFA(SFA_File);
             StudentDB = tmp[0];
             FacultyDB = tmp[1];
             AdminDB = tmp[2];
             CourseDB = GetCourses(Course_File);
-            CourseHistoryDB= GetCourseHistory(CSH_File);
+            CourseHistoryDB = GetCourseHistory(CSH_File);
         }
 
 
@@ -150,7 +150,7 @@ namespace ClassRegistration
 
                     if (status == "faculty")
                     {
-                        FAC.Rows.Add(user,pass,first,middle,last,emptyList,emptyList);
+                        FAC.Rows.Add(user, pass, first, middle, last, emptyList, emptyList);
                     }
                     else if (status == "admin")
                     {
@@ -158,7 +158,7 @@ namespace ClassRegistration
                     }
                     else
                     {
-                        STU.Rows.Add(user, pass, first, middle, last, status,0.0 ,emptyList, emptyList);
+                        STU.Rows.Add(user, pass, first, middle, last, status, 0.0, emptyList, emptyList);
                     }
                 }
                 file.Close();
@@ -232,19 +232,19 @@ namespace ClassRegistration
                     user = ln.Substring(0, 9).TrimEnd().ToLower();
                     numCourses = Int32.Parse(ln.Substring(11, 2));
                     ln = " " + ln.Substring(14);
-                    for (int i=0; i < numCourses; i++)
+                    for (int i = 0; i < numCourses; i++)
                     {
-                        course = ln.Substring(24*i, 11).Trim();
-                        term = ln.Substring((24 * i) +12, 3).Trim();
-                        credit = Decimal.Parse(ln.Substring((24 * i)+16, 4).Trim());
-                        //grade = ln.Substring((24 * i)+21, 2).Trim();
-                        grade = ln.Substring((24 * i) + 21);
-                        grade = grade.Substring(0, grade.IndexOf(" ")  < 1 ? 1 : grade.IndexOf(" ")).Trim();
+                        course = ln.Substring(24 * i, 11).Trim();
+                        term = ln.Substring((24 * i) + 12, 3).Trim();
+                        credit = Decimal.Parse(ln.Substring((24 * i) + 16, 4).Trim());
+                        grade = ln.Substring((24 * i)+21, 3).Trim();
+                        //grade = ln.Substring((24 * i) + 21);
+                        //grade = grade.Substring(0, grade.IndexOf(" ") < 1 ? 1 : grade.IndexOf(" ")).Trim();
                         CSH.Rows.Add(user, course, term, credit, grade);
                     }
                 }
             }
-            
+
             return CSH;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -265,13 +265,22 @@ namespace ClassRegistration
 
         }
 
-        public ArrayList getStudentArrayList(string username)
+        public Student2 getStudentObject(string username)
         {
             DataRow DR = getStudentRow(username);
             ArrayList lst = new ArrayList();
-            for (int i = 0; i < DR.ItemArray.Length; i++)
-                lst.Add(DR.ItemArray[i]);
-            return lst;
+            string user = DR.Field<string>(0);
+            string pass = DR.Field<string>(1);
+            string firstName = DR.Field<string>(2);
+            string middleName = DR.Field<string>(3);
+            string lastName = DR.Field<string>(4);
+            string advisorUser = DR.Field<string>(5);
+            decimal RegCredits = DR.Field<decimal>(6);
+            List<string> CurrentCourses = DR.Field<List<string>>(7);
+            List<string> RegisteredCourses = DR.Field<List<string>>(8);
+
+            return new Student2(user, pass, firstName, middleName, lastName, advisorUser,
+            RegCredits, CurrentCourses, RegisteredCourses);
         }
 
         private DataRow getFacultyRow(string username)
@@ -439,6 +448,33 @@ namespace ClassRegistration
             AdminDB.Rows[index].SetField(column, data);
         }
 
+        public T getCourseField<T>(string coursecode, string column)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
+        public T getCourseField<T>(string coursecode, int column)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            T data = DR.Field<T>(column);
+            return data;
+        }
+
+        public void setCourseField<T>(string coursecode, string column, T data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = AdminDB.Rows.IndexOf(DR);
+            CourseDB.Rows[index].SetField(column, data);
+        }
+
+        public void setCourseField<T>(string coursecode, int column, T data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = AdminDB.Rows.IndexOf(DR);
+            CourseDB.Rows[index].SetField(column, data);
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////// 
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -446,7 +482,7 @@ namespace ClassRegistration
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         // Used for adding and removing strings from lists within DataBases (Current/Registered Courses)/
-        public void pushCourseinStudent(string user, string column, string data)
+        public void pushIteminStudent(string user, string column, string data)
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
@@ -455,7 +491,7 @@ namespace ClassRegistration
             StudentDB.Rows[index].SetField(column, lst);
         }
 
-        public void pushCourseinStudent(string user, int column, string data)
+        public void pushIteminStudent(string user, int column, string data)
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
@@ -464,7 +500,7 @@ namespace ClassRegistration
             StudentDB.Rows[index].SetField(column, lst);
         }
 
-        public void removeCourseinStudent(string user, string column, string data)
+        public void removeIteminStudent(string user, string column, string data)
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
@@ -473,13 +509,85 @@ namespace ClassRegistration
             StudentDB.Rows[index].SetField(column, lst);
         }
 
-        public void removeCourseinStudent(string user, int column, string data)
+        public void removeIteminStudent(string user, int column, string data)
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
             List<string> lst = DR.Field<List<string>>(column);
             lst.Remove(data);
             StudentDB.Rows[index].SetField(column, lst);
+        }
+
+        public void pushIteminFaculty(string user, string column, string data)
+        {
+            DataRow DR = getFacultyRow(user);
+            int index = FacultyDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Add(data);
+            FacultyDB.Rows[index].SetField(column, lst);
+        }
+
+        public void pushIteminFaculty(string user, int column, string data)
+        {
+            DataRow DR = getFacultyRow(user);
+            int index = FacultyDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Add(data);
+            FacultyDB.Rows[index].SetField(column, lst);
+        }
+
+        public void removeIteminFaculty(string user, string column, string data)
+        {
+            DataRow DR = getFacultyRow(user);
+            int index = FacultyDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Remove(data);
+            FacultyDB.Rows[index].SetField(column, lst);
+        }
+
+        public void removeIteminFaculty(string user, int column, string data)
+        {
+            DataRow DR = getFacultyRow(user);
+            int index = FacultyDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Remove(data);
+            FacultyDB.Rows[index].SetField(column, lst);
+        }
+
+        public void pushIteminCourse(string coursecode, string column, string data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = CourseDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Add(data);
+            CourseDB.Rows[index].SetField(column, lst);
+        }
+
+        public void pushIteminCourse(string coursecode, int column, string data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = CourseDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Add(data);
+            CourseDB.Rows[index].SetField(column, lst);
+        }
+
+        public void removeIteminCourse(string coursecode, string column, string data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = CourseDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Remove(data);
+            CourseDB.Rows[index].SetField(column, lst);
+        }
+
+        public void removeIteminCourse(string coursecode, int column, string data)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int index = CourseDB.Rows.IndexOf(DR);
+            List<string> lst = DR.Field<List<string>>(column);
+            lst.Remove(data);
+            CourseDB.Rows[index].SetField(column, lst);
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -545,6 +653,9 @@ namespace ClassRegistration
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        // Functions used to interpret a students GPA ///////////////////////////////////////////////////
         private bool isQuality(string grade)
         {
             List<string> letters = new List<string> { "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F" };
@@ -616,9 +727,9 @@ namespace ClassRegistration
             }
 
             List<string> tmp = new List<string>();
-            List<string> NoCreds = new List<string>(){"U", "W", "X", "O", "I", "EQ"};
+            List<string> NoCreds = new List<string>() { "U", "W", "X", "O", "I", "EQ" };
 
-            for (int i= courses.Count()-1; i >= 0; i--)
+            for (int i = courses.Count() - 1; i >= 0; i--)
             {
                 if (!NoCreds.Contains(grades[i]))
                 {
@@ -644,8 +755,159 @@ namespace ClassRegistration
 
             return lst;
         }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////Functions that prints courses and interact with timeblocks////////////////////////////////
+        private static string sum_up(int target)
+        {
+            string code = "";
+            List<int> numbers = new List<int>() { 1, 2, 4, 8, 16 };
+            sum_up_recursive(numbers, target, new List<int>(), ref code);
+            return code;
+        }
+
+        private static void sum_up_recursive(List<int> numbers, int target, List<int> partial, ref string code)
+        {
+            int s = 0;
+            foreach (int x in partial) s += x;
+
+            if (s == target)
+                code = getDays(partial);
+
+            if (s >= target)
+                return;
+
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                List<int> remaining = new List<int>();
+                int n = numbers[i];
+                for (int j = i + 1; j < numbers.Count; j++) remaining.Add(numbers[j]);
+
+                List<int> partial_rec = new List<int>(partial);
+                partial_rec.Add(n);
+                sum_up_recursive(remaining, target, partial_rec, ref code);
+            }
+        }
+
+        private static string getDays(List<int> lst)
+        {
+            string str = "";
+            if (lst.Contains(1))
+                str += "M";
+            if (lst.Contains(2))
+                str += "T";
+            if (lst.Contains(4))
+                str += "W";
+            if (lst.Contains(8))
+                str += "R";
+            if (lst.Contains(16))
+                str += "F";
+            while (str.Length != 6)
+            {
+                str += " ";
+            }
+            return str;
+        }
+
+        private static string getTime(int t)
+        {
+            string AMPM = " AM";
+            float time = t;
+            time = time / 2;
+            System.TimeSpan s = System.TimeSpan.FromSeconds(time * 3600);
+            if (s.Hours >= 12)
+            {
+                AMPM = " PM";
+                if (s.Hours > 12)
+                    s = s.Subtract(System.TimeSpan.FromSeconds(12 * 3600));
+            }
+            string min = (s.Minutes).ToString();
+            if (min.Length != 2)
+                min += "0";
+            string hours = (s.Hours).ToString();
+            if (hours.Length != 2)
+                hours = "0" + hours;
+            return hours + ":" + min + AMPM;
+        }
+
+        public string getSchedule(string coursecode)
+        {
+            ArrayList timeBlocks = getCourseField<ArrayList>(coursecode, "TimeBlocks");
+            string output = "";
+
+            foreach (int ddttl in timeBlocks)
+            {
+                //Console.WriteLine(ddttl);
+                output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + "  ";
+            }
+            return output;
+
+        }
+
+        private bool TimeSpan_Overlap(TimeSpan start1, TimeSpan finish1, TimeSpan start2, TimeSpan finish2)
+        {
+            if (start1 == start2 || finish1 == finish2)
+                return true;
+
+            if ((start1 < start2 && start2 < finish1) || (start1 < finish2 && finish2 < finish1))
+                return true;
+
+            if ((start2 < start1 && start1 < finish2) || (start2 < finish1 && finish1 < finish2))
+                return true;
+            else
+                return false;
+
+        }
+
+        public bool Overlap(string coursecode1, string coursecode2)
+        {
+            ArrayList tb1 = getCourseField<ArrayList>(coursecode1, "TimeBlocks");
+            ArrayList tb2 = getCourseField<ArrayList>(coursecode2, "TimeBlocks");
+            foreach (int ddttl1 in tb1)
+            {
+                char[] dayarray1 = sum_up(ddttl1 / 1000).Trim().ToCharArray();
+                foreach (int ddttl2 in tb2)
+                {
+                    char[] dayarray2 = sum_up(ddttl2 / 1000).Trim().ToCharArray();
+                    foreach (char day1 in dayarray1)
+                    {
+                        TimeSpan start1 = DateTime.Parse(getTime((ddttl1 / 10) % 100)).TimeOfDay;
+                        TimeSpan finish1 = DateTime.Parse(getTime(((ddttl1 / 10) % 100) + ((ddttl1 % 10)))).TimeOfDay;
+                        foreach (char day2 in dayarray2)
+                        {
+                            if (day1 == day2)
+                            {
+                                TimeSpan start2 = DateTime.Parse(getTime((ddttl2 / 10) % 100)).TimeOfDay;
+                                TimeSpan finish2 = DateTime.Parse(getTime(((ddttl2 / 10) % 100) + ((ddttl2 % 10)))).TimeOfDay;
+                                if (TimeSpan_Overlap(start1, finish1, start2, finish2))
+                                    return true;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public string CourseToString(string coursecode)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            string g = DR.Field<string>("CourseName");
+            string name = getCourseField<string>(coursecode, "CourseName").PadRight(15);
+            string instructor = getCourseField<string>(coursecode, "Instructor").PadRight(10);
+            string credits = getCourseField<decimal>(coursecode, "Credits").ToString().PadRight(6);
+            string seats = getCourseField<int>(coursecode, "SeatsAvail").ToString().PadRight(6);
+            string timeblocks = getSchedule(coursecode);
+
+            return coursecode.PadRight(12) + name + instructor + credits  + seats + timeblocks;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////
     }
-
 
 }
