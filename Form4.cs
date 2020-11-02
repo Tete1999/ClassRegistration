@@ -22,9 +22,12 @@ namespace ClassRegistration
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
-            listBox1.DataSource = DDD.CourseHistoryDB;
+            List<string> lst = DDD.CourseHistoryToList(user);
+            listBox1.Items.Clear();
+            listBox1.DataSource = lst;
             decimal[] tmp = DDD.GetStudentGPA(user);
-            richTextBox1.Text = tmp[0] + "  "  + tmp[1] + "  " + tmp[2];
+            richTextBox1.Text = "GPA:                    " + tmp[0] 
+                + "\nQuality Points        "  + tmp[1] + "\n Total Points         " + tmp[2];
         }
 
      

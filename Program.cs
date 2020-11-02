@@ -39,9 +39,16 @@ namespace ClassRegistration
             //////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////
             DataBase DDD = new DataBase("UserDB.in", "courseDB.in", "historyDB.in");
+
+            string qe = DDD.getStudentFieldString("jbiden", "User");
+            qe = "Poopdick";
+            qe = DDD.getStudentFieldString("jbiden", "User");
             string g = DDD.CourseToString("MTH-145-00");
             Console.WriteLine(g);
+            g = g.Substring(0, g.IndexOf(" "));
+            Console.WriteLine(g);
             g = DDD.CourseToString("CS-435-01");
+            g.Substring(0, g.IndexOf(" "));
             Console.WriteLine(g);
             g = DDD.CourseToString("CS-125-00");
             Console.WriteLine(g);

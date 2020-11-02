@@ -45,7 +45,7 @@ namespace ClassRegistration
         {
             Form3 form3 = new Form3(ref DDD, user);
             form3.listBox3.DataSource = null;
-            form3.listBox3.DataSource = DDD.getStudentField<List<string>>(user, "RC");
+            form3.listBox3.DataSource = DDD.getStudentFieldList(user, "RC");
             form3.ShowDialog();
   
         }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
 using System.Net;
+using System.Windows.Forms;
 
 namespace ClassRegistration
 {
@@ -457,17 +458,33 @@ namespace ClassRegistration
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
         // Get and set functions for databases given user and applicable column /////////////////////////
-        public T getStudentField<T>(string user, string column)
+        public string getStudentFieldString(string user, string column)
         {
             DataRow DR = getStudentRow(user);
-            T data = DR.Field<T>(column);
+            string data = DR.Field<string>(column);
             return data;
         }
 
-        public T getStudentField<T>(string user, int column)
+        public List<string> getStudentFieldList(string user, string column)
         {
             DataRow DR = getStudentRow(user);
-            T data = DR.Field<T>(column);
+            List<string> data = new List<string>();
+            foreach (string s in DR.Field<List<string>>(column))
+                data.Add(s);
+            return data;
+        }
+
+        public int getStudentFieldInt(string user, string column)
+        {
+            DataRow DR = getStudentRow(user);
+            int data = DR.Field<int>(column);
+            return data;
+        }
+
+        public decimal getStudentFieldDecimal(string user, string column)
+        {
+            DataRow DR = getStudentRow(user);
+            decimal data = DR.Field<decimal>(column);
             return data;
         }
 
@@ -485,17 +502,33 @@ namespace ClassRegistration
             StudentDB.Rows[index].SetField(column, data);
         }
 
-        public T getFacultyField<T>(string user, string column)
+        public string getFacultyFieldString(string user, string column)
         {
             DataRow DR = getFacultyRow(user);
-            T data = DR.Field<T>(column);
+            string data = DR.Field<string>(column);
             return data;
         }
 
-        public T getFacultyField<T>(string user, int column)
+        public List<string> getFacultyFieldList(string user, string column)
         {
             DataRow DR = getFacultyRow(user);
-            T data = DR.Field<T>(column);
+            List<string> data = new List<string>();
+            foreach (string s in DR.Field<List<string>>(column))
+                data.Add(s);
+            return data;
+        }
+
+        public int getFacultyFieldInt(string user, string column)
+        {
+            DataRow DR = getFacultyRow(user);
+            int data = DR.Field<int>(column);
+            return data;
+        }
+
+        public decimal getFacultyFieldDecimal(string user, string column)
+        {
+            DataRow DR = getFacultyRow(user);
+            decimal data = DR.Field<decimal>(column);
             return data;
         }
 
@@ -513,17 +546,32 @@ namespace ClassRegistration
             FacultyDB.Rows[index].SetField(column, data);
         }
 
-        public T getAdminField<T>(string user, string column)
+        public string getAdminFieldString(string user, string column)
         {
             DataRow DR = getAdminRow(user);
-            T data = DR.Field<T>(column);
+            string data = DR.Field<string>(column);
             return data;
         }
 
-        public T getAdminField<T>(string user, int column)
+        public List<string> getAdminFieldList(string user, string column)
         {
             DataRow DR = getAdminRow(user);
-            T data = DR.Field<T>(column);
+            List<string> data = new List<string>();
+            foreach (string s in DR.Field<List<string>>(column))
+                data.Add(s);
+            return data;
+        }
+        public int getAdminFieldInt(string user, string column)
+        {
+            DataRow DR = getAdminRow(user);
+            int data = DR.Field<int>(column);
+            return data;
+        }
+
+        public decimal getAdminFieldDecimal(string user, string column)
+        {
+            DataRow DR = getAdminRow(user);
+            decimal data = DR.Field<decimal>(column);
             return data;
         }
 
@@ -541,17 +589,42 @@ namespace ClassRegistration
             AdminDB.Rows[index].SetField(column, data);
         }
 
-        public T getCourseField<T>(string coursecode, string column)
+        public string getCourseFieldString(string coursecode, string column)
         {
             DataRow DR = getCourseRow(coursecode);
-            T data = DR.Field<T>(column);
+            string data = DR.Field<string>(column);
             return data;
         }
 
-        public T getCourseField<T>(string coursecode, int column)
+        public List<string> getCourseFieldList(string coursecode, string column)
         {
             DataRow DR = getCourseRow(coursecode);
-            T data = DR.Field<T>(column);
+            List<string> data = new List<string>();
+            foreach (string s in DR.Field<List<string>>(column))
+                data.Add(s);
+            return data;
+        }
+
+        public int getCourseFieldInt(string coursecode, string column)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            int data = DR.Field<int>(column);
+            return data;
+        }
+
+        public decimal getCourseFieldDecimal(string coursecode, string column)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            decimal data = DR.Field<decimal>(column);
+            return data;
+        }
+
+        public ArrayList getCourseFieldArrayList(string coursecode, string column)
+        {
+            DataRow DR = getCourseRow(coursecode);
+            ArrayList data = new ArrayList();
+            foreach (object var in DR.Field<ArrayList>(column))
+                data.Add(var);
             return data;
         }
 
@@ -567,6 +640,15 @@ namespace ClassRegistration
             DataRow DR = getCourseRow(coursecode);
             int index = AdminDB.Rows.IndexOf(DR);
             CourseDB.Rows[index].SetField(column, data);
+        }
+
+        public List<string> getCourseHistoryFieldList(string user, string column)
+        {
+            List<string> lst = new List<string>();
+            DataRow[] DRlst = CourseHistoryDB.Select("User = '" + user + "'");
+            foreach (DataRow r in DRlst)
+                lst.Add(r.Field<string>(column));
+            return lst;
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////// 
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -899,7 +981,7 @@ namespace ClassRegistration
                 str += "R";
             if (lst.Contains(16))
                 str += "F";
-            while (str.Length != 6)
+            while (str.Length != 5)
             {
                 str += " ";
             }
@@ -929,7 +1011,7 @@ namespace ClassRegistration
 
         public string getSchedule(string coursecode)
         {
-            ArrayList timeBlocks = getCourseField<ArrayList>(coursecode, "TimeBlocks");
+            ArrayList timeBlocks = getCourseFieldArrayList(coursecode, "TimeBlocks");
             string output = "";
 
             foreach (int ddttl in timeBlocks)
@@ -971,8 +1053,8 @@ namespace ClassRegistration
 
         public bool Overlap(string coursecode1, string coursecode2)
         {
-            ArrayList tb1 = getCourseField<ArrayList>(coursecode1, "TimeBlocks");
-            ArrayList tb2 = getCourseField<ArrayList>(coursecode2, "TimeBlocks");
+            ArrayList tb1 = getCourseFieldArrayList(coursecode1, "TimeBlocks");
+            ArrayList tb2 = getCourseFieldArrayList(coursecode2, "TimeBlocks");
             foreach (int ddttl1 in tb1)
             {
                 char[] dayarray1 = sum_up(ddttl1 / 1000).Trim().ToCharArray();
@@ -1004,13 +1086,28 @@ namespace ClassRegistration
         {
             DataRow DR = getCourseRow(coursecode);
             string g = DR.Field<string>("CourseName");
-            string name = getCourseField<string>(coursecode, "CourseName").PadRight(15);
-            string instructor = getCourseField<string>(coursecode, "Instructor").PadRight(10);
-            string credits = getCourseField<decimal>(coursecode, "Credits").ToString().PadRight(6);
-            string seats = getCourseField<int>(coursecode, "SeatsAvail").ToString().PadRight(6);
+            string name = getCourseFieldString(coursecode, "CourseName").PadRight(12);
+            string instructor = getCourseFieldString(coursecode, "Instructor").PadRight(10);
+            string credits = getCourseFieldDecimal(coursecode, "Credits").ToString().PadRight(5);
+            string seats = getCourseFieldInt(coursecode, "SeatsAvail").ToString().PadRight(4);
             string timeblocks = getSchedule(coursecode);
 
-            return coursecode.PadRight(15) + name + instructor + credits  + seats + timeblocks;
+            return coursecode.PadRight(12) + name + instructor + credits  + seats + timeblocks;
+        }
+
+        public List<string> CourseHistoryToList(string user)
+        {
+            List<string> lst = new List<string>();
+            DataRow[] DR = CourseHistoryDB.Select("User = '" + user + "'");
+            foreach(DataRow row in DR)
+            {
+                string coursecode = row.Field<string>("Course");
+                string Term = row.Field<string>("Term");
+                string Credit = row.Field<decimal>("Credit").ToString();
+                string Grade = row.Field<string>("Grade");
+                lst.Add(coursecode.PadRight(20) + Term.PadRight(20) + Credit.PadRight(20) + Grade);
+            }
+            return lst;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
