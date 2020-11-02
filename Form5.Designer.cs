@@ -58,21 +58,22 @@
             // 
             // listBox1
             // 
+            this.listBox1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(783, 93);
+            this.listBox1.ItemHeight = 18;
+            this.listBox1.Location = new System.Drawing.Point(12, 156);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(742, 436);
+            this.listBox1.Size = new System.Drawing.Size(1095, 436);
             this.listBox1.TabIndex = 6;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.button2.Location = new System.Drawing.Point(783, 535);
+            this.button2.Location = new System.Drawing.Point(724, 90);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(267, 45);
+            this.button2.Size = new System.Drawing.Size(383, 52);
             this.button2.TabIndex = 7;
             this.button2.Text = "View Course Roster";
             this.button2.UseVisualStyleBackColor = true;

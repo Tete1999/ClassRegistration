@@ -17,6 +17,7 @@ namespace ClassRegistration
             this.DDD = master;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+
             InitializeComponent();
         }
 
@@ -59,6 +60,30 @@ private void button1_Click(object sender, EventArgs e)
             {
                 if (row.Field<string>(0) == textBox1.Text.ToLower() && row.Field<string>(1) == textBox2.Text)
                 {
+                    Faculty2 fac = DDD.getFacultyObject(textBox1.Text.ToLower());
+                    Form5 form5 = new Form5(ref DDD, fac.user);
+                    //List<Course> studentsCourses = element.getRegisteredCourses();
+                    //courseBox = new List<string>();
+                    //if (studentsCourses == null)
+                    //{
+                    //    courseBox.Add("You are not registered for any courses yet!");
+                    //}
+                    //else
+                    //{
+                    //    courseBox.Clear();
+                    //    foreach (Course c in studentsCourses)
+                    //    {
+                    //        courseBox.Add(c.ToString());
+                    //    }
+                    //}
+
+
+                    string s = "Welcome " + fac.firstName + " " + fac.middleName + " " + fac.lastName;
+                    form5.ChangeLabelName(s);
+                    form5.ShowDialog();
+                    flag = true;
+                    form5.Refresh();
+                    break;
                     //Faculty2 faculty = DDD.getFacultyObject(textBox1.Text.ToLower());
                     //Form5 form5 = new Form5(ref DDD, faculty.user);
                     //string s = "Welcome " + faculty.firstName + " " +  faculty.middleName + " " +  faculty.lastName;
@@ -116,6 +141,11 @@ private void button1_Click(object sender, EventArgs e)
             if (flag == false)
             {
                 MessageBox.Show("The Username or Password is Incorrect", "Error");
+                textBox2.Text = "";
+            }
+            else
+            {
+                textBox1.Text = "";
                 textBox2.Text = "";
             }
         }

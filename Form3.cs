@@ -96,7 +96,7 @@ namespace ClassRegistration
             {
                 regcourses[i] = regcourses[i].Substring(0, regcourses[i].Length - 3);
             }
-            if (regcourses.Contains(course.Substring(0,course.Length-3)))
+            if (regcourses.Contains(course.Substring(0, course.Length - 3)))
             {
                 MessageBox.Show("Error: Course Already Registered");
                 flag = true;
@@ -106,6 +106,8 @@ namespace ClassRegistration
                 MessageBox.Show("Error: Credit Limit Exceeded");
                 flag = true;
             }
+            else if (DDD.getCourseFieldInt(course, "SeatsAvail") < 1)
+                MessageBox.Show("Error: Class is Full");
             if (!flag && DDD.getCourseFieldInt(course, "SeatsAvail") >= 1)
             {
                 //Check For Time Overlaps
@@ -136,7 +138,7 @@ namespace ClassRegistration
                 DDD.pushIteminStudent(user, "RC", course);
                 DDD.IncrementDecrementinCourse(course, "SeatsAvail", -1);
                 DDD.pushIteminCourse(course, "StudentsEnrolled", user);
-                List<string> cccc = DDD.getStudentFieldList(user, "RC");
+                //List<string> cccc = new List<string>(DDD.getCourseFieldList(course, "StudentsEnrolled"));
             }
             listBox3.DataSource = null;
             List<string> lst2 = new List<string>();

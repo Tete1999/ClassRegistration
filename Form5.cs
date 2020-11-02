@@ -10,40 +10,33 @@ namespace ClassRegistration
 {
     public partial class Form5 : Form
     {
-        private List<Student> students;
-        private List<Admin> admin;
-        private List<Faculty> faculty;
-        private List<Course> courses;
-        private Faculty facultyMember;
-        //private DataBase DDD;
-        //private string user;
-        public Form5(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses, Faculty fac)
+        private DataBase DDD;
+        private string user;
+        //private List<Student> students;
+        //private List<Admin> admin;
+        //private List<Faculty> faculty;
+        //private List<Course> courses;
+        //private Faculty facultyMember;
+
+        public Form5(ref DataBase master,  string user)
         {
-            this.students = students;
-            this.admin = admin;
-            this.faculty = faculty;
-            this.courses = courses;
-            this.facultyMember = fac;
+            this.DDD = master;
+            this.user = user;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
 
-            List<Course> teaching = new List<Course>();
-            foreach (Course c in courses)
+            List<string> teaching = new List<string>();
+            foreach (string c in DDD.getFacultyFieldList(user,"Courses"))
             {
-                if (c.getInstructor().TrimEnd().ToLower() == facultyMember.getUser().ToLower())
-                {
-                    teaching.Add(c);
-                }
+                teaching.Add(DDD.CourseToString(c));
             }
-            Console.WriteLine(teaching.Count.ToString());
             listBox1.DataSource = null;
             listBox1.DataSource = teaching;
 
 
-            
+
         }
-        public Faculty getFaculty() { return facultyMember; }
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -55,8 +48,9 @@ namespace ClassRegistration
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form6 form6 = new Form6(courses, students, facultyMember);
-            form6.listBox1.DataSource = courses;
+            Form6 form6 = new Form6(ref DDD, user);
+            //Form6 form6 = new Form6(courses, students, facultyMember);
+            //form6.listBox1.DataSource = courses;
             form6.ShowDialog();
         }
 
@@ -67,21 +61,16 @@ namespace ClassRegistration
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string course = listBox1.SelectedItem.ToString();
-            Form7 form7 = new Form7();
-            List<Student> roster = new List<Student>();
-            foreach (Student stud in students)
+            if (listBox1.SelectedItem != null)
             {
-                foreach (Course c in stud.getRegisteredCourses())
-                {
-                    if (c.getCourseName().ToString().TrimEnd().ToLower() == course.Substring(0, 11).TrimEnd().ToLower())
-                    {
-                        roster.Add(stud);
-                    }
-                }
+                string course = listBox1.SelectedItem.ToString();
+                course = course.Substring(0, course.IndexOf(" "));
+                Form7 form7 = new Form7();
+                List<string> roster = new List<string>(DDD.getCourseFieldList(course, "StudentsEnrolled"));
+                form7.listBox1.DataSource = null;
+                form7.listBox1.DataSource = roster;
+                form7.ShowDialog();
             }
-            form7.listBox1.DataSource = roster;
-            form7.ShowDialog();
         }
     }
 }

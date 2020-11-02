@@ -122,6 +122,19 @@ namespace ClassRegistration
             AdminDB = tmp[2];
             CourseDB = GetCourses(Course_File);
             CourseHistoryDB = GetCourseHistory(CSH_File);
+
+            foreach(DataRow DR in StudentDB.Select())
+            {
+                string advisor = DR.Field<string>("AdvisorUser");
+                string studentuser = DR.Field<string>(0);
+                pushIteminFaculty(advisor, "AdviseeUsers", studentuser);
+            }
+            foreach(DataRow DR in CourseDB.Select())
+            {
+                string fac = DR.Field<string>("Instructor");
+                string course = DR.Field<string>(0);
+                pushIteminFaculty(fac, "Courses", course);
+            }
         }
 
 
@@ -218,7 +231,7 @@ namespace ClassRegistration
 
                     if (status == "faculty")
                     {
-                        FAC.Rows.Add(user, pass, first, middle, last, emptyList, emptyList);
+                        FAC.Rows.Add(user, pass, first, middle, last, new List<string>(), new List<string>());
                     }
                     else if (status == "admin")
                     {
@@ -226,7 +239,7 @@ namespace ClassRegistration
                     }
                     else
                     {
-                        STU.Rows.Add(user, pass, first, middle, last, status, 0.0, emptyList, emptyList);
+                        STU.Rows.Add(user, pass, first, middle, last, status, 0.0, new List<string>(), new List<string>());
                     }
                 }
                 file.Close();
@@ -661,7 +674,7 @@ namespace ClassRegistration
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Add(data);
             StudentDB.Rows[index].SetField(column, lst);
         }
@@ -670,7 +683,7 @@ namespace ClassRegistration
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Add(data);
             StudentDB.Rows[index].SetField(column, lst);
         }
@@ -679,7 +692,7 @@ namespace ClassRegistration
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Remove(data);
             StudentDB.Rows[index].SetField(column, lst);
         }
@@ -688,7 +701,7 @@ namespace ClassRegistration
         {
             DataRow DR = getStudentRow(user);
             int index = StudentDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Remove(data);
             StudentDB.Rows[index].SetField(column, lst);
         }
@@ -697,7 +710,7 @@ namespace ClassRegistration
         {
             DataRow DR = getFacultyRow(user);
             int index = FacultyDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Add(data);
             FacultyDB.Rows[index].SetField(column, lst);
         }
@@ -706,7 +719,7 @@ namespace ClassRegistration
         {
             DataRow DR = getFacultyRow(user);
             int index = FacultyDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Add(data);
             FacultyDB.Rows[index].SetField(column, lst);
         }
@@ -715,7 +728,7 @@ namespace ClassRegistration
         {
             DataRow DR = getFacultyRow(user);
             int index = FacultyDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Remove(data);
             FacultyDB.Rows[index].SetField(column, lst);
         }
@@ -724,7 +737,7 @@ namespace ClassRegistration
         {
             DataRow DR = getFacultyRow(user);
             int index = FacultyDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Remove(data);
             FacultyDB.Rows[index].SetField(column, lst);
         }
@@ -733,7 +746,7 @@ namespace ClassRegistration
         {
             DataRow DR = getCourseRow(coursecode);
             int index = CourseDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Add(data);
             CourseDB.Rows[index].SetField(column, lst);
         }
@@ -742,7 +755,7 @@ namespace ClassRegistration
         {
             DataRow DR = getCourseRow(coursecode);
             int index = CourseDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Add(data);
             CourseDB.Rows[index].SetField(column, lst);
         }
@@ -751,7 +764,7 @@ namespace ClassRegistration
         {
             DataRow DR = getCourseRow(coursecode);
             int index = CourseDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Remove(data);
             CourseDB.Rows[index].SetField(column, lst);
         }
@@ -760,7 +773,7 @@ namespace ClassRegistration
         {
             DataRow DR = getCourseRow(coursecode);
             int index = CourseDB.Rows.IndexOf(DR);
-            List<string> lst = DR.Field<List<string>>(column);
+            List<string> lst = new List<string>(DR.Field<List<string>>(column));
             lst.Remove(data);
             CourseDB.Rows[index].SetField(column, lst);
         }

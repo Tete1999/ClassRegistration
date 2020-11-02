@@ -15,6 +15,8 @@ namespace ClassRegistration
         public Form8()
         {
             //this.msg = flag;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
         }
 
@@ -41,6 +43,11 @@ namespace ClassRegistration
         public void error()
         {
             MessageBox.Show("Time conflict detected");
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
