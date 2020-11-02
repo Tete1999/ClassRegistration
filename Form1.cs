@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
@@ -9,18 +10,11 @@ namespace ClassRegistration
 
     public partial class Form1 : Form
     {
-        private List<Student> students;
-        private List<Admin> admin;
-        private List<Faculty> faculty;
-        private List<Course> courses;
-        private List<string> courseBox;
+        private DataBase DDD;
 
-        public Form1(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses)
+        public Form1(ref DataBase master)
         {
-            this.students = students;
-            this.admin = admin;
-            this.faculty = faculty;
-            this.courses = courses;
+            this.DDD = master;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
@@ -57,57 +51,60 @@ namespace ClassRegistration
 
 private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(students, admin, faculty, courses, null);
+            //Form2 form2 = new Form2(students, admin, faculty, courses, null);
             bool flag = false;
             
 
-            foreach (Faculty element in faculty)
+            foreach (DataRow row in DDD.FacultyDB.Rows)
             {
-                if (element.getUser() == textBox1.Text.ToLower() && element.getPass() == textBox2.Text)
+                if (row.Field<string>(0) == textBox1.Text.ToLower() && row.Field<string>(1) == textBox2.Text)
                 {
-                    Form5 form5 = new Form5(students, admin, faculty, courses, element);
-                    string s = "Welcome " + element.getFullName();
-                    form5.ChangeLabelName(s);
-                    form5.ShowDialog();
-                    flag = true;
-                    form5.Refresh();
-                    break;
+                    //Faculty2 faculty = DDD.getFacultyObject(textBox1.Text.ToLower());
+                    //Form5 form5 = new Form5(ref DDD, faculty.user);
+                    //string s = "Welcome " + faculty.firstName + " " +  faculty.middleName + " " +  faculty.lastName;
+                    //form5.ChangeLabelName(s);
+                    //form5.ShowDialog();
+                    //flag = true;
+                    //form5.Refresh();
+                    //break;
                 }
             }
-            foreach (Admin element in admin)
+            foreach (DataRow row in DDD.AdminDB.Rows)
             {
-                if (element.getUser() == textBox1.Text.ToLower() && element.getPass() == textBox2.Text)
+                if (row.Field<string>(0) == textBox1.Text.ToLower() && row.Field<string>(1) == textBox2.Text)
                 {
-                    form2 = new Form2(students, admin, faculty, courses, null);
-                    string s = "Welcome " + element.getFullName();
-                    form2.ChangeLabelName(s);
-                    form2.ShowDialog();
-                    flag = true;
-                    break;
+                    //Admin2 admin = DDD.getAdminObject(textBox1.Text.ToLower());
+                    //Form2 form2 = new Form2(DDD, admin);
+                    //string s = "Welcome " + admin.firstName + " " +  admin.middleName + " " +  admin.lastName;
+                    //form2.ChangeLabelName(s);
+                    //form2.ShowDialog();
+                    //flag = true;
+                    //break;
                 }
             }
-            foreach (Student element in students)
+            foreach (DataRow row in DDD.StudentDB.Rows)
             {
-                if (element.getUser() == textBox1.Text.ToLower() && element.getPass() == textBox2.Text)
+                if (row.Field<string>(0) == textBox1.Text.ToLower() && row.Field<string>(1) == textBox2.Text)
                 {
-                    form2 = new Form2(students, admin, faculty, courses, element);
-                    List<Course> studentsCourses = element.getRegisteredCourses();
-                    courseBox = new List<string>();
-                    if (studentsCourses == null)
-                    {
-                        courseBox.Add("You are not registered for any courses yet!");
-                    }
-                    else
-                    {
-                        courseBox.Clear();
-                        foreach (Course c in studentsCourses)
-                        {
-                            courseBox.Add(c.ToString());
-                        }
-                    }
+                    Student2 student = DDD.getStudentObject(textBox1.Text.ToLower());
+                    Form2 form2 = new Form2(ref DDD, student.user);
+                    //List<Course> studentsCourses = element.getRegisteredCourses();
+                    //courseBox = new List<string>();
+                    //if (studentsCourses == null)
+                    //{
+                    //    courseBox.Add("You are not registered for any courses yet!");
+                    //}
+                    //else
+                    //{
+                    //    courseBox.Clear();
+                    //    foreach (Course c in studentsCourses)
+                    //    {
+                    //        courseBox.Add(c.ToString());
+                    //    }
+                    //}
 
                   
-                    string s = "Welcome " + element.getFullName();
+                    string s = "Welcome " + student.firstName + " " + student.middleName + " " + student.lastName;
                     form2.ChangeLabelName(s);
                     form2.ShowDialog();
                     flag = true;

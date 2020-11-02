@@ -106,11 +106,11 @@ namespace ClassRegistration
     public class DataBase
     {
         //Private Attributes
-        private DataTable StudentDB;
-        private DataTable FacultyDB;
-        private DataTable AdminDB;
-        private DataTable CourseDB;
-        private DataTable CourseHistoryDB;
+        public DataTable StudentDB;
+        public DataTable FacultyDB;
+        public DataTable AdminDB;
+        public DataTable CourseDB;
+        public DataTable CourseHistoryDB;
 
         ////////////// Constructor /////////////////////////////////////////////
         public DataBase(string SFA_File, string Course_File, string CSH_File)
@@ -265,13 +265,13 @@ namespace ClassRegistration
             string ln;
             while ((ln = file.ReadLine()) != null)
             {
-                courseName = ln.Substring(0, 11);
-                title = ln.Substring(11, 15);
-                instructor = ln.Substring(27, 10);
+                courseName = ln.Substring(0, 11).Trim();
+                title = ln.Substring(11, 15).Trim();
+                instructor = ln.Substring(27, 10).Trim();
                 credit = decimal.Parse(ln.Substring(38, 4));
                 seats = int.Parse(ln.Substring(43, 3));
                 numBlocks = int.Parse(ln.Substring(47, 1));
-                timeBlocks = append(ln.Substring(49).TrimEnd());
+                timeBlocks = append(ln.Substring(49).Trim());
                 Courses.Rows.Add(courseName, title, instructor, credit, seats, numBlocks, timeBlocks, emptyList);
             }
             file.Close();
@@ -304,7 +304,7 @@ namespace ClassRegistration
                         course = ln.Substring(24 * i, 11).Trim();
                         term = ln.Substring((24 * i) + 12, 3).Trim();
                         credit = Decimal.Parse(ln.Substring((24 * i) + 16, 4).Trim());
-                        grade = ln.Substring((24 * i)+21, 3).Trim();
+                        grade = ln.Substring((24 * i)+21, 2).Trim();
                         //grade = ln.Substring((24 * i) + 21);
                         //grade = grade.Substring(0, grade.IndexOf(" ") < 1 ? 1 : grade.IndexOf(" ")).Trim();
                         CSH.Rows.Add(user, course, term, credit, grade);
@@ -349,7 +349,33 @@ namespace ClassRegistration
             return new Student2(user, pass, firstName, middleName, lastName, advisorUser,
             RegCredits, CurrentCourses, RegisteredCourses);
         }
+        public Faculty2 getFacultyObject(string username)
+        {
+            DataRow DR = getFacultyRow(username);
+            ArrayList lst = new ArrayList();
+            string user = DR.Field<string>(0);
+            string pass = DR.Field<string>(1);
+            string firstName = DR.Field<string>(2);
+            string middleName = DR.Field<string>(3);
+            string lastName = DR.Field<string>(4);
+            List<string> adviseeUsers = DR.Field<List<string>>(5);
+            List<string> courses = DR.Field<List<string>>(6);
 
+            return new Faculty2(user, pass, firstName, middleName, lastName, adviseeUsers, courses);
+        }
+
+        public Admin2 getAdminObject(string username)
+        {
+            DataRow DR = getFacultyRow(username);
+            ArrayList lst = new ArrayList();
+            string user = DR.Field<string>(0);
+            string pass = DR.Field<string>(1);
+            string firstName = DR.Field<string>(2);
+            string middleName = DR.Field<string>(3);
+            string lastName = DR.Field<string>(4);
+            
+            return new Admin2(user, pass, firstName, middleName, lastName);
+        }
         private DataRow getFacultyRow(string username)
         {
             DataRow DR;
@@ -984,7 +1010,7 @@ namespace ClassRegistration
             string seats = getCourseField<int>(coursecode, "SeatsAvail").ToString().PadRight(6);
             string timeblocks = getSchedule(coursecode);
 
-            return coursecode.PadRight(12) + name + instructor + credits  + seats + timeblocks;
+            return coursecode.PadRight(15) + name + instructor + credits  + seats + timeblocks;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////

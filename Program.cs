@@ -41,6 +41,12 @@ namespace ClassRegistration
             DataBase DDD = new DataBase("UserDB.in", "courseDB.in", "historyDB.in");
             string g = DDD.CourseToString("MTH-145-00");
             Console.WriteLine(g);
+            g = DDD.CourseToString("CS-435-01");
+            Console.WriteLine(g);
+            g = DDD.CourseToString("CS-125-00");
+            Console.WriteLine(g);
+            g = DDD.CourseToString("ART-123-00");
+            Console.WriteLine(g);
             bool tf = DDD.Overlap("CS-435-02", "MTH-145-00");
             //foreach (DataRow dataRow in DDD.CourseHistoryDB.Rows)
             //{
@@ -54,7 +60,7 @@ namespace ClassRegistration
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(students, admin,  faculty, courses));
+            Application.Run(new Form1(ref DDD));
         }
     }
 }

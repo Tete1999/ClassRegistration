@@ -10,29 +10,18 @@ namespace ClassRegistration
 
     public partial class Form2 : Form
     {
-        private List<Student> students;
-        private List<Admin> admin;
-        private List<Faculty> faculty;
-        private List<Course> courses;
-        private Student student;
+        private DataBase DDD;
+        private string user;
 
-        public Form2(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses, Student student)
+        public Form2(ref DataBase master, string username)
         {
-            this.students = students;
-            this.admin = admin;
-            this.faculty = faculty;
-            this.courses = courses;
-            this.student = student;
+            this.DDD = master;
+            this.user = username;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
         }
 
-
-        public Student getStudent()
-        {
-            return student;
-        }
         private void Form2_Load(object sender, EventArgs e)
         {
 
@@ -54,9 +43,9 @@ namespace ClassRegistration
    
         private void button1_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3(courses, student);
+            Form3 form3 = new Form3(ref DDD, user);
             form3.listBox3.DataSource = null;
-            form3.listBox3.DataSource = student.getRegisteredCourses();
+            form3.listBox3.DataSource = DDD.getStudentField<List<string>>(user, "RC");
             form3.ShowDialog();
   
         }
@@ -79,22 +68,22 @@ namespace ClassRegistration
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(student.getCourseHistory());
-            string[] coursesTaken = student.getCourseHistory().Split('\n');
-            List<string> ct = new List<string>();
-            foreach (string element in coursesTaken)
-            {
-                Console.WriteLine(element);
-                string opt = "";
-                string[] tmp = Regex.Replace(element, @"\s+", " ").Split();
-                foreach (string s in tmp)
-                {
-                    string t = s.Trim() + "\t";
-                    opt += t;
-                }
-                ct.Add(opt);
-            }
-            Form4 form4 = new Form4(ct, student.getGPA());
+            //Console.WriteLine(student.getCourseHistory());
+            //string[] coursesTaken = student.getCourseHistory().Split('\n');
+            //List<string> ct = new List<string>();
+            //foreach (string element in coursesTaken)
+            //{
+            //    Console.WriteLine(element);
+            //    string opt = "";
+            //    string[] tmp = Regex.Replace(element, @"\s+", " ").Split();
+            //    foreach (string s in tmp)
+            //    {
+            //        string t = s.Trim() + "\t";
+            //        opt += t;
+            //    }
+            //    ct.Add(opt);
+            //}
+            Form4 form4 = new Form4(ref DDD, user);
             form4.ShowDialog();
         }
 

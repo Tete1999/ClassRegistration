@@ -15,6 +15,8 @@ namespace ClassRegistration
         private List<Faculty> faculty;
         private List<Course> courses;
         private Faculty facultyMember;
+        //private DataBase DDD;
+        //private string user;
         public Form5(List<Student> students, List<Admin> admin, List<Faculty> faculty, List<Course> courses, Faculty fac)
         {
             this.students = students;

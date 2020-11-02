@@ -12,17 +12,19 @@ namespace ClassRegistration
 {
     public partial class Form4 : Form
     {
-        private List<string> coursesTaken;
-        private string gpaInfo;
-        public Form4(List<string>coursesTaken, string gpaInfo )
+        private DataBase DDD;
+        private string user;
+
+        public Form4(ref DataBase master, string username )
         {
-            this.coursesTaken = coursesTaken;
-            this.gpaInfo = gpaInfo;
+            this.DDD = master;
+            this.user = username;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
-            listBox1.DataSource = coursesTaken;
-            richTextBox1.Text = gpaInfo;
+            listBox1.DataSource = DDD.CourseHistoryDB;
+            decimal[] tmp = DDD.GetStudentGPA(user);
+            richTextBox1.Text = tmp[0] + "  "  + tmp[1] + "  " + tmp[2];
         }
 
      

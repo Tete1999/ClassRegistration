@@ -14,22 +14,33 @@ namespace ClassRegistration
 {
     public partial class Form3 : Form
     {
-        private List<Course> courses;
-        private Student student;
-        private List<Course> studentsCourses = new List<Course>();
+        private DataBase DDD;
+        private string user;
 
 
-        public Form3(List<Course> courses, Student student)
+        public Form3(ref DataBase master, string student)
         {
-            this.courses = courses;
-            this.student = student;
+            this.DDD = master;
+            this.user = student;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
-            listBox1.DataSource = courses;
-            listBox3.DataSource = studentsCourses;
-            List<string> seats = seatsData(courses);
-            listBox2.DataSource = seats;
+            //listBox1.DataSource = courses;
+            List<string> lst = new List<string>();
+            List<string> lst2 = new List<string>();
+            foreach (DataRow r in DDD.CourseDB.Rows)
+            {
+                lst.Add(DDD.CourseToString(r["CourseCode"].ToString()));
+            }
+            listBox1.Items.Clear();
+            listBox1.DataSource = lst;
+            //listBox1.
+            listBox3.Items.Clear();
+            listBox3.DataSource = DDD.getStudentField<List<string>>(user,"RC");
+            //listBox3.DataSource = user.
+            //List<string> seats = seatsData(courses);
+            listBox2.DataSource = DDD.CourseDB;
+            listBox2.DisplayMember = "SeatsAvail";
 
         }
 
@@ -72,67 +83,67 @@ namespace ClassRegistration
 
         private void button1_Click(object sender, EventArgs e)
         {
-            studentsCourses = student.getRegisteredCourses();
-            Course newCourse = new Course();
-            bool flag = false;
-            //Selection of Course 
-            if (student.getTotalCredit() < 5)
-            {
-                foreach (Course c in courses)
-                {
-                    if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
-                    {
-                        newCourse = c;
-                    }
-                }
-                foreach (Course c in studentsCourses)
-                {
-                    if (c.Overlap(newCourse))
-                    {
-                        MessageBox.Show("Warning: Time Overlap");
-                    }
-                }
+        //    studentsCourses = student.getRegisteredCourses();
+        //    Course newCourse = new Course();
+        //    bool flag = false;
+        //    //Selection of Course 
+        //    if (student.getTotalCredit() < 5)
+        //    {
+        //        foreach (Course c in courses)
+        //        {
+        //            if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+        //            {
+        //                newCourse = c;
+        //            }
+        //        }
+        //        foreach (Course c in studentsCourses)
+        //        {
+        //            if (c.Overlap(newCourse))
+        //            {
+        //                MessageBox.Show("Warning: Time Overlap");
+        //            }
+        //        }
 
-                // Have I already registered
-                foreach (Course c in studentsCourses)
-                {
-                    if (c.getTitle().TrimEnd() == newCourse.getTitle().TrimEnd())
-                    {
-                        flag = true;
-                    }
-                }
+        //        // Have I already registered
+        //        foreach (Course c in studentsCourses)
+        //        {
+        //            if (c.getTitle().TrimEnd() == newCourse.getTitle().TrimEnd())
+        //            {
+        //                flag = true;
+        //            }
+        //        }
 
-                if (student.getCourseHistory().ToString().Contains(newCourse.getCourseName().ToString().TrimEnd()))
-                {
-                    MessageBox.Show("Warning: Course Taken Before");
+        //        if (student.getCourseHistory().ToString().Contains(newCourse.getCourseName().ToString().TrimEnd()))
+        //        {
+        //            MessageBox.Show("Warning: Course Taken Before");
 
-                }
-                if (flag == false && newCourse.getSeats() >= 1)
-                {
-                    if ((student.getTotalCredit() + newCourse.getCredit()) < 5)
-                    {
-                        student.addCourse(newCourse);
-                        studentsCourses = student.getRegisteredCourses();
-                        MessageBox.Show("Course Added");
-                        //newCourse.setSeats(newCourse.getSeats() - 1);
-                        List<string> seats = seatsData(courses);
-                        listBox2.DataSource = seats;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error: Credit Limit Exceeded");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Error: Course is Full or Course Already Registered");
-                }
-            }
+        //        }
+        //        if (flag == false && newCourse.getSeats() >= 1)
+        //        {
+        //            if ((student.getTotalCredit() + newCourse.getCredit()) < 5)
+        //            {
+        //                student.addCourse(newCourse);
+        //                studentsCourses = student.getRegisteredCourses();
+        //                MessageBox.Show("Course Added");
+        //                //newCourse.setSeats(newCourse.getSeats() - 1);
+        //                List<string> seats = seatsData(courses);
+        //                listBox2.DataSource = seats;
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Error: Credit Limit Exceeded");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Error: Course is Full or Course Already Registered");
+        //        }
+        //    }
             
-            listBox1.DataSource = null;
-            listBox1.DataSource = courses;
-            listBox3.DataSource = null;
-            listBox3.DataSource = studentsCourses;
+        //    listBox1.DataSource = null;
+        //    listBox1.DataSource = courses;
+        //    listBox3.DataSource = null;
+        //    listBox3.DataSource = studentsCourses;
            
         }
        
@@ -140,17 +151,17 @@ namespace ClassRegistration
 
         private void button2_Click(object sender, EventArgs e)
         {
-            List<Course> studentsCourses = student.getRegisteredCourses();
-            Course newCourse = new Course();
-            foreach (Course c in courses)
-            {
-                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
-                {
-                    newCourse = c;
-                }
-            }
-            student.dropCourse(newCourse);
-            listBox2.DataSource = seatsDataDrop(courses);
+            //List<Course> studentsCourses = student.getRegisteredCourses();
+            //Course newCourse = new Course();
+            //foreach (Course c in courses)
+            //{
+            //    if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+            //    {
+            //        newCourse = c;
+            //    }
+            //}
+            //student.dropCourse(newCourse);
+            //listBox2.DataSource = seatsDataDrop(courses);
             
         }
 
@@ -171,31 +182,31 @@ namespace ClassRegistration
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            bool flag = false;
-            List<Course> rg = student.getRegisteredCourses();
-            Course toRemove = new Course(null, null, null, 1, 0, null);
-            foreach (Course c in rg)
-            {
-                if (listBox3.SelectedItem != null)
-                {
-                    if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
-                    {
-                        toRemove = c;
-                        flag = true;
-                    }
-                }
-            }
-            rg.Remove(toRemove);
-            listBox2.DataSource = seatsDataDrop(courses);
-            listBox3.DataSource = null;
-            listBox3.DataSource = rg;
-            MessageBox.Show("Course Dropped Successfully");
+        //    bool flag = false;
+        //    List<Course> rg = student.getRegisteredCourses();
+        //    Course toRemove = new Course(null, null, null, 1, 0, null);
+        //    foreach (Course c in rg)
+        //    {
+        //        if (listBox3.SelectedItem != null)
+        //        {
+        //            if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
+        //            {
+        //                toRemove = c;
+        //                flag = true;
+        //            }
+        //        }
+        //    }
+        //    rg.Remove(toRemove);
+        //    listBox2.DataSource = seatsDataDrop(courses);
+        //    listBox3.DataSource = null;
+        //    listBox3.DataSource = rg;
+        //    MessageBox.Show("Course Dropped Successfully");
         }
 
-        public List<Course> getRegisteredCourses()
-        {
-            return student.getRegisteredCourses();
-        }
+        //public List<Course> getRegisteredCourses()
+        //{
+        //    return student.getRegisteredCourses();
+        //}
 
         private void label2_Click_1(object sender, EventArgs e)
         {
