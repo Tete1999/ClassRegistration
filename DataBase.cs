@@ -112,6 +112,7 @@ namespace ClassRegistration
         public DataTable AdminDB;
         public DataTable CourseDB;
         public DataTable CourseHistoryDB;
+        public DataTable CurrentCoursesDB;
 
         ////////////// Constructor /////////////////////////////////////////////
         public DataBase(string SFA_File, string Course_File, string CSH_File)
@@ -121,7 +122,9 @@ namespace ClassRegistration
             FacultyDB = tmp[1];
             AdminDB = tmp[2];
             CourseDB = GetCourses(Course_File);
-            CourseHistoryDB = GetCourseHistory(CSH_File);
+            DataTable[] tmp2 = GetCourseHistory(CSH_File);
+            CourseHistoryDB = tmp2[0];
+            CurrentCoursesDB = tmp2[1];
 
             foreach(DataRow DR in StudentDB.Select())
             {
@@ -201,6 +204,17 @@ namespace ClassRegistration
             CourseHistory.Columns.Add("Credit", typeof(decimal));
             CourseHistory.Columns.Add("Grade", typeof(string));
             return CourseHistory;
+        }
+
+        private DataTable CreateCurrentCourseDB()
+        {
+            DataTable CurrentCourse = new DataTable();
+            CurrentCourse.Columns.Add("User", typeof(string));
+            CurrentCourse.Columns.Add("Course", typeof(string));
+            CurrentCourse.Columns.Add("Term", typeof(string));
+            CurrentCourse.Columns.Add("Credit", typeof(decimal));
+            CurrentCourse.Columns.Add("Grade", typeof(string));
+            return CurrentCourse;
         }
         private DataTable[] getSFA(string SFA_File)
         {
@@ -294,9 +308,10 @@ namespace ClassRegistration
         }
 
 
-        private DataTable GetCourseHistory(string CSH_File)
+        private DataTable[] GetCourseHistory(string CSH_File)
         {
             DataTable CSH = CreateCourseHistoryDB();
+            DataTable CC = CreateCurrentCourseDB();
 
             string ln;
             string user;
@@ -321,12 +336,18 @@ namespace ClassRegistration
                         grade = ln.Substring((24 * i)+21, 2).Trim();
                         //grade = ln.Substring((24 * i) + 21);
                         //grade = grade.Substring(0, grade.IndexOf(" ") < 1 ? 1 : grade.IndexOf(" ")).Trim();
-                        CSH.Rows.Add(user, course, term, credit, grade);
+                        if (grade != "N")
+                            CSH.Rows.Add(user, course, term, credit, grade);
+                        else
+                            CC.Rows.Add(user, course, term, credit, grade);
                     }
                 }
             }
 
-            return CSH;
+            DataTable[] data = new DataTable[2];
+            data[0] = CSH;
+            data[1] = CC;
+            return data;
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -659,6 +680,15 @@ namespace ClassRegistration
         {
             List<string> lst = new List<string>();
             DataRow[] DRlst = CourseHistoryDB.Select("User = '" + user + "'");
+            foreach (DataRow r in DRlst)
+                lst.Add(r.Field<string>(column));
+            return lst;
+        }
+
+        public List<string> getCurrentCourseFieldList(string user, string column)
+        {
+            List<string> lst = new List<string>();
+            DataRow[] DRlst = CurrentCoursesDB.Select("User = '" + user + "'");
             foreach (DataRow r in DRlst)
                 lst.Add(r.Field<string>(column));
             return lst;
@@ -1122,6 +1152,22 @@ namespace ClassRegistration
             }
             return lst;
         }
+
+        public List<string> CurrentCourseToList(string user)
+        {
+            List<string> lst = new List<string>();
+            DataRow[] DR = CurrentCoursesDB.Select("User = '" + user + "'");
+            foreach (DataRow row in DR)
+            {
+                string coursecode = row.Field<string>("Course");
+                string Term = row.Field<string>("Term");
+                string Credit = row.Field<decimal>("Credit").ToString();
+                string Grade = row.Field<string>("Grade");
+                lst.Add(coursecode.PadRight(20) + Term.PadRight(20) + Credit.PadRight(20) + Grade);
+            }
+            return lst;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
     }

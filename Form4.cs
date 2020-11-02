@@ -26,8 +26,12 @@ namespace ClassRegistration
             listBox1.Items.Clear();
             listBox1.DataSource = lst;
             decimal[] tmp = DDD.GetStudentGPA(user);
-            richTextBox1.Text = "GPA:                  " + tmp[0] 
-                + "\nQuality Points        "  + tmp[1] + "\nTotal Points          " + tmp[2];
+            richTextBox1.Text = "GPA:                  " + tmp[0]
+                + "\nQuality Points:       " + tmp[1] + "\nTotal Points:         " + tmp[2];
+
+            List<string> lst2 = DDD.CurrentCourseToList(user);
+            listBox2.Items.Clear();
+            listBox2.DataSource = lst2;
         }
 
      
@@ -53,6 +57,16 @@ namespace ClassRegistration
         }
 
         private void Form4_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

@@ -92,6 +92,10 @@ namespace ClassRegistration
                 }
                 form8.listBox1.DataSource = null;
                 form8.listBox1.DataSource = lst;
+
+                List<string> lst2 = DDD.CurrentCourseToList(student);
+                form8.listBox2.Items.Clear();
+                form8.listBox2.DataSource = lst2;
                 form8.ShowDialog();
             }
         //    Student adv = new Student();

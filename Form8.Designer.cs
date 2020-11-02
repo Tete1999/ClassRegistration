@@ -72,12 +72,14 @@
             // 
             // listBox2
             // 
+            this.listBox2.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 20;
+            this.listBox2.ItemHeight = 23;
             this.listBox2.Location = new System.Drawing.Point(12, 400);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(1195, 184);
+            this.listBox2.Size = new System.Drawing.Size(1195, 165);
             this.listBox2.TabIndex = 3;
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // label3
             // 
