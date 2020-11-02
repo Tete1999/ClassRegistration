@@ -40,19 +40,19 @@
             // 
             // listBox1
             // 
-            this.listBox1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox1.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 18;
-            this.listBox1.Location = new System.Drawing.Point(26, 98);
+            this.listBox1.ItemHeight = 23;
+            this.listBox1.Location = new System.Drawing.Point(26, 64);
             this.listBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(1235, 382);
+            this.listBox1.Size = new System.Drawing.Size(1181, 303);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(616, 30);
+            this.button1.Location = new System.Drawing.Point(616, 9);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(158, 48);
@@ -65,7 +65,7 @@
             // 
             this.label1.BackColor = System.Drawing.Color.Goldenrod;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(26, 30);
+            this.label1.Location = new System.Drawing.Point(26, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(584, 48);
             this.label1.TabIndex = 3;
@@ -74,7 +74,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(616, 499);
+            this.button3.Location = new System.Drawing.Point(616, 413);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(158, 48);
@@ -87,7 +87,7 @@
             // 
             this.label2.BackColor = System.Drawing.Color.Goldenrod;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(26, 499);
+            this.label2.Location = new System.Drawing.Point(25, 413);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(584, 48);
             this.label2.TabIndex = 5;
@@ -97,33 +97,33 @@
             // 
             // listBox3
             // 
-            this.listBox3.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox3.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 18;
-            this.listBox3.Location = new System.Drawing.Point(26, 565);
+            this.listBox3.ItemHeight = 23;
+            this.listBox3.Location = new System.Drawing.Point(26, 472);
             this.listBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(1235, 382);
+            this.listBox3.Size = new System.Drawing.Size(1235, 165);
             this.listBox3.TabIndex = 7;
             this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
             // 
             // listBox2
             // 
-            this.listBox2.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox2.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 18;
-            this.listBox2.Location = new System.Drawing.Point(1333, 98);
+            this.listBox2.ItemHeight = 23;
+            this.listBox2.Location = new System.Drawing.Point(1213, 64);
             this.listBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBox2.Name = "listBox2";
             this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBox2.Size = new System.Drawing.Size(94, 382);
+            this.listBox2.Size = new System.Drawing.Size(48, 303);
             this.listBox2.TabIndex = 8;
             // 
             // label3
             // 
             this.label3.BackColor = System.Drawing.Color.Goldenrod;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(1333, 30);
+            this.label3.Location = new System.Drawing.Point(1167, 5);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 48);
             this.label3.TabIndex = 9;

@@ -29,7 +29,7 @@ namespace ClassRegistration
             List<string> lst = new List<string>();
             foreach (DataRow r in DDD.CourseDB.Rows)
             {
-                lst.Add(DDD.CourseToString(r["CourseCode"].ToString()));
+                lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
             }
             listBox1.Items.Clear();
             listBox1.DataSource = lst;
@@ -37,7 +37,7 @@ namespace ClassRegistration
             List<string> lst2 = new List<string>();
             foreach(string s in DDD.getStudentFieldList(user, "RC"))
             {
-                lst2.Add(DDD.CourseToString(s));
+                lst2.Add(DDD.CourseToString(s,false));
             }
             listBox3.Items.Clear();
             listBox3.DataSource = lst2;
@@ -142,7 +142,7 @@ namespace ClassRegistration
             List<string> lst2 = new List<string>();
             foreach (string s in DDD.getStudentFieldList(user, "RC"))
             {
-                lst2.Add(DDD.CourseToString(s));
+                lst2.Add(DDD.CourseToString(s,false));
             }
             listBox3.Items.Clear();
             listBox3.DataSource = lst2;
@@ -151,7 +151,7 @@ namespace ClassRegistration
             List<string> lst = new List<string>();
             foreach (DataRow r in DDD.CourseDB.Rows)
             {
-                lst.Add(DDD.CourseToString(r["CourseCode"].ToString()));
+                lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
             }
             listBox1.Items.Clear();
             listBox1.DataSource = lst;
@@ -192,48 +192,32 @@ namespace ClassRegistration
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            string course = listBox3.SelectedItem.ToString();
-            course = course.Substring(0, course.IndexOf(" "));
-            DDD.IncrementDecrementinStudent(user, "RegCred", -1 * DDD.getCourseFieldDecimal(course, "Credits"));
-            DDD.removeIteminStudent(user, "RC", course);
-            DDD.IncrementDecrementinCourse(course, "SeatsAvail", 1);
-            DDD.removeIteminCourse(course, "StudentsEnrolled", user);
-            listBox3.DataSource = null;
-            List<string> lst2 = new List<string>();
-            foreach (string s in DDD.getStudentFieldList(user, "RC"))
+            if (listBox3.SelectedItem != null)
             {
-                lst2.Add(DDD.CourseToString(s));
-            }
-            listBox3.Items.Clear();
-            listBox3.DataSource = lst2;
+                string course = listBox3.SelectedItem.ToString();
+                course = course.Substring(0, course.IndexOf(" "));
+                DDD.IncrementDecrementinStudent(user, "RegCred", -1 * DDD.getCourseFieldDecimal(course, "Credits"));
+                DDD.removeIteminStudent(user, "RC", course);
+                DDD.IncrementDecrementinCourse(course, "SeatsAvail", 1);
+                DDD.removeIteminCourse(course, "StudentsEnrolled", user);
+                listBox3.DataSource = null;
+                List<string> lst2 = new List<string>();
+                foreach (string s in DDD.getStudentFieldList(user, "RC"))
+                {
+                    lst2.Add(DDD.CourseToString(s,false));
+                }
+                listBox3.Items.Clear();
+                listBox3.DataSource = lst2;
 
-            listBox1.DataSource = null;
-            List<string> lst = new List<string>();
-            foreach (DataRow r in DDD.CourseDB.Rows)
-            {
-                lst.Add(DDD.CourseToString(r["CourseCode"].ToString()));
+                listBox1.DataSource = null;
+                List<string> lst = new List<string>();
+                foreach (DataRow r in DDD.CourseDB.Rows)
+                {
+                    lst.Add(DDD.CourseToString(r["CourseCode"].ToString(),false));
+                }
+                listBox1.Items.Clear();
+                listBox1.DataSource = lst;
             }
-            listBox1.Items.Clear();
-            listBox1.DataSource = lst;
-            //    bool flag = false;
-            //    List<Course> rg = student.getRegisteredCourses();
-            //    Course toRemove = new Course(null, null, null, 1, 0, null);
-            //    foreach (Course c in rg)
-            //    {
-            //        if (listBox3.SelectedItem != null)
-            //        {
-            //            if (c.ToString().Substring(0, 11).TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
-            //            {
-            //                toRemove = c;
-            //                flag = true;
-            //            }
-            //        }
-            //    }
-            //    rg.Remove(toRemove);
-            //    listBox2.DataSource = seatsDataDrop(courses);
-            //    listBox3.DataSource = null;
-            //    listBox3.DataSource = rg;
-            //    MessageBox.Show("Course Dropped Successfully");
         }
 
         //public List<Course> getRegisteredCourses()

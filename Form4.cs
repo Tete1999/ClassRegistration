@@ -26,8 +26,8 @@ namespace ClassRegistration
             listBox1.Items.Clear();
             listBox1.DataSource = lst;
             decimal[] tmp = DDD.GetStudentGPA(user);
-            richTextBox1.Text = "GPA:                    " + tmp[0] 
-                + "\nQuality Points        "  + tmp[1] + "\n Total Points         " + tmp[2];
+            richTextBox1.Text = "GPA:                  " + tmp[0] 
+                + "\nQuality Points        "  + tmp[1] + "\nTotal Points          " + tmp[2];
         }
 
      

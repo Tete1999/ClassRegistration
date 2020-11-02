@@ -981,7 +981,7 @@ namespace ClassRegistration
                 str += "R";
             if (lst.Contains(16))
                 str += "F";
-            while (str.Length != 5)
+            while (str.Length <= 4)
             {
                 str += " ";
             }
@@ -990,13 +990,13 @@ namespace ClassRegistration
 
         private static string getTime(int t)
         {
-            string AMPM = " AM";
+            string AMPM = "AM";
             float time = t;
             time = time / 2;
             System.TimeSpan s = System.TimeSpan.FromSeconds(time * 3600);
             if (s.Hours >= 12)
             {
-                AMPM = " PM";
+                AMPM = "PM";
                 if (s.Hours > 12)
                     s = s.Subtract(System.TimeSpan.FromSeconds(12 * 3600));
             }
@@ -1082,17 +1082,17 @@ namespace ClassRegistration
             return false;
         }
 
-        public string CourseToString(string coursecode)
+        public string CourseToString(string coursecode, bool showseats = true)
         {
             DataRow DR = getCourseRow(coursecode);
             string g = DR.Field<string>("CourseName");
             string name = getCourseFieldString(coursecode, "CourseName").PadRight(12);
-            string instructor = getCourseFieldString(coursecode, "Instructor").PadRight(10);
+            string instructor = getCourseFieldString(coursecode, "Instructor").PadRight(8);
             string credits = getCourseFieldDecimal(coursecode, "Credits").ToString().PadRight(5);
             string seats = getCourseFieldInt(coursecode, "SeatsAvail").ToString().PadRight(4);
             string timeblocks = getSchedule(coursecode);
 
-            return coursecode.PadRight(12) + name + instructor + credits  + seats + timeblocks;
+            return coursecode.PadRight(12) + name + instructor + credits  + (showseats ? seats: "") + timeblocks;
         }
 
         public List<string> CourseHistoryToList(string user)
