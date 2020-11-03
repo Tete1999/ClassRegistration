@@ -44,8 +44,8 @@ namespace ClassRegistration
         private void button1_Click(object sender, EventArgs e)
         {
             Form3 form3 = new Form3(ref DDD, user);
-            form3.listBox3.DataSource = null;
-            form3.listBox3.DataSource = DDD.getStudentFieldList(user, "RC");
+            //form3.listBox3.DataSource = null;
+            //form3.listBox3.DataSource = DDD.getStudentFieldList(user, "RC");
             form3.ShowDialog();
   
         }

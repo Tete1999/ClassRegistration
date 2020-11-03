@@ -34,10 +34,12 @@ namespace ClassRegistration
             listBox1.Items.Clear();
             listBox1.DataSource = lst;
             //listBox1.
+
+            listBox3.DataSource = null;
             List<string> lst2 = new List<string>();
-            foreach(string s in DDD.getStudentFieldList(user, "RC"))
+            foreach (string s in DDD.getStudentFieldList(user, "RC"))
             {
-                lst2.Add(DDD.CourseToString(s,false));
+                lst2.Add(DDD.CourseToString(s, false));
             }
             listBox3.Items.Clear();
             listBox3.DataSource = lst2;
@@ -91,7 +93,7 @@ namespace ClassRegistration
             bool flag = false;
             string course = listBox1.SelectedItem.ToString();
             course = course.Substring(0, course.IndexOf(" "));
-            List<string> regcourses = DDD.getStudentFieldList(user, "RC");
+            List<string> regcourses = new List<string>(DDD.getStudentFieldList(user, "RC"));
             for (int i = 0; i < regcourses.Count; i++)
             {
                 regcourses[i] = regcourses[i].Substring(0, regcourses[i].Length - 3);
@@ -111,8 +113,8 @@ namespace ClassRegistration
             if (!flag && DDD.getCourseFieldInt(course, "SeatsAvail") >= 1)
             {
                 //Check For Time Overlaps
-                regcourses = DDD.getStudentFieldList(user, "RC");
-                List<string> check = DDD.getStudentFieldList(user, "RC");
+                regcourses = new List<string>(DDD.getStudentFieldList(user, "RC"));
+                List<string> check = new List<string>(DDD.getStudentFieldList(user, "RC"));
                 foreach (string rc in regcourses)
                 {
                     if (DDD.Overlap(course, rc))
@@ -120,7 +122,7 @@ namespace ClassRegistration
                 }
 
                 //Check For Course Previously Taken
-                List<string> CourseHist = DDD.getCourseHistoryFieldList(user, "Course");
+                List<string> CourseHist = new List<string>(DDD.getCourseHistoryFieldList(user, "Course"));
                 for (int i = 0; i < CourseHist.Count; i++)
                 {
                     CourseHist[i] = CourseHist[i].Substring(0, CourseHist[i].Length - 3);
