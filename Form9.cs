@@ -19,7 +19,7 @@ namespace ClassRegistration
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
-            ChangeLabelName(user)
+            ChangeLabelName(user);
             List<string> lst = new List<string>();
             foreach (DataRow r in DDD.CourseDB.Rows)
             {
