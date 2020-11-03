@@ -37,6 +37,7 @@ namespace ClassRegistration
         public void ChangeLabelName(string s)
         {
             label1.Text = s;
+
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
