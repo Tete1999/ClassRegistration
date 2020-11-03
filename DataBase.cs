@@ -665,7 +665,7 @@ namespace ClassRegistration
         public void setCourseField<T>(string coursecode, string column, T data)
         {
             DataRow DR = getCourseRow(coursecode);
-            int index = AdminDB.Rows.IndexOf(DR);
+            int index = CourseDB.Rows.IndexOf(DR);
             CourseDB.Rows[index].SetField(column, data);
         }
 
@@ -1059,8 +1059,14 @@ namespace ClassRegistration
 
             foreach (int ddttl in timeBlocks)
             {
-                //Console.WriteLine(ddttl);
-                output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + "  ";
+                if (!(sum_up(ddttl / 1000).Trim().Length == 0))
+                    //Console.WriteLine(ddttl);
+                    output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + "  ";
+                else
+                {
+                    output = "ARRANGED";
+                    break;
+                }
             }
             return output;
 
@@ -1069,11 +1075,16 @@ namespace ClassRegistration
         public string getSchedule(ArrayList timeBlocks)
         {
             string output = "";
-
             foreach (int ddttl in timeBlocks)
             {
-                //Console.WriteLine(ddttl);
-                output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + "  ";
+                if (!(sum_up(ddttl / 1000).Trim().Length == 0))
+                    //Console.WriteLine(ddttl);
+                    output += sum_up(ddttl / 1000) + getTime((ddttl / 10) % 100) + "-" + getTime(((ddttl / 10) % 100) + ((ddttl % 10))) + "  ";
+                else
+                {
+                    output = "ARRANGED";
+                    break;
+                }
             }
             return output;
 
@@ -1098,6 +1109,8 @@ namespace ClassRegistration
         {
             ArrayList tb1 = getCourseFieldArrayList(coursecode1, "TimeBlocks");
             ArrayList tb2 = getCourseFieldArrayList(coursecode2, "TimeBlocks");
+            if (getSchedule(tb1) == "ARRANGED" || getSchedule(tb2) == "ARRANGED")
+                return false;
             foreach (int ddttl1 in tb1)
             {
                 char[] dayarray1 = sum_up(ddttl1 / 1000).Trim().ToCharArray();

@@ -18,5 +18,10 @@ namespace ClassRegistration
             this.user = user;
             InitializeComponent();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
