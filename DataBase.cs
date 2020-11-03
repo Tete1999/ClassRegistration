@@ -401,7 +401,7 @@ namespace ClassRegistration
 
         public Admin2 getAdminObject(string username)
         {
-            DataRow DR = getFacultyRow(username);
+            DataRow DR = getAdminRow(username);
             ArrayList lst = new ArrayList();
             string user = DR.Field<string>(0);
             string pass = DR.Field<string>(1);

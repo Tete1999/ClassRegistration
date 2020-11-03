@@ -98,6 +98,8 @@ private void button1_Click(object sender, EventArgs e)
             {
                 if (row.Field<string>(0) == textBox1.Text.ToLower() && row.Field<string>(1) == textBox2.Text)
                 {
+                    Admin2 adm = DDD.getAdminObject(textBox1.Text.ToLower());
+                    Form9 form9 = new Form9(ref DDD, adm.user);
                     //Admin2 admin = DDD.getAdminObject(textBox1.Text.ToLower());
                     //Form2 form2 = new Form2(DDD, admin);
                     //string s = "Welcome " + admin.firstName + " " +  admin.middleName + " " +  admin.lastName;
@@ -105,6 +107,12 @@ private void button1_Click(object sender, EventArgs e)
                     //form2.ShowDialog();
                     //flag = true;
                     //break;
+                    string s = "Welcome " + adm.firstName + " " + adm.middleName + " " + adm.lastName;
+                    form9.ChangeLabelName(s);
+                    form9.ShowDialog();
+                    flag = true;
+                    form9.Refresh();
+                    break;
                 }
             }
             foreach (DataRow row in DDD.StudentDB.Rows)
