@@ -55,7 +55,7 @@ namespace ClassRegistration
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(listBox2.DataSource != null)
+            if(listBox2.SelectedItem != null)
             {
                 string student = listBox2.SelectedItem.ToString();
                 List<string> regcourses = new List<string>(DDD.getStudentFieldList(student, "RC"));

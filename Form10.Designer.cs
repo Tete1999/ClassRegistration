@@ -37,7 +37,7 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
+            this.listBox1.ItemHeight = 20;
             this.listBox1.Location = new System.Drawing.Point(26, 130);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(613, 404);
@@ -51,7 +51,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(175, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(307, 44);
+            this.label1.Size = new System.Drawing.Size(361, 52);
             this.label1.TabIndex = 1;
             this.label1.Text = "Student Listings";
             // 
@@ -64,6 +64,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Inspect";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -74,6 +75,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Remove";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form10
             // 

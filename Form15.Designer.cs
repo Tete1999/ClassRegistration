@@ -47,11 +47,11 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(25, 104);
+            this.button1.Location = new System.Drawing.Point(711, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(706, 52);
+            this.button1.Size = new System.Drawing.Size(257, 52);
             this.button1.TabIndex = 6;
-            this.button1.Text = "Advising";
+            this.button1.Text = "Delete This";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // listBox1
@@ -59,20 +59,21 @@
             this.listBox1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(25, 162);
+            this.listBox1.ItemHeight = 18;
+            this.listBox1.Location = new System.Drawing.Point(22, 112);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(1095, 436);
             this.listBox1.TabIndex = 7;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.button2.Location = new System.Drawing.Point(737, 104);
+            this.button2.Location = new System.Drawing.Point(974, 12);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(383, 52);
+            this.button2.Size = new System.Drawing.Size(183, 52);
             this.button2.TabIndex = 8;
-            this.button2.Text = "View Course Roster";
+            this.button2.Text = "Delete This";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // Form15

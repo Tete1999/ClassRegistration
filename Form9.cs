@@ -63,7 +63,8 @@ namespace ClassRegistration
                     DDD.IncrementDecrementinStudent(stu, "RegCred", -1 * creds);
                 }
                 string fac = DDD.getCourseFieldString(course, "Instructor");
-                DDD.removeIteminFaculty(fac, "Courses", course);
+                if (fac != "Staff")
+                    DDD.removeIteminFaculty(fac, "Courses", course);
                 DataRow DR = DDD.CourseDB.Select("CourseCode = '" + course + "'")[0];
                 DDD.CourseDB.Rows.Remove(DR);
 
@@ -124,6 +125,32 @@ namespace ClassRegistration
             }
             listBox1.DataSource = null;
             listBox1.Items.Clear();
+            listBox1.DataSource = lst;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form10 form10 = new Form10(ref DDD, user);
+            form10.ShowDialog();
+            List<string> lst = new List<string>();
+            foreach (DataRow r in DDD.CourseDB.Rows)
+            {
+                lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
+            }
+            listBox1.DataSource = null;
+            listBox1.DataSource = lst;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form14 form14 = new Form14(ref DDD,user);
+            form14.ShowDialog();
+            List<string> lst = new List<string>();
+            foreach (DataRow r in DDD.CourseDB.Rows)
+            {
+                lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
+            }
+            listBox1.DataSource = null;
             listBox1.DataSource = lst;
         }
     }

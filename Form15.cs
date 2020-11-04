@@ -17,6 +17,20 @@ namespace ClassRegistration
             this.DDD = master;
             this.user = user;
             InitializeComponent();
+
+            List<string> lst = new List<string>();
+            foreach (string r in DDD.getFacultyFieldList(user,"Courses"))
+            {
+                lst.Add(DDD.CourseToString(r));
+            }
+            listBox1.DataSource = null;
+            listBox1.DataSource = lst;
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
