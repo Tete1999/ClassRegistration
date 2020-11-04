@@ -45,5 +45,19 @@ namespace ClassRegistration
         {
 
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void ChangeLabelName(string s)
+        {
+            label4.Text = s;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

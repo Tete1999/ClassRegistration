@@ -77,6 +77,9 @@ namespace ClassRegistration
             {
                 string fac = listBox1.SelectedItem.ToString();
                 Form15 form15 = new Form15(ref DDD, fac);
+                Faculty2 fac2 = DDD.getFacultyObject(fac);
+                string s = fac2.firstName + " " + fac2.middleName + " " + fac2.lastName;
+                form15.ChangeLabelName(s);
                 form15.ShowDialog();
             }
         }

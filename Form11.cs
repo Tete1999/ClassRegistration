@@ -132,7 +132,10 @@ namespace ClassRegistration
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Student2 stu2 = DDD.getStudentObject(user);
             Form12 form12 = new Form12(ref DDD, user);
+            string s = stu2.firstName + " " + stu2.middleName + " " + stu2.lastName;
+            form12.ChangeLabelName(s);
             form12.ShowDialog();
         }
 
@@ -141,6 +144,15 @@ namespace ClassRegistration
             Form20 form20 = new Form20(ref DDD, user);
             form20.ShowDialog();
 
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void ChangeLabelName(string s)
+        {
+            label4.Text = s;
         }
     }
 }

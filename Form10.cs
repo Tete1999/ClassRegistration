@@ -73,7 +73,10 @@ namespace ClassRegistration
             if (listBox1.SelectedItem != null)
             {
                 string student = listBox1.SelectedItem.ToString();
+                Student2 stu = DDD.getStudentObject(student);
                 Form11 form11 = new Form11(ref DDD, student);
+                string s = stu.firstName + " " + stu.middleName + " " + stu.lastName;
+                form11.ChangeLabelName(s);
                 form11.ShowDialog();
             }
         }

@@ -51,5 +51,14 @@ namespace ClassRegistration
                 MessageBox.Show("Advisor Changed to: " + fac);
             }
         }
+        public void ChangeLabelName(string s)
+        {
+            label1.Text = s;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

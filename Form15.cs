@@ -32,5 +32,9 @@ namespace ClassRegistration
         {
 
         }
+        public void ChangeLabelName(string s)
+        {
+            label1.Text = s;
+        }
     }
 }
