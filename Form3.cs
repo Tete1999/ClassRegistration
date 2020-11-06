@@ -56,37 +56,6 @@ namespace ClassRegistration
           
         }
 
-        private List<string> seatsData(List<Course> courses)
-        {
-            List<string> seats = new List<string>();
-            foreach (Course c in courses)
-            {
-                if (c.getCourseName().TrimEnd() == listBox1.SelectedItem.ToString().Substring(0, 11).TrimEnd())
-                {
-                    c.setSeats(c.getSeats() - 1);
-                }
-                seats.Add(c.getSeats().ToString() + "\n");
-            }
-            return seats;
-        }
-
-        private List<string> seatsDataDrop(List<Course> courses)
-        {
-            List<string> seats = new List<string>();
-            foreach (Course c in courses)
-            {
-                if (listBox3.SelectedItem != null)
-                {
-                    if (c.getCourseName().TrimEnd() == listBox3.SelectedItem.ToString().Substring(0, 11).TrimEnd())
-                    {
-                        c.setSeats(c.getSeats() + 1);
-                    }
-                }
-                seats.Add(c.getSeats().ToString() + "\n");
-            }
-            return seats;
-        }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
