@@ -110,21 +110,25 @@ namespace ClassRegistration
         public DataTable StudentDB;
         public DataTable FacultyDB;
         public DataTable AdminDB;
+        public DataTable ManagerDB;
         public DataTable CourseDB;
         public DataTable CourseHistoryDB;
         public DataTable CurrentCoursesDB;
+        public DataTable PrerequisiteDB;
 
         ////////////// Constructor /////////////////////////////////////////////
-        public DataBase(string SFA_File, string Course_File, string CSH_File)
+        public DataBase(string SFA_File, string Course_File, string CSH_File, string Pre_File)
         {
             DataTable[] tmp = getSFA(SFA_File);
             StudentDB = tmp[0];
             FacultyDB = tmp[1];
             AdminDB = tmp[2];
+            ManagerDB = tmp[3];
             CourseDB = GetCourses(Course_File);
             DataTable[] tmp2 = GetCourseHistory(CSH_File);
             CourseHistoryDB = tmp2[0];
             CurrentCoursesDB = tmp2[1];
+            PrerequisiteDB = GetPrerequisiteDB(Pre_File);
 
             foreach(DataRow DR in StudentDB.Select())
             {
@@ -216,12 +220,22 @@ namespace ClassRegistration
             CurrentCourse.Columns.Add("Grade", typeof(string));
             return CurrentCourse;
         }
+
+        private DataTable CreatPrerequisiteDB()
+        {
+            DataTable Course = new DataTable();
+            Course.Columns.Add("CourseCode", typeof(string));
+            Course.Columns.Add("PreReqs", typeof(List<string>));
+            return Course;
+        }
+
         private DataTable[] getSFA(string SFA_File)
         {
             DataTable STU = CreateStudentDB();
             DataTable FAC = CreateFacultyDB();
             DataTable ADMIN = CreateAdminDB();
-            DataTable[] returnTable = new DataTable[3];
+            DataTable MANAGER = CreateAdminDB();
+            DataTable[] returnTable = new DataTable[4];
 
             string ln;
             string user;
@@ -251,6 +265,10 @@ namespace ClassRegistration
                     {
                         ADMIN.Rows.Add(user, pass, first, middle, last);
                     }
+                    else if (status == "manager")
+                    {
+                        MANAGER.Rows.Add(user, pass, first, middle, last);
+                    }
                     else
                     {
                         STU.Rows.Add(user, pass, first, middle, last, status, 0.0, new List<string>(), new List<string>());
@@ -261,6 +279,7 @@ namespace ClassRegistration
             returnTable[0] = STU;
             returnTable[1] = FAC;
             returnTable[2] = ADMIN;
+            returnTable[3] = MANAGER;
             return returnTable;
         }
 
@@ -349,6 +368,36 @@ namespace ClassRegistration
             data[1] = CC;
             return data;
         }
+
+        private DataTable GetPrerequisiteDB(string Pre_File)
+        {
+            DataTable PreReq = CreatPrerequisiteDB();
+
+            string ln;
+            string parent;
+            string child;
+            int numchildren;
+
+            using (StreamReader file = new StreamReader(Pre_File))
+            {
+                while ((ln = file.ReadLine()) != null)
+                {
+                    parent = ln.Substring(0, 8).Trim();
+                    List<string> lst = new List<string>();
+
+                    numchildren = Int32.Parse(ln.Substring(7, 2).Trim());
+                    ln = ln.Substring(9);
+                    for (int i = 0; i < numchildren; i++)
+                    {
+                        child = ln.Substring(8 * i, 8).Trim();
+                        lst.Add(child);
+                    }
+                    PreReq.Rows.Add(parent, lst);
+                }
+            }
+            
+            return PreReq;
+        }
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -434,6 +483,15 @@ namespace ClassRegistration
             DataRow DR;
             string criteria = "User = '" + username + "'";
             DR = AdminDB.Select(criteria)[0];
+            return DR;
+
+        }
+
+        private DataRow getManagerRow(string username)
+        {
+            DataRow DR;
+            string criteria = "User = '" + username + "'";
+            DR = ManagerDB.Select(criteria)[0];
             return DR;
 
         }
@@ -595,6 +653,7 @@ namespace ClassRegistration
                 data.Add(s);
             return data;
         }
+
         public int getAdminFieldInt(string user, string column)
         {
             DataRow DR = getAdminRow(user);
@@ -621,6 +680,50 @@ namespace ClassRegistration
             DataRow DR = getAdminRow(user);
             int index = AdminDB.Rows.IndexOf(DR);
             AdminDB.Rows[index].SetField(column, data);
+        }
+
+        public string getManagerFieldString(string user, string column)
+        {
+            DataRow DR = getManagerRow(user);
+            string data = DR.Field<string>(column);
+            return data;
+        }
+
+        public List<string> getManagerFieldList(string user, string column)
+        {
+            DataRow DR = getManagerRow(user);
+            List<string> data = new List<string>();
+            foreach (string s in DR.Field<List<string>>(column))
+                data.Add(s);
+            return data;
+        }
+
+        public int getManagerFieldInt(string user, string column)
+        {
+            DataRow DR = getManagerRow(user);
+            int data = DR.Field<int>(column);
+            return data;
+        }
+
+        public decimal getManagerFieldDecimal(string user, string column)
+        {
+            DataRow DR = getManagerRow(user);
+            decimal data = DR.Field<decimal>(column);
+            return data;
+        }
+
+        public void setManagerField<T>(string user, string column, T data)
+        {
+            DataRow DR = getManagerRow(user);
+            int index = ManagerDB.Rows.IndexOf(DR);
+            ManagerDB.Rows[index].SetField(column, data);
+        }
+
+        public void setManagerField<T>(string user, int column, T data)
+        {
+            DataRow DR = getManagerRow(user);
+            int index = ManagerDB.Rows.IndexOf(DR);
+            ManagerDB.Rows[index].SetField(column, data);
         }
 
         public string getCourseFieldString(string coursecode, string column)
@@ -691,6 +794,20 @@ namespace ClassRegistration
             DataRow[] DRlst = CurrentCoursesDB.Select("User = '" + user + "'");
             foreach (DataRow r in DRlst)
                 lst.Add(r.Field<string>(column));
+            return lst;
+        }
+
+        public List<string> getPrequisites(string coursecode)
+        {
+            List<string> lst = new List<string>();
+            coursecode = coursecode.Substring(0, coursecode.Length - 3);
+            DataRow[] DRlst = PrerequisiteDB.Select("CourseCode = '" + coursecode + "'");
+            if (DRlst.Length != 0)
+            {
+                DataRow DR = DRlst[0];
+                foreach (string s in DR.Field<List<string>>("PreReqs"))
+                    lst.Add(s);
+            }
             return lst;
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -1183,6 +1300,47 @@ namespace ClassRegistration
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+        public bool HasPrequisitesFullfilled(string user, string coursecode)
+        {
+            List<string> lst = new List<string>();
+            lst= getPrequisites(coursecode);
+
+            List<string> hist = new List<string>();
+            hist = getCourseHistoryFieldList(user, "Course");
+
+            List<string> grade = new List<string>();
+            grade = getCourseHistoryFieldList(user, "Grade");
+
+            List<string> current = new List<string>();
+            current = getCurrentCourseFieldList(user, "Course");
+
+            List<string> letters = new List<string> { "A", "A-", "B+", "B", "B-", "C+", "C", "C-",
+                "D+", "D", "D-", "S", "EQ" };
+
+            foreach (string pre in lst)
+            {
+                bool hastaken = false;
+                for (int i= 0; i < hist.Count; i++)
+                {
+                    if (hist[i].Substring(0, hist[i].Length - 3) == pre)
+                    {
+                        if(letters.Contains(grade[i]) || (grade[i].Contains("R") && !grade[i].Contains("F")))
+                            hastaken = true;
+                    }
+                }
+                foreach (string curr in current)
+                {
+                    if (curr.Substring(0, curr.Length - 3) == pre)
+                        hastaken = true;
+                }
+                if (!hastaken)
+                    return false;
+            }
+            return true;
+        }
+
     }
 
 }

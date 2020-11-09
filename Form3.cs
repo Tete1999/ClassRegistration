@@ -72,6 +72,15 @@ namespace ClassRegistration
                 MessageBox.Show("Error: Course Already Registered");
                 flag = true;
             }
+            else if (!DDD.HasPrequisitesFullfilled(user, course))
+            {
+                string prereqcourses = "";
+
+                foreach (string r in DDD.getPrequisites(course))
+                    prereqcourses += r + "  ";
+                MessageBox.Show("Error: Following are prerequisites: " + prereqcourses);
+                flag = true;
+            }
             else if (!(DDD.getStudentFieldDecimal(user, "RegCred") + DDD.getCourseFieldDecimal(course, "Credits") <= 5.0M))
             {
                 MessageBox.Show("Error: Credit Limit Exceeded");
