@@ -43,7 +43,8 @@ namespace ClassRegistration
             {
                 string fac = listBox1.SelectedItem.ToString();
                 string tempfac = DDD.getStudentFieldString(user, "AdvisorUser");
-                DDD.removeIteminFaculty(tempfac, "AdviseeUsers", user);
+                if (tempfac != "Staff")
+                    DDD.removeIteminFaculty(tempfac, "AdviseeUsers", user);
 
                 DDD.setStudentField<string>(user, "AdvisorUser", fac);
                 DDD.pushIteminFaculty(fac, "AdviseeUsers", user);

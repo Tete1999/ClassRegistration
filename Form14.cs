@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace ClassRegistration
 {
@@ -16,7 +17,14 @@ namespace ClassRegistration
         {
             this.DDD = master;
             this.user = user;
+
             InitializeComponent();
+
+            if (!DDD.getAdminFieldBool(user, "Manager"))
+            {
+                button2.Visible = false;
+                button3.Visible = false;
+            }
 
             List<string> lst = new List<string>();
             foreach (DataRow r in DDD.FacultyDB.Select())
@@ -82,6 +90,37 @@ namespace ClassRegistration
                 form15.ChangeLabelName(s);
                 form15.ShowDialog();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string user = Interaction.InputBox("Insert Faculty Username", "Add Faculty", "JDoe", 100, 100).ToLower();
+
+            if (DDD.FacultyDB.Select("User = '" + user + "'").Length != 0)
+            {
+                MessageBox.Show(user + " has already been taken");
+                return;
+            }
+            string pass = Interaction.InputBox("Insert Faculty Password", "Add Faculty", "1234", 100, 100).ToLower();
+            string first = Interaction.InputBox("Insert First Name", "Add Faculty", "first", 100, 100).ToLower();
+            string middle = Interaction.InputBox("Insert Middle Name", "Add Faculty", "middle", 100, 100).ToLower();
+            string last = Interaction.InputBox("Insert Last Name", "Add Faculty", "last", 100, 100).ToLower();
+
+            DialogResult dialogResult = MessageBox.Show("username: " + user + "\n" + "password: " + pass + "\n" +
+                "full name : " + first + " " + middle + " " + last, "Confirm Faculty Credentials",
+                MessageBoxButtons.OKCancel);
+            if (dialogResult == DialogResult.OK)
+            {
+                DDD.FacultyDB.Rows.Add(user, pass, first, middle, last, new List<string>(), new List<string>());
+                MessageBox.Show(user + " added to database");
+            }
+            List<string> lst = new List<string>();
+            foreach (DataRow r in DDD.FacultyDB.Select())
+            {
+                lst.Add(r["User"].ToString());
+            }
+            listBox1.DataSource = null;
+            listBox1.DataSource = lst;
         }
     }
 }

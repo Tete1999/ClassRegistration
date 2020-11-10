@@ -22,6 +22,15 @@ namespace ClassRegistration
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             InitializeComponent();
             ChangeLabelName(user);
+            if (!DDD.getAdminFieldBool(user, "Manager"))
+            {
+                button6.Visible = false;
+                button7.Visible = false;
+                button1.Visible = false;
+                button2.Visible = false;
+                button3.Visible = false;
+            }
+
             List<string> lst = new List<string>();
             foreach (DataRow r in DDD.CourseDB.Rows)
             {
@@ -152,6 +161,66 @@ namespace ClassRegistration
             }
             listBox1.DataSource = null;
             listBox1.DataSource = lst;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string code = Interaction.InputBox("Insert Course Code", "Add Course", "XXX-XXX-XX", 100, 100).ToUpper();
+            if (code.Length < 9)
+            {
+                MessageBox.Show("Error: Not a Valid Course Code");
+                return;
+            }
+
+            if (!code.Substring(code.Length-3).StartsWith("-"))
+            {
+                MessageBox.Show("Error: Not a Valid Course Code");
+                return;
+            }
+
+            if (DDD.CourseDB.Select("CourseCode = '" + code + "'").Length != 0)
+            {
+                MessageBox.Show(code + " already exists");
+                return;
+            }
+            string name = Interaction.InputBox("Insert Course Name", "Add Course", "Intro Lrn", 100, 100);
+            decimal credits = 0M;
+            int seats = 0;
+            try
+            {
+                credits = decimal.Parse(Interaction.InputBox("Insert Credits", "Add Course", "1.00", 100, 100).ToLower());
+                seats = Int32.Parse(Interaction.InputBox("Insert Seats", "Add Course", "20", 100, 100).ToLower());
+            }
+            catch
+            {
+                MessageBox.Show("Invlid Information");
+                return;
+            }
+
+            DialogResult dialogResult = MessageBox.Show("course: " + code + "\n" + "name: " + name + "\n" +
+                "Instructor : Staff" + "\n" + "Credits: " + credits + "\n" + "Seats: " + seats + "\n" + 
+                "Time: ARRANGED", "Confirm Course", MessageBoxButtons.OKCancel);
+            if (dialogResult == DialogResult.OK)
+            {
+                ArrayList arrayList = new ArrayList();
+                arrayList.Add(0);
+                DDD.CourseDB.Rows.Add(code, name, "Staff", credits, seats, 0 ,arrayList, new List<string>());
+                MessageBox.Show(code + " added to database");
+            }
+
+            List<string> lst = new List<string>();
+            foreach (DataRow r in DDD.CourseDB.Rows)
+            {
+                lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
+            }
+            listBox1.DataSource = null;
+            listBox1.DataSource = lst;
+
         }
     }
 }

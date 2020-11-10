@@ -110,7 +110,6 @@ namespace ClassRegistration
         public DataTable StudentDB;
         public DataTable FacultyDB;
         public DataTable AdminDB;
-        public DataTable ManagerDB;
         public DataTable CourseDB;
         public DataTable CourseHistoryDB;
         public DataTable CurrentCoursesDB;
@@ -123,7 +122,6 @@ namespace ClassRegistration
             StudentDB = tmp[0];
             FacultyDB = tmp[1];
             AdminDB = tmp[2];
-            ManagerDB = tmp[3];
             CourseDB = GetCourses(Course_File);
             DataTable[] tmp2 = GetCourseHistory(CSH_File);
             CourseHistoryDB = tmp2[0];
@@ -182,6 +180,7 @@ namespace ClassRegistration
             AllAdmins.Columns.Add("First", typeof(string));
             AllAdmins.Columns.Add("Middle", typeof(string));
             AllAdmins.Columns.Add("Last", typeof(string));
+            AllAdmins.Columns.Add("Manager", typeof(bool));
             return AllAdmins;
         }
 
@@ -234,8 +233,7 @@ namespace ClassRegistration
             DataTable STU = CreateStudentDB();
             DataTable FAC = CreateFacultyDB();
             DataTable ADMIN = CreateAdminDB();
-            DataTable MANAGER = CreateAdminDB();
-            DataTable[] returnTable = new DataTable[4];
+            DataTable[] returnTable = new DataTable[3];
 
             string ln;
             string user;
@@ -263,11 +261,11 @@ namespace ClassRegistration
                     }
                     else if (status == "admin")
                     {
-                        ADMIN.Rows.Add(user, pass, first, middle, last);
+                        ADMIN.Rows.Add(user, pass, first, middle, last,false);
                     }
                     else if (status == "manager")
                     {
-                        MANAGER.Rows.Add(user, pass, first, middle, last);
+                        ADMIN.Rows.Add(user, pass, first, middle, last,true);
                     }
                     else
                     {
@@ -279,7 +277,6 @@ namespace ClassRegistration
             returnTable[0] = STU;
             returnTable[1] = FAC;
             returnTable[2] = ADMIN;
-            returnTable[3] = MANAGER;
             return returnTable;
         }
 
@@ -487,14 +484,14 @@ namespace ClassRegistration
 
         }
 
-        private DataRow getManagerRow(string username)
-        {
-            DataRow DR;
-            string criteria = "User = '" + username + "'";
-            DR = ManagerDB.Select(criteria)[0];
-            return DR;
+        //private DataRow getManagerRow(string username)
+        //{
+        //    DataRow DR;
+        //    string criteria = "User = '" + username + "'";
+        //    DR = ManagerDB.Select(criteria)[0];
+        //    return DR;
 
-        }
+        //}
 
         public ArrayList getAdminArrayList(string username)
         {
@@ -668,6 +665,13 @@ namespace ClassRegistration
             return data;
         }
 
+        public bool getAdminFieldBool(string user, string column)
+        {
+            DataRow DR = getAdminRow(user);
+            bool data = DR.Field<bool>(column);
+            return data;
+        }
+
         public void setAdminField<T>(string user, string column, T data)
         {
             DataRow DR = getAdminRow(user);
@@ -682,49 +686,49 @@ namespace ClassRegistration
             AdminDB.Rows[index].SetField(column, data);
         }
 
-        public string getManagerFieldString(string user, string column)
-        {
-            DataRow DR = getManagerRow(user);
-            string data = DR.Field<string>(column);
-            return data;
-        }
+        //public string getManagerFieldString(string user, string column)
+        //{
+        //    DataRow DR = getManagerRow(user);
+        //    string data = DR.Field<string>(column);
+        //    return data;
+        //}
 
-        public List<string> getManagerFieldList(string user, string column)
-        {
-            DataRow DR = getManagerRow(user);
-            List<string> data = new List<string>();
-            foreach (string s in DR.Field<List<string>>(column))
-                data.Add(s);
-            return data;
-        }
+        //public List<string> getManagerFieldList(string user, string column)
+        //{
+        //    DataRow DR = getManagerRow(user);
+        //    List<string> data = new List<string>();
+        //    foreach (string s in DR.Field<List<string>>(column))
+        //        data.Add(s);
+        //    return data;
+        //}
 
-        public int getManagerFieldInt(string user, string column)
-        {
-            DataRow DR = getManagerRow(user);
-            int data = DR.Field<int>(column);
-            return data;
-        }
+        //public int getManagerFieldInt(string user, string column)
+        //{
+        //    DataRow DR = getManagerRow(user);
+        //    int data = DR.Field<int>(column);
+        //    return data;
+        //}
 
-        public decimal getManagerFieldDecimal(string user, string column)
-        {
-            DataRow DR = getManagerRow(user);
-            decimal data = DR.Field<decimal>(column);
-            return data;
-        }
+        //public decimal getManagerFieldDecimal(string user, string column)
+        //{
+        //    DataRow DR = getManagerRow(user);
+        //    decimal data = DR.Field<decimal>(column);
+        //    return data;
+        //}
 
-        public void setManagerField<T>(string user, string column, T data)
-        {
-            DataRow DR = getManagerRow(user);
-            int index = ManagerDB.Rows.IndexOf(DR);
-            ManagerDB.Rows[index].SetField(column, data);
-        }
+        //public void setManagerField<T>(string user, string column, T data)
+        //{
+        //    DataRow DR = getManagerRow(user);
+        //    int index = ManagerDB.Rows.IndexOf(DR);
+        //    ManagerDB.Rows[index].SetField(column, data);
+        //}
 
-        public void setManagerField<T>(string user, int column, T data)
-        {
-            DataRow DR = getManagerRow(user);
-            int index = ManagerDB.Rows.IndexOf(DR);
-            ManagerDB.Rows[index].SetField(column, data);
-        }
+        //public void setManagerField<T>(string user, int column, T data)
+        //{
+        //    DataRow DR = getManagerRow(user);
+        //    int index = ManagerDB.Rows.IndexOf(DR);
+        //    ManagerDB.Rows[index].SetField(column, data);
+        //}
 
         public string getCourseFieldString(string coursecode, string column)
         {
