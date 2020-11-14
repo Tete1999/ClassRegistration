@@ -97,7 +97,6 @@ namespace ClassRegistration
                 form17.ShowDialog();
                 finished = form17.finished;
             }
-
             string course = listBox1.SelectedItem.ToString();
             course = course.Substring(0, course.IndexOf(" "));
             DialogResult dialogResult = MessageBox.Show("New Schedule: " + DDD.getSchedule(arrayList),

@@ -1226,7 +1226,33 @@ namespace ClassRegistration
 
         }
 
-        public bool Overlap(string coursecode1, string coursecode2)
+        public bool Overlap(ArrayList arrayList, int tb)
+        {
+            foreach (int ddttl1 in arrayList)
+            {
+                char[] dayarray1 = sum_up(ddttl1 / 1000).Trim().ToCharArray();
+                char[] dayarray2 = sum_up(tb / 1000).Trim().ToCharArray();
+                foreach (char day1 in dayarray1)
+                {
+                    TimeSpan start1 = DateTime.Parse(getTime((ddttl1 / 10) % 100)).TimeOfDay;
+                    TimeSpan finish1 = DateTime.Parse(getTime(((ddttl1 / 10) % 100) + ((ddttl1 % 10)))).TimeOfDay;
+                    foreach (char day2 in dayarray2)
+                    {
+                        if (day1 == day2)
+                        {
+                            TimeSpan start2 = DateTime.Parse(getTime((tb / 10) % 100)).TimeOfDay;
+                            TimeSpan finish2 = DateTime.Parse(getTime(((tb / 10) % 100) + ((tb % 10)))).TimeOfDay;
+                            if (TimeSpan_Overlap(start1, finish1, start2, finish2))
+                                return true;
+                        }
+
+                    }
+                }
+            }
+            return false;
+        }
+
+            public bool Overlap(string coursecode1, string coursecode2)
         {
             ArrayList tb1 = getCourseFieldArrayList(coursecode1, "TimeBlocks");
             ArrayList tb2 = getCourseFieldArrayList(coursecode2, "TimeBlocks");

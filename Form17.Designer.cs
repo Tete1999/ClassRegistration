@@ -33,6 +33,7 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.Add_More = new System.Windows.Forms.Button();
             this.Finish = new System.Windows.Forms.Button();
+            this.Arranged = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -55,6 +56,7 @@
             // 
             // checkedListBox1
             // 
+            this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point(78, 25);
             this.checkedListBox1.Name = "checkedListBox1";
@@ -82,12 +84,23 @@
             this.Finish.UseVisualStyleBackColor = true;
             this.Finish.Click += new System.EventHandler(this.Finish_Click);
             // 
+            // Arranged
+            // 
+            this.Arranged.Location = new System.Drawing.Point(548, 184);
+            this.Arranged.Name = "Arranged";
+            this.Arranged.Size = new System.Drawing.Size(167, 46);
+            this.Arranged.TabIndex = 10;
+            this.Arranged.Text = "ARRANGED";
+            this.Arranged.UseVisualStyleBackColor = true;
+            this.Arranged.Click += new System.EventHandler(this.Arranged_Click);
+            // 
             // Form17
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Maroon;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Arranged);
             this.Controls.Add(this.Finish);
             this.Controls.Add(this.Add_More);
             this.Controls.Add(this.checkedListBox1);
@@ -106,5 +119,6 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button Add_More;
         private System.Windows.Forms.Button Finish;
+        private System.Windows.Forms.Button Arranged;
     }
 }

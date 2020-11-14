@@ -26,6 +26,7 @@ namespace ClassRegistration
         private List<int> ddttltime = new List<int>();
         private List<string> class_length = new List<string> { "30 Minutes", "60 Minutes", "90 Minutes",
             "120 Minutes", "150 Minutes", "180 Minutes", "210 Minutes", "240 Minutes" };
+        
         public Form17(ref DataBase master, string user, ref ArrayList tb, ref bool finished)
         {
             this.DDD = master;
@@ -45,6 +46,9 @@ namespace ClassRegistration
             comboBox2.DataSource = class_length;
 
             checkedListBox1.Items.AddRange(days);
+
+            if (timeblocks.Count != 0)
+                Arranged.Visible = false;
 
         }
 
@@ -100,8 +104,14 @@ namespace ClassRegistration
                 int daycode = getdaycode(checkedListBox1.CheckedItems);
                 int numblocks = comboBox2.SelectedIndex + 1;
                 int timecode = ddttltime[comboBox1.SelectedIndex];
-                timeblocks.Add(daycode*1000 + timecode*10 + numblocks);
-                this.Close();
+                int tbcode = daycode * 1000 + timecode * 10 + numblocks;
+                if (!DDD.Overlap(timeblocks, tbcode))
+                {
+                    timeblocks.Add(tbcode);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Time Conflict");
             }
             else
             {
@@ -116,14 +126,28 @@ namespace ClassRegistration
                 int daycode = getdaycode(checkedListBox1.CheckedItems);
                 int numblocks = comboBox2.SelectedIndex + 1;
                 int timecode = ddttltime[comboBox1.SelectedIndex];
-                timeblocks.Add(daycode*1000 + timecode*10 + numblocks);
-                finished = true;
-                this.Close();
+                int tbcode = daycode * 1000 + timecode * 10 + numblocks;
+                if (!DDD.Overlap(timeblocks, tbcode))
+                {
+                    timeblocks.Add(tbcode);
+                    finished = true;
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Time Conflict");
             }
             else
             {
                 MessageBox.Show("Please Select Days");
             }
+        }
+
+        private void Arranged_Click(object sender, EventArgs e)
+        {
+            timeblocks.Clear();
+            timeblocks.Add(0);
+            finished = true;
+            this.Close();
         }
     }
 }
