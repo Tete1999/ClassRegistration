@@ -91,27 +91,32 @@ namespace ClassRegistration
         {
             ArrayList arrayList = new ArrayList();
             bool finished = false;
+            bool forcedclose = true;
             while (!finished)
             {
                 Form17 form17 = new Form17(ref DDD, user, ref arrayList, ref finished);
                 form17.ShowDialog();
                 finished = form17.finished;
+                forcedclose = form17.forcedclose;
             }
-            string course = listBox1.SelectedItem.ToString();
-            course = course.Substring(0, course.IndexOf(" "));
-            DialogResult dialogResult = MessageBox.Show("New Schedule: " + DDD.getSchedule(arrayList),
-                "Confirm New Change", MessageBoxButtons.OKCancel);
-            if (dialogResult == DialogResult.OK)
+            if (!forcedclose)
             {
-                DDD.setCourseField<ArrayList>(course, "TimeBlocks", arrayList);
-                List<string> lst = new List<string>();
-                foreach (DataRow r in DDD.CourseDB.Rows)
+                string course = listBox1.SelectedItem.ToString();
+                course = course.Substring(0, course.IndexOf(" "));
+                DialogResult dialogResult = MessageBox.Show("New Schedule: " + DDD.getSchedule(arrayList),
+                    "Confirm New Change", MessageBoxButtons.OKCancel);
+                if (dialogResult == DialogResult.OK)
                 {
-                    lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
+                    DDD.setCourseField<ArrayList>(course, "TimeBlocks", arrayList);
+                    List<string> lst = new List<string>();
+                    foreach (DataRow r in DDD.CourseDB.Rows)
+                    {
+                        lst.Add(DDD.CourseToString(r["CourseCode"].ToString(), false));
+                    }
+                    listBox1.DataSource = null;
+                    listBox1.Items.Clear();
+                    listBox1.DataSource = lst;
                 }
-                listBox1.DataSource = null;
-                listBox1.Items.Clear();
-                listBox1.DataSource = lst;
             }
         }
 
