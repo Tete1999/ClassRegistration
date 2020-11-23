@@ -16,7 +16,8 @@ namespace ClassRegistration
         private DataBase DDD;
         private string user;
         private ArrayList timeblocks;
-        public bool finished;
+        public bool finished = true;
+        public bool forcedclose = true;
         private string[] days = new[] { "M", "T", "W", "R", "F" };
         private List<string> start_time = new List<string> { "5:00 AM", "5:30 AM", "6:00 AM", "6:30 AM",
                 "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", 
@@ -104,14 +105,22 @@ namespace ClassRegistration
                 int daycode = getdaycode(checkedListBox1.CheckedItems);
                 int numblocks = comboBox2.SelectedIndex + 1;
                 int timecode = ddttltime[comboBox1.SelectedIndex];
-                int tbcode = daycode * 1000 + timecode * 10 + numblocks;
-                if (!DDD.Overlap(timeblocks, tbcode))
+                if (timecode + numblocks < 48)
                 {
-                    timeblocks.Add(tbcode);
-                    this.Close();
+                    int tbcode = daycode * 1000 + timecode * 10 + numblocks;
+                    if (!DDD.Overlap(timeblocks, tbcode))
+                    {
+                        timeblocks.Add(tbcode);
+                        finished = false;
+                        this.Close();
+                    }
+                    else
+                        MessageBox.Show("Time Conflict");
                 }
                 else
-                    MessageBox.Show("Time Conflict");
+                {
+                    MessageBox.Show("Cannot Schedule Past 11:30PM");
+                }
             }
             else
             {
@@ -126,15 +135,23 @@ namespace ClassRegistration
                 int daycode = getdaycode(checkedListBox1.CheckedItems);
                 int numblocks = comboBox2.SelectedIndex + 1;
                 int timecode = ddttltime[comboBox1.SelectedIndex];
-                int tbcode = daycode * 1000 + timecode * 10 + numblocks;
-                if (!DDD.Overlap(timeblocks, tbcode))
+                if (timecode + numblocks < 48)
                 {
-                    timeblocks.Add(tbcode);
-                    finished = true;
-                    this.Close();
+                    int tbcode = daycode * 1000 + timecode * 10 + numblocks;
+                    if (!DDD.Overlap(timeblocks, tbcode))
+                    {
+                        timeblocks.Add(tbcode);
+                        finished = true;
+                        forcedclose = false;
+                        this.Close();
+                    }
+                    else
+                        MessageBox.Show("Time Conflict");
                 }
                 else
-                    MessageBox.Show("Time Conflict");
+                {
+                    MessageBox.Show("Cannot Schedule Past 11:30PM");
+                }
             }
             else
             {
@@ -147,7 +164,17 @@ namespace ClassRegistration
             timeblocks.Clear();
             timeblocks.Add(0);
             finished = true;
+            forcedclose = false;
             this.Close();
+        }
+
+        private void Form17_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void Form17_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
         }
     }
 }
